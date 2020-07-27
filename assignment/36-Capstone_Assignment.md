@@ -328,3 +328,28 @@ The contribution is worth **20 points**:
 -   **5 points** for equitable contribution based on sprint 1 peer assessments
 -   **5 points** for equitable contribution based on sprint 2 peer assessments
 -   **8 points** for equitable contribution based on git history
+
+## Extra Credit
+
+Your team may earn up to *5 points* of extra credit (equivalent to 1 percentage
+point on your final course grade). Generally, this will possible by
+incorporating a course topic that is not required for the capstone assignment
+and was not covered in a previous assignment.
+
+-   If your team practices test-driven development for the full capstone
+    assignment, that is worth 5 points. (Not available for an Honors team.)
+-   If your team practices pair programming for the all (or almost all) of the
+    capstone assignment, that is worth 5 points.
+-   If your project has an "or" requirement (*i.e.*, it must have a GUI or be
+    network-based) then you may turn that "or" into an "and" for 3 points.
+-   If your team's project has a GUI then explicitly making accessibility a
+    requirement for your software is worth 2 points.
+-   Making diversity a process requirement is worth 2 points (having a diverse
+    team is not sufficient: by the end of sprint 1, you must have a plan to
+    make your software appealing to a diverse market; by the end of sprint 2,
+    you must show that you worked to implement that plan).
+-   Many other, similar, options are possible. If you have a suggestion,
+    discuss it with the professor early in Sprint 1.
+
+If your team attempts more than one extra-credit activity, the bonus points will
+accumulate up to a maximum of 5 points.
