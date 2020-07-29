@@ -2,21 +2,22 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ElectionEntity implements Election{
 
+    public static  final int MAXIMUM_NAME_LENGTH = 20;
     @Id
     @GeneratedValue
     private Long electionId;
 
     @NaturalId
+    @Column(length = MAXIMUM_NAME_LENGTH)
     private String name;
 
     @Column
@@ -28,12 +29,15 @@ public class ElectionEntity implements Election{
     @Column
     private boolean status;
 
-    public ElectionEntity(String name, Long electionId, LocalDate startTime, LocalDate endTime, boolean status) {
+    @OneToMany(mappedBy = "election", cascade = CascadeType.ALL)
+    private Set<QuestionEntity> questions;
+
+    public ElectionEntity(String name, LocalDate startTime, LocalDate endTime, boolean status) {
         this.name = name;
-        this.electionId = electionId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.status = status;
+        questions = new HashSet<>();
     }
 
     public ElectionEntity() {
@@ -48,5 +52,15 @@ public class ElectionEntity implements Election{
     @Override
     public List<Question> getAssociatedQuestions() {
         return null;
+    }
+
+    public void addElection(Question question){
+        if (question instanceof QuestionEntity) {
+            QuestionEntity questionEntity = (QuestionEntity) question;
+            questions.add(questionEntity);
+            questionEntity.setElection(this);
+        } else {
+            throw new IllegalArgumentException("Expected question, got " + question.getClass().getSimpleName());
+        }
     }
 }

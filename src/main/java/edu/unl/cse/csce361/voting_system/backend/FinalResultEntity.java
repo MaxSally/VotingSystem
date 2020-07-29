@@ -13,12 +13,12 @@ public class FinalResultEntity implements  FinalResult{
     private Long id;
 
     @Column
-    private AnswerOption answerOption;
+    private String answerOption;
 
     public FinalResultEntity() {
     }
 
-    public FinalResultEntity(AnswerOption answerOption) {
+    public FinalResultEntity(String answerOption) {
         this.answerOption = answerOption;
     }
 

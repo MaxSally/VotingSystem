@@ -3,13 +3,13 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class QuestionEntity implements Question {
@@ -18,18 +18,24 @@ public class QuestionEntity implements Question {
     @GeneratedValue
     private Long questionId;
 
+    @NaturalId
     @Column
     private String questionText;
 
-    @Column
-    private Election election;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ElectionEntity election;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private Set<AnswerOptionEntity> answerOptions;
 
     public QuestionEntity() {
     }
 
-    public QuestionEntity(String questionText, Election election) {
+    public QuestionEntity(String questionText, String election) {
+        super();
         this.questionText = questionText;
-        this.election = election;
+        setElection(election);
+        answerOptions = new HashSet<>();
     }
 
     @Override
@@ -41,4 +47,41 @@ public class QuestionEntity implements Question {
     public List<AnswerOption> getAssociatedAnswerOption() {
         return new ArrayList<>();
     }
+
+    private void setElection(String election) {
+        ElectionEntity electionEntity = null;
+        try {
+            electionEntity = HibernateUtil.getSession().bySimpleNaturalId(ElectionEntity.class).load(election);
+        } catch (Exception e) {
+            System.err.println("Error while loading Election: either the required Java class is not a mapped entity\n" +
+                    "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");
+            System.err.println("  " + e.getMessage());
+            System.err.println("Please inform the the developer that the error occurred in\n" +
+                    "    CarEntity.setElection(String).");
+            electionEntity = null;
+            System.err.println("Resuming, leaving " + this.toString() + " without an assigned Election.");
+        } finally {
+            if (electionEntity != null) {
+                electionEntity.addElection(this);
+            } else {
+                this.election = null;
+            }
+        }
+    }
+
+    public void setElection(ElectionEntity election){
+        this.election = election;
+    }
+
+    public void addAnswerOption(AnswerOption answerOption){
+        if(answerOption instanceof AnswerOptionEntity){
+            AnswerOptionEntity answerOptionEntity = (AnswerOptionEntity) answerOption;
+            answerOptions.add(answerOptionEntity);
+            answerOptionEntity.setQuestion(this);
+        } else {
+            throw new IllegalArgumentException("Expected AnswerOption, got " + answerOption.getClass().getSimpleName());
+        }
+    }
+
+
 }

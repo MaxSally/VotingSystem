@@ -2,12 +2,12 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class VoterEntity implements Voter {
@@ -29,18 +29,23 @@ public class VoterEntity implements Voter {
     @GeneratedValue
     private Long voterId;
 
+    @NaturalId
     @Column
     private String SSN;
     @Column
     private String name;
 
+    @OneToMany(mappedBy = "voter", cascade = CascadeType.ALL)
+    Set<VoterChoice> voterChoices;
+
     public VoterEntity() {
         super();
     }
 
-    public VoterEntity(String SSN, String name) {
+    public VoterEntity(String name, String SSN) {
         this.SSN = SSN;
         this.name = name;
+        voterChoices = new HashSet<>();
     }
 
     @Override
@@ -68,12 +73,13 @@ public class VoterEntity implements Voter {
         return SSN;
     }
 
-    public boolean equals(Voter voter) {
-        return voter.getSSN().equals(this.SSN);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(voterId, SSN, getName());
+    public void addVoter(VoterChoice voterChoice){
+        if(voterChoice instanceof VoterEntity){
+            VoterChoiceEntity voterChoiceEntity = (VoterChoiceEntity) voterChoice;
+            voterChoices.add(voterChoiceEntity);
+            voterChoiceEntity.setVoter(this);
+        }else {
+            throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
+        }
     }
 }

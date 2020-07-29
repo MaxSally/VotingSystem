@@ -21,6 +21,14 @@ public class AdminEntity implements  Admin{
     @Column
     private String password;
 
+    public AdminEntity() {
+    }
+
+    public AdminEntity(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public boolean logIn(String username, String password) {
         return true;
