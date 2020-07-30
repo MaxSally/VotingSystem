@@ -1,5 +1,7 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,9 +9,14 @@ import java.util.Set;
 @Entity
 public class AnswerOptionEntity implements  AnswerOption{
 
+    private static Long idCount = 0L;
+
     @Id
     @GeneratedValue
     private Long answerId;
+
+    @NaturalId
+    private Long personalId;
 
     @Column
     private String answerText;
@@ -28,6 +35,8 @@ public class AnswerOptionEntity implements  AnswerOption{
         setQuestion(question);
         status = true;
         voterChoices = new HashSet<>();
+        personalId = idCount;
+        idCount++;
     }
 
     public AnswerOptionEntity() {
@@ -68,7 +77,7 @@ public class AnswerOptionEntity implements  AnswerOption{
     }
 
     public void addAnswerOption(VoterChoice voterChoice){
-        if(voterChoice instanceof VoterEntity){
+        if(voterChoice instanceof VoterChoiceEntity){
             VoterChoiceEntity voterChoiceEntity = (VoterChoiceEntity) voterChoice;
             voterChoices.add(voterChoiceEntity);
             voterChoiceEntity.setAnswerOption(this);

@@ -10,15 +10,15 @@ public class VoterChoiceEntity implements VoterChoice {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Voter voter;
+    @ManyToOne(fetch=FetchType.LAZY)
+    private VoterEntity voter;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private AnswerOption answerOption;
+    private AnswerOptionEntity answerOption;
 
-    public VoterChoiceEntity(String voter, String answerOption) {
+    public VoterChoiceEntity(String voter, Long selectedAnswerOptionIndex) {
         setVoter(voter);
-        setAnswerOption(answerOption);
+        setAnswerOption(selectedAnswerOptionIndex);
     }
 
     public VoterChoiceEntity() {
@@ -38,7 +38,7 @@ public class VoterChoiceEntity implements VoterChoice {
                     "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");
             System.err.println("  " + e.getMessage());
             System.err.println("Please inform the the developer that the error occurred in\n" +
-                    "    CarEntity.setElection(String).");
+                    "    VoterChoiceEntity.setVoter(String).");
             voterEntity = null;
             System.err.println("Resuming, leaving " + this.toString() + " without an assigned Election.");
         } finally {
@@ -50,16 +50,16 @@ public class VoterChoiceEntity implements VoterChoice {
         }
     }
 
-    private void setAnswerOption(String answerOption){
+    private void setAnswerOption(Long selectedAnswerOptionIndex){
         AnswerOptionEntity answerOptionEntity = null;
         try {
-            answerOptionEntity = HibernateUtil.getSession().bySimpleNaturalId(AnswerOptionEntity.class).load(answerOption);
+            answerOptionEntity = HibernateUtil.getSession().bySimpleNaturalId(AnswerOptionEntity.class).load(selectedAnswerOptionIndex);
         } catch (Exception e) {
             System.err.println("Error while loading Election: either the required Java class is not a mapped entity\n" +
                     "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");
             System.err.println("  " + e.getMessage());
             System.err.println("Please inform the the developer that the error occurred in\n" +
-                    "    CarEntity.setElection(String).");
+                    "    VoterChoiceEntity.setAnswerOption(Long)");
             answerOptionEntity = null;
             System.err.println("Resuming, leaving " + this.toString() + " without an assigned Election.");
         } finally {

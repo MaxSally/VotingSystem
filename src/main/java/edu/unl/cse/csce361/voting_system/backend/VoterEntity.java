@@ -30,13 +30,15 @@ public class VoterEntity implements Voter {
     private Long voterId;
 
     @NaturalId
-    @Column
+    @Column(unique = true)
     private String SSN;
     @Column
     private String name;
+    @Column
+    private boolean hasVoted;
 
     @OneToMany(mappedBy = "voter", cascade = CascadeType.ALL)
-    Set<VoterChoice> voterChoices;
+    Set<VoterChoiceEntity> voterChoices;
 
     public VoterEntity() {
         super();
@@ -46,6 +48,7 @@ public class VoterEntity implements Voter {
         this.SSN = SSN;
         this.name = name;
         voterChoices = new HashSet<>();
+        hasVoted = false;
     }
 
     @Override
@@ -74,7 +77,7 @@ public class VoterEntity implements Voter {
     }
 
     public void addVoter(VoterChoice voterChoice){
-        if(voterChoice instanceof VoterEntity){
+        if(voterChoice instanceof VoterChoiceEntity){
             VoterChoiceEntity voterChoiceEntity = (VoterChoiceEntity) voterChoice;
             voterChoices.add(voterChoiceEntity);
             voterChoiceEntity.setVoter(this);

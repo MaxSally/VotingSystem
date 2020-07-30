@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import javax.persistence.PersistenceException;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DatabasePopulator {
@@ -38,9 +39,9 @@ public class DatabasePopulator {
         );
     }
 
-    static Set<Question> createQuestion() {
+    static List<Question> createQuestion() {
         System.out.println("Creating Question.....");
-        return Set.of(
+        return List.of(
                 new QuestionEntity("Who is the next mayor?", "Nov2020"),
                 new QuestionEntity("Who is the next city council?","Nov2020"),
                 new QuestionEntity("Who is the next Sheriff?","Nov2020"),
@@ -52,9 +53,9 @@ public class DatabasePopulator {
         );
     }
 
-    static Set<AnswerOption> createAnswerOption(){
+    static List<AnswerOption> createAnswerOption(){
         System.out.println("Create answer options ......");
-        return Set.of(
+        return List.of(
                 new AnswerOptionEntity("Who is the next mayor?", "Pat Mann"),
                 new AnswerOptionEntity("Who is the next mayor?", "Dawn Keykong"),
                 new AnswerOptionEntity("Who is the next city council?", "Inky"),
@@ -73,17 +74,24 @@ public class DatabasePopulator {
     }
 
     static Set<VoterChoice> createVoterChoice(){
-        System.out.println("Create voter choice/selctioln..........");
+        System.out.println("Create voter choice/selection..........");
         return Set.of(
-                new VoterChoiceEntity("A", "")
+                new VoterChoiceEntity("123456789", 1L),
+                new VoterChoiceEntity("123456789", 4L),
+                new VoterChoiceEntity("123456789", 5L),
+                new VoterChoiceEntity("123456789", 7L),
+                new VoterChoiceEntity("123456789", 8L),
+                new VoterChoiceEntity("123879456", 0L)
         );
     }
 
     static void depopulateTables(Session session) {
         System.out.println("Emptying tables...");
+        session.createQuery("delete from VoterEntity").executeUpdate();
         session.createQuery("delete from ElectionEntity").executeUpdate();
         session.createQuery("delete from QuestionEntity").executeUpdate();
-        session.createQuery("delete  from AnswerOptionEntity").executeUpdate();
+        session.createQuery("delete from AnswerOptionEntity").executeUpdate();
+        session.createQuery("delete from VoterChoiceEntity").executeUpdate();;
     }
 
     public static void main(String[] args) {
@@ -102,6 +110,7 @@ public class DatabasePopulator {
             createElection().forEach(session::saveOrUpdate);
             createQuestion().forEach(session::saveOrUpdate);
             createAnswerOption().forEach(session::saveOrUpdate);
+            createVoterChoice().forEach(session::saveOrUpdate);
             System.out.println("Concluding Hibernate transaction...");
             session.getTransaction().commit();
             System.out.println("Now populating RentalEntity...");
