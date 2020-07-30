@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity
 public class VoterEntity implements Voter {
 
-    private static int REQUIRED_SSN_LENGTH= 9;
+    public static int REQUIRED_SSN_LENGTH= 9;
 
     static VoterEntity getVoterBySSN(String ssn){
         Session session = HibernateUtil.getSession();
@@ -100,7 +100,7 @@ public class VoterEntity implements Voter {
         }
     }
 
-    private boolean validateSSN(String ssn) {
+    static boolean validateSSN(String ssn) {
         return ssn.length() == REQUIRED_SSN_LENGTH;
     }
 }

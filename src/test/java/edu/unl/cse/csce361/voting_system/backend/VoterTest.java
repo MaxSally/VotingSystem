@@ -54,4 +54,13 @@ public class VoterTest {
         boolean logInResult = Backend.getInstance().logIn(name, ssn);
         assertFalse(logInResult);
     }
+
+    @Test
+    public void testRegisterVoter() {
+        String name = "Chloe";
+        String ssn = "121212121";
+
+        Voter voter = Backend.getInstance().registerToVote(name, ssn);
+        assertEquals(voter.getName(), name);
+    }
 }
