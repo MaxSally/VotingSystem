@@ -3,7 +3,9 @@ package edu.unl.cse.csce361.voting_system.backend;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +27,7 @@ public class AnswerOptionEntity implements  AnswerOption{
     private QuestionEntity question;
 
     @OneToMany(mappedBy = "answerOption", cascade = CascadeType.ALL)
-    private Set<VoterChoiceEntity> voterChoices;
+    private List<VoterChoiceEntity> voterChoices;
 
     @Column
     private boolean status;
@@ -34,7 +36,7 @@ public class AnswerOptionEntity implements  AnswerOption{
         this.answerText = answerText;
         setQuestion(question);
         status = true;
-        voterChoices = new HashSet<>();
+        voterChoices = new ArrayList<>();
         personalId = idCount;
         idCount++;
     }

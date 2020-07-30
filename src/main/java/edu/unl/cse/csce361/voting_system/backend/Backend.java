@@ -3,6 +3,9 @@ package edu.unl.cse.csce361.voting_system.backend;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import java.util.List;
+import java.util.Set;
+
 import static edu.unl.cse.csce361.voting_system.backend.VoterEntity.REQUIRED_SSN_LENGTH;
 
 public class Backend {
@@ -47,6 +50,11 @@ public class Backend {
             session.getTransaction().rollback();
         }
         return voter;
+    }
+
+    public List<QuestionEntity> getAllQuestionsByElection(String electionName) {
+        Election election = ElectionEntity.getElectionByName(electionName);
+        return election.getAssociatedQuestions();
     }
 
 }

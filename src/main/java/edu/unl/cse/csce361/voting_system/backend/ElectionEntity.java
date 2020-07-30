@@ -1,9 +1,12 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +15,20 @@ import java.util.Set;
 public class ElectionEntity implements Election{
 
     public static  final int MAXIMUM_NAME_LENGTH = 20;
+
+    static ElectionEntity getElectionByName(String electionName){
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        ElectionEntity election = null;
+        try {
+            election = session.bySimpleNaturalId(ElectionEntity.class).load(electionName);
+            session.getTransaction().commit();
+        } catch (HibernateException exception) {
+            System.err.println("Could not load Voter " + electionName + ". " + exception.getMessage());
+        }
+        return election;
+    }
+
     @Id
     @GeneratedValue
     private Long electionId;
@@ -30,14 +47,14 @@ public class ElectionEntity implements Election{
     private boolean status;
 
     @OneToMany(mappedBy = "election", cascade = CascadeType.ALL)
-    private Set<QuestionEntity> questions;
+    private List<QuestionEntity> questions;
 
     public ElectionEntity(String name, LocalDate startTime, LocalDate endTime, boolean status) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.status = status;
-        questions = new HashSet<>();
+        questions = new ArrayList<>();
     }
 
     public ElectionEntity() {
@@ -50,8 +67,8 @@ public class ElectionEntity implements Election{
     }
 
     @Override
-    public List<Question> getAssociatedQuestions() {
-        return null;
+    public List<QuestionEntity> getAssociatedQuestions() {
+        return questions;
     }
 
     public void addElection(Question question){

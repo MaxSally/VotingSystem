@@ -26,7 +26,7 @@ public class QuestionEntity implements Question {
     private ElectionEntity election;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private Set<AnswerOptionEntity> answerOptions;
+    private List<AnswerOptionEntity> answerOptions;
 
     public QuestionEntity() {
     }
@@ -35,7 +35,7 @@ public class QuestionEntity implements Question {
         super();
         this.questionText = questionText;
         setElection(election);
-        answerOptions = new HashSet<>();
+        answerOptions = new ArrayList<>();
     }
 
     @Override

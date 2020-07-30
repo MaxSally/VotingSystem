@@ -5,9 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class VoterEntity implements Voter {
@@ -40,7 +38,7 @@ public class VoterEntity implements Voter {
     private boolean hasVoted;
 
     @OneToMany(mappedBy = "voter", cascade = CascadeType.ALL)
-    Set<VoterChoiceEntity> voterChoices;
+    List<VoterChoiceEntity> voterChoices;
 
     public VoterEntity() {
         super();
@@ -53,7 +51,7 @@ public class VoterEntity implements Voter {
             this.SSN = "";
         }
         this.name = name;
-        voterChoices = new HashSet<>();
+        voterChoices = new ArrayList<>();
         hasVoted = false;
     }
 
@@ -101,6 +99,10 @@ public class VoterEntity implements Voter {
     }
 
     static boolean validateSSN(String ssn) {
-        return ssn.length() == REQUIRED_SSN_LENGTH;
+        if(ssn.length() != REQUIRED_SSN_LENGTH) {
+            throw new IllegalArgumentException("Invalid SSN length. The required length is " + REQUIRED_SSN_LENGTH);
+        } else {
+            return true;
+        }
     }
 }

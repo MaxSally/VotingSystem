@@ -1,9 +1,10 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
 import java.util.List;
+import java.util.Set;
 
 public interface Election {
     String getDescription();
 
-    List<Question> getAssociatedQuestions();
+    List<QuestionEntity> getAssociatedQuestions();
 }
