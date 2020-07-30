@@ -57,8 +57,8 @@ public class Backend {
         return election.getAssociatedQuestions();
     }
 
-    public List<AnswerOptionEntity> getAllAnswersByQuestion(String questionName) {
-        Question question = QuestionEntity.getQuestionsByName(questionName);
+    public List<AnswerOptionEntity> getAllAnswersByQuestion(String questionName, String electionName) {
+        Question question = QuestionEntity.getQuestionsByName(questionName, electionName);
         return question.getAssociatedAnswerOption();
     }
 

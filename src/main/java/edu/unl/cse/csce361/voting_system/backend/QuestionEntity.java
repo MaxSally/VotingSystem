@@ -12,12 +12,18 @@ import java.util.List;
 @Entity
 public class QuestionEntity implements Question {
 
-    static QuestionEntity getQuestionsByName(String questionName){
+    static QuestionEntity getQuestionsByName(String questionName, String electionName){
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         QuestionEntity question = null;
         try {
-            question = session.bySimpleNaturalId(QuestionEntity.class).load(questionName);
+            List<QuestionEntity> questions = session.createQuery("From QuestionEntity where questionText = '" + questionName + "'", QuestionEntity.class).list();
+            for(QuestionEntity questionEntity : questions) {
+                if(questionEntity.getElectionName().equals(electionName)) {
+                    question = questionEntity;
+                    break;
+                }
+            }
             session.getTransaction().commit();
         } catch (HibernateException exception) {
             System.err.println("Could not load Question " + questionName + ". " + exception.getMessage());
@@ -52,6 +58,10 @@ public class QuestionEntity implements Question {
     @Override
     public String getQuestionText() {
         return questionText;
+    }
+
+    public String getElectionName() {
+        return election.getElectionName();
     }
 
     @Override

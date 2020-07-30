@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface Election {
-    String getDescription();
+    String getElectionName();
 
     List<QuestionEntity> getAssociatedQuestions();
 }

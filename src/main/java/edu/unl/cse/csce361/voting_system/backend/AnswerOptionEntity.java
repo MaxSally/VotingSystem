@@ -1,5 +1,7 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -12,6 +14,25 @@ import java.util.Set;
 public class AnswerOptionEntity implements  AnswerOption{
 
     private static Long idCount = 0L;
+
+    static Long getAnswerOptionIndexByName(String questionText, String answerText) {
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        Long answerIndex = null;
+        try {
+            List<AnswerOptionEntity> answers = session.createQuery("From AnswerOptionEntity where answerText = '" + answerText + "'",
+                    AnswerOptionEntity.class).list();
+            for(AnswerOptionEntity answerOptionEntity : answers) {
+                if(answerOptionEntity.getQuestion().equals(questionText)) {
+                    answerIndex = answerOptionEntity.getPersonalID();
+                }
+            }
+            session.getTransaction().commit();
+        } catch (HibernateException exception) {
+            System.err.println("Could not load answerText " + answerText + ". " + exception.getMessage());
+        }
+        return answerIndex;
+    }
 
     @Id
     @GeneratedValue
@@ -51,6 +72,14 @@ public class AnswerOptionEntity implements  AnswerOption{
     @Override
     public String getAnswerText() {
         return answerText;
+    }
+
+    public Long getPersonalID() {
+        return personalId;
+    }
+
+    public QuestionEntity getQuestion() {
+        return question;
     }
     
     private void setQuestion(String question){
