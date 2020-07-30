@@ -7,12 +7,23 @@ import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class QuestionEntity implements Question {
+
+    static QuestionEntity getQuestionsByName(String questionName){
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        QuestionEntity question = null;
+        try {
+            question = session.bySimpleNaturalId(QuestionEntity.class).load(questionName);
+            session.getTransaction().commit();
+        } catch (HibernateException exception) {
+            System.err.println("Could not load Question " + questionName + ". " + exception.getMessage());
+        }
+        return question;
+    }
 
     @Id
     @GeneratedValue
@@ -44,8 +55,8 @@ public class QuestionEntity implements Question {
     }
 
     @Override
-    public List<AnswerOption> getAssociatedAnswerOption() {
-        return new ArrayList<>();
+    public List<AnswerOptionEntity> getAssociatedAnswerOption() {
+        return answerOptions;
     }
 
     private void setElection(String election) {

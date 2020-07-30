@@ -50,7 +50,7 @@ public class AnswerOptionEntity implements  AnswerOption{
 
     @Override
     public String getAnswerText() {
-        return null;
+        return answerText;
     }
     
     private void setQuestion(String question){
@@ -62,7 +62,7 @@ public class AnswerOptionEntity implements  AnswerOption{
                     "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");
             System.err.println("  " + e.getMessage());
             System.err.println("Please inform the the developer that the error occurred in\n" +
-                    "    CarEntity.setQuestion(String).");
+                    "    QuestionEntity.setQuestion(String).");
             questionEntity = null;
             System.err.println("Resuming, leaving " + this.toString() + " without an assigned Question.");
         } finally {

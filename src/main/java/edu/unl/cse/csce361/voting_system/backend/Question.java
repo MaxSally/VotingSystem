@@ -5,5 +5,5 @@ import java.util.List;
 public interface Question {
     String getQuestionText();
 
-    List<AnswerOption> getAssociatedAnswerOption();
+    List<AnswerOptionEntity> getAssociatedAnswerOption();
 }

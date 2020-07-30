@@ -60,7 +60,6 @@ public class ElectionEntity implements Election{
     public ElectionEntity() {
     }
 
-
     @Override
     public String getDescription() {
         return null;

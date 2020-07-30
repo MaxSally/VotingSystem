@@ -87,8 +87,21 @@ public class VoterTest {
         
         List<QuestionEntity> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
         assertTrue(questions.size() == expectedSize);
-        assertEquals(questions.get(0).getQuestionText(), expectedQuestion1);
-        assertEquals(questions.get(1).getQuestionText(), expectedQuestion2);
-        assertEquals(questions.get(2).getQuestionText(), expectedQuestion3);
+        assertEquals(expectedQuestion1, questions.get(0).getQuestionText());
+        assertEquals(expectedQuestion2, questions.get(1).getQuestionText());
+        assertEquals(expectedQuestion3, questions.get(2).getQuestionText());
+    }
+
+    @Test
+    public void testGetAllAnswersByQuestion() {
+        String questionName = "Who is the next mayor?";
+        String expectedAnswer1 = "Pat Mann";
+        String expectedAnswer2 = "Dawn Keykong";
+        int expectedSize = 2;
+
+        List<AnswerOptionEntity> answers = Backend.getInstance().getAllAnswersByQuestion(questionName);
+        assertTrue(answers.size() == expectedSize);
+        assertEquals(expectedAnswer1, answers.get(0).getAnswerText());
+        assertEquals(expectedAnswer2, answers.get(1).getAnswerText());
     }
 }
