@@ -12,15 +12,17 @@ import java.util.Set;
 @Entity
 public class VoterEntity implements Voter {
 
-    static VoterEntity getVoterByName(String name){
+    private static int REQUIRED_SSN_LENGTH= 9;
+
+    static VoterEntity getVoterBySSN(String ssn){
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         VoterEntity voter = null;
         try {
-            voter = session.bySimpleNaturalId(VoterEntity.class).load(name);
+            voter = session.bySimpleNaturalId(VoterEntity.class).load(ssn);
             session.getTransaction().commit();
         } catch (HibernateException exception) {
-            System.err.println("Could not load Voter " + name + ". " + exception.getMessage());
+            System.err.println("Could not load Voter " + ssn + ". " + exception.getMessage());
         }
         return voter;
     }
@@ -45,7 +47,11 @@ public class VoterEntity implements Voter {
     }
 
     public VoterEntity(String name, String SSN) {
-        this.SSN = SSN;
+        if(validateSSN(SSN)) {
+            this.SSN= SSN;
+        } else {
+            this.SSN = "";
+        }
         this.name = name;
         voterChoices = new HashSet<>();
         hasVoted = false;
@@ -53,12 +59,25 @@ public class VoterEntity implements Voter {
 
     @Override
     public String getName() {
-        return "";
+        return name;
     }
 
     @Override
-    public boolean logIn(){
-        return true;
+    public boolean logIn(String name, String ssn) {
+        VoterEntity voterEntity = null;
+        try {
+            voterEntity = HibernateUtil.getSession().bySimpleNaturalId(VoterEntity.class).load(ssn);
+        } catch (Exception e) {
+            System.err.println("Error while loading Voter: either the required Java class is not a mapped entity\n" +
+                    "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");
+            System.err.println("  " + e.getMessage());
+            System.err.println("Please inform the the developer that the error occurred in\n" +
+                    "    VoterEntity.logIn(String, String).");
+            voterEntity = null;
+            System.err.println("Resuming, leaving " + this.toString() + " without an assigned Election.");
+            return false;
+        }
+        return voterEntity != null && voterEntity.getName().equals(name);
     }
 
     @Override
@@ -71,11 +90,6 @@ public class VoterEntity implements Voter {
         return "";
     }
 
-    @Override
-    public String getSSN(){
-        return SSN;
-    }
-
     public void addVoter(VoterChoice voterChoice){
         if(voterChoice instanceof VoterChoiceEntity){
             VoterChoiceEntity voterChoiceEntity = (VoterChoiceEntity) voterChoice;
@@ -84,5 +98,9 @@ public class VoterEntity implements Voter {
         }else {
             throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
         }
+    }
+
+    private boolean validateSSN(String ssn) {
+        return ssn.length() == REQUIRED_SSN_LENGTH;
     }
 }
