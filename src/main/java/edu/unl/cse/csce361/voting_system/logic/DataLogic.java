@@ -27,35 +27,40 @@ public class DataLogic {
         currentElection = null;
     }
 
-    public boolean submitVote(String questionText, String answerText){
+    public boolean submitVote(List<Pair<String, String>> voterSelections){
         if(currentVoter.hasVoted()){
             System.err.println("Voter has voted");
             return false;
         }
-        Set<String> answeredQuestion = new HashSet<>();
-        for(QuestionAnswer questionAnswer: lstQuestionAnswer){
-            if(!questionAnswer.getQuestionText().equals(questionText)){
-                continue;
-            }
-            for(Pair<String, Long> answerOption : questionAnswer.getAnswerOptionWithId()){
-                if(!answerOption.getKey().equals(answerText)){
+        for(Pair<String, String> vote : voterSelections){
+            String questionText = vote.getKey();
+            String answerText = vote.getValue();
+            Set<String> answeredQuestion = new HashSet<>();
+            for(QuestionAnswer questionAnswer: lstQuestionAnswer){
+                if(!questionAnswer.getQuestionText().equals(questionText)){
                     continue;
                 }
-                if(answeredQuestion.contains(questionText)){
-                    System.err.println("Voter answers a question more than once.");
-                    return false;
-                }else{
-                    answeredQuestion.add(questionText);
-                    boolean status = Backend.getInstance().submitVote(currentVoter,
-                            answerOption.getValue());
-                    if(!status){
-                        System.err.println("Encounter problem while adding vote to the system.");
+                for(Pair<String, Long> answerOption : questionAnswer.getAnswerOptionWithId()){
+                    if(!answerOption.getKey().equals(answerText)){
+                        continue;
+                    }
+                    if(answeredQuestion.contains(questionText)){
+                        System.err.println("Voter answers a question more than once.");
                         return false;
+                    }else{
+                        answeredQuestion.add(questionText);
+                        boolean status = Backend.getInstance().submitVote(currentVoter,
+                                answerOption.getValue());
+                        if(!status){
+                            System.err.println("Encounter problem while adding vote to the system.");
+                            return false;
+                        }
                     }
                 }
-            }
 
+            }
         }
+
         Backend.getInstance().setVoterStatus(currentVoter, true);
         return true;
     }
@@ -63,7 +68,7 @@ public class DataLogic {
     public List<QuestionAnswer> getAllQuestionsAndAnswers(){
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(currentElection.getName());
         for(String question : questions){
-            List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question);
+            List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question, currentElection.getName());
             QuestionAndAnswerOption questionAndAnswerOption = new QuestionAndAnswerOption(currentElection.getName(), question);
             questionAndAnswerOption.setAnswerOptions(answerOptions);
             lstQuestionAnswer.add(questionAndAnswerOption);
@@ -81,5 +86,9 @@ public class DataLogic {
 
     public void setCurrentVoter(String SSN){
         currentVoter = Backend.getInstance().getVoterBySSN(SSN);
+    }
+
+    public Voter getCurrentVoter(){
+        return currentVoter;
     }
 }

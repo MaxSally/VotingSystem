@@ -23,7 +23,7 @@ public class AnswerOptionEntity implements  AnswerOption{
             session.getTransaction().commit();
             for(AnswerOptionEntity answerOptionEntity : answers) {
                 if(answerOptionEntity.getQuestion().getQuestionText().equals(questionText)) {
-                    answerIndex = answerOptionEntity.getPersonalID();
+                    answerIndex = answerOptionEntity.getAnswerId();
                 }
             }
         } catch (HibernateException exception) {
@@ -72,8 +72,8 @@ public class AnswerOptionEntity implements  AnswerOption{
         return answerText;
     }
 
-    public Long getPersonalID() {
-        return personalId;
+    public Long getAnswerId() {
+        return answerId;
     }
 
     public QuestionEntity getQuestion() {
@@ -113,9 +113,5 @@ public class AnswerOptionEntity implements  AnswerOption{
         }else {
             throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
         }
-    }
-
-    public Long getAnswerId() {
-        return answerId;
     }
 }

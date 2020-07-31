@@ -125,5 +125,14 @@ public class VoterEntity implements Voter {
     @Override
     public void setVoterStatus(boolean status) {
         hasVoted = status;
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            session.saveOrUpdate(this);
+            session.getTransaction().commit();
+        } catch (HibernateException exception){
+            System.err.println("Encounter hibernate exception while setting voter status: " + exception);
+            session.getTransaction().rollback();
+        }
     }
 }

@@ -101,7 +101,7 @@ public class VoterTest {
         String electionName = "Nov2020";
         int expectedSize = 2;
 
-        List<AnswerOptionEntity> answers = Backend.getInstance().getAllAnswersByQuestion(questionName, electionName);
+        List<Pair<String, Long>> answers = Backend.getInstance().getAllAnswersByQuestion(questionName, electionName);
         assertTrue(answers.size() == expectedSize);
         assertEquals(expectedAnswer1, answers.get(0).getKey());
         assertEquals(expectedAnswer2, answers.get(1).getKey());
@@ -112,7 +112,6 @@ public class VoterTest {
         String questionText = "Shall there be a 25¢ tax on cherries?";
         String answerText = "Yes";
         Long expectedID = 5L;
-
         Long actualID = AnswerOptionEntity.getAnswerOptionIndexByName(questionText, answerText);
         System.out.println(actualID);
         assertTrue(expectedID == actualID);

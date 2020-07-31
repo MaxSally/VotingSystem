@@ -1,5 +1,7 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.Session;
 
@@ -11,7 +13,7 @@ import java.util.Set;
 
 public class DatabasePopulator {
 
-    static Set<Voter> createVoters() {
+    public static Set<Voter> createVoters() {
         System.out.println("Creating Voter.....");
         return Set.of(
             new VoterEntity("A", "123456789"),
@@ -23,7 +25,7 @@ public class DatabasePopulator {
         );
     }
 
-    static Set<Admin> createAdmin() {
+    public static Set<Admin> createAdmin() {
         System.out.println("Creating Admin.....");
         return Set.of(
                 new AdminEntity("superuser 999", "this is my password"),
@@ -31,7 +33,7 @@ public class DatabasePopulator {
         );
     }
 
-    static Set<Election> createElection(){
+    public static Set<Election> createElection(){
         System.out.println("Creating election .... Hooray");
         return Set.of(
                 new ElectionEntity("Nov2020", LocalDate.of(2020, 7, 9), LocalDate.of(2020, 11, 9), false),
@@ -39,7 +41,7 @@ public class DatabasePopulator {
         );
     }
 
-    static List<Question> createQuestion() {
+    public static List<Question> createQuestion() {
         System.out.println("Creating Question.....");
         return List.of(
                 new QuestionEntity("Who is the next mayor?", "Nov2020"),
@@ -53,7 +55,7 @@ public class DatabasePopulator {
         );
     }
 
-    static List<AnswerOption> createAnswerOption(){
+    public static List<AnswerOption> createAnswerOption(){
         System.out.println("Create answer options ......");
         return List.of(
                 new AnswerOptionEntity("Who is the next mayor?", "Pat Mann"),
@@ -73,7 +75,7 @@ public class DatabasePopulator {
         );
     }
 
-    static Set<VoterChoice> createVoterChoice(){
+    public static Set<VoterChoice> createVoterChoice(){
         System.out.println("Create voter choice/selection..........");
         return Set.of(
                 new VoterChoiceEntity("123456789", 1L),
@@ -85,7 +87,26 @@ public class DatabasePopulator {
         );
     }
 
-    static void depopulateTables(Session session) {
+    public static void setVoterStatus(){
+        Session session = HibernateUtil.getSession();
+        try{
+            Voter voter = VoterEntity.getVoterBySSN("123456789");
+            voter.setVoterStatus(true);
+            session.beginTransaction();
+            session.saveOrUpdate(voter);
+            session.getTransaction().commit();
+            voter = VoterEntity.getVoterBySSN("123879456");
+            voter.setVoterStatus(true);
+            session.beginTransaction();
+            session.saveOrUpdate(voter);
+            session.getTransaction().commit();
+        }catch (HibernateException exception){
+            System.err.println("Encounter hibernate exception while setting voter status in db populator :v:" + exception);
+            session.getTransaction().rollback();
+        }
+    }
+
+    public static void depopulateTables(Session session) {
         System.out.println("Emptying tables...");
         session.createQuery("delete from VoterEntity").executeUpdate();
         session.createQuery("delete from ElectionEntity").executeUpdate();
@@ -111,13 +132,9 @@ public class DatabasePopulator {
             createQuestion().forEach(session::saveOrUpdate);
             createAnswerOption().forEach(session::saveOrUpdate);
             createVoterChoice().forEach(session::saveOrUpdate);
+            session.getTransaction().commit();
+            setVoterStatus();
             System.out.println("Concluding Hibernate transaction...");
-            session.getTransaction().commit();
-            System.out.println("Now populating RentalEntity...");
-            //Set<RentalEntity> rentals = createRentals(session);
-            session.beginTransaction();
-            //rentals.forEach(session::saveOrUpdate);
-            session.getTransaction().commit();
             System.out.println("Success! The database has been populated.");
         } catch (MappingException mappingException) {
             System.err.println("Problem encountered when creating a table. The most likely problem is a missing\n" +

@@ -56,6 +56,7 @@ public class Backend {
 
     public List<String> getAllQuestionsByElection(String electionName) {
         Election election = ElectionEntity.getElectionByName(electionName);
+        return election.getAssociatedQuestions();
         List<String> questionAsString = new ArrayList<>();
         for(QuestionEntity questionEntity: election.getAssociatedQuestions()){
             questionAsString.add(questionEntity.getQuestionText());
