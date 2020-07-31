@@ -113,6 +113,7 @@ public class VoterTest {
         Long expectedID = 5L;
 
         Long actualID = AnswerOptionEntity.getAnswerOptionIndexByName(questionText, answerText);
+        System.out.println(actualID);
         assertTrue(expectedID == actualID);
     }
 }

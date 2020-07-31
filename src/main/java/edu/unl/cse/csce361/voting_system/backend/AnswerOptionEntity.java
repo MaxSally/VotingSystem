@@ -22,12 +22,12 @@ public class AnswerOptionEntity implements  AnswerOption{
         try {
             List<AnswerOptionEntity> answers = session.createQuery("From AnswerOptionEntity where answerText = '" + answerText + "'",
                     AnswerOptionEntity.class).list();
+            session.getTransaction().commit();
             for(AnswerOptionEntity answerOptionEntity : answers) {
-                if(answerOptionEntity.getQuestion().equals(questionText)) {
+                if(answerOptionEntity.getQuestion().getQuestionText().equals(questionText)) {
                     answerIndex = answerOptionEntity.getPersonalID();
                 }
             }
-            session.getTransaction().commit();
         } catch (HibernateException exception) {
             System.err.println("Could not load answerText " + answerText + ". " + exception.getMessage());
         }
@@ -44,7 +44,7 @@ public class AnswerOptionEntity implements  AnswerOption{
     @Column
     private String answerText;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private QuestionEntity question;
 
     @OneToMany(mappedBy = "answerOption", cascade = CascadeType.ALL)
