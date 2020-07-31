@@ -1,8 +1,10 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import javafx.util.Pair;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -52,14 +54,22 @@ public class Backend {
         return voter;
     }
 
-    public List<QuestionEntity> getAllQuestionsByElection(String electionName) {
+    public List<String> getAllQuestionsByElection(String electionName) {
         Election election = ElectionEntity.getElectionByName(electionName);
-        return election.getAssociatedQuestions();
+        List<String> questionAsString = new ArrayList<>();
+        for(QuestionEntity questionEntity: election.getAssociatedQuestions()){
+            questionAsString.add(questionEntity.getQuestionText());
+        }
+        return questionAsString;
     }
 
-    public List<AnswerOptionEntity> getAllAnswersByQuestion(String questionName) {
+    public List<Pair<String, Long>> getAllAnswersByQuestion(String questionName) {
         Question question = QuestionEntity.getQuestionsByName(questionName);
-        return question.getAssociatedAnswerOption();
+        List<Pair<String, Long>> answerOptions = new ArrayList<>();
+        for(AnswerOptionEntity answerOptionEntity: question.getAssociatedAnswerOption()){
+            answerOptions.add(new Pair<>(answerOptionEntity.getAnswerText(), answerOptionEntity.getAnswerId()));
+        }
+        return answerOptions;
     }
 
 }

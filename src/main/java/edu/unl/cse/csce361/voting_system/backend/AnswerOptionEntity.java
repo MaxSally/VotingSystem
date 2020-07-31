@@ -4,9 +4,7 @@ import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class AnswerOptionEntity implements  AnswerOption{
@@ -15,10 +13,10 @@ public class AnswerOptionEntity implements  AnswerOption{
 
     @Id
     @GeneratedValue
-    private Long answerId;
+    private Long id;
 
     @NaturalId
-    private Long personalId;
+    private Long answerId;
 
     @Column
     private String answerText;
@@ -37,7 +35,7 @@ public class AnswerOptionEntity implements  AnswerOption{
         setQuestion(question);
         status = true;
         voterChoices = new ArrayList<>();
-        personalId = idCount;
+        answerId = idCount;
         idCount++;
     }
 
@@ -86,5 +84,9 @@ public class AnswerOptionEntity implements  AnswerOption{
         }else {
             throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
         }
+    }
+
+    public Long getAnswerId() {
+        return answerId;
     }
 }

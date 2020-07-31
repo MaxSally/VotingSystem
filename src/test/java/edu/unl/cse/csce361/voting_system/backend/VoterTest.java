@@ -4,6 +4,7 @@ import edu.unl.cse.csce361.voting_system.backend.Backend;
 import edu.unl.cse.csce361.voting_system.backend.DatabasePopulator;
 import edu.unl.cse.csce361.voting_system.backend.HibernateUtil;
 import edu.unl.cse.csce361.voting_system.backend.Voter;
+import javafx.util.Pair;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
@@ -85,11 +86,11 @@ public class VoterTest {
         String expectedQuestion3 = "Who is the next Sheriff?";
         int expectedSize = 6;
         
-        List<QuestionEntity> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
+        List<String> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
         assertTrue(questions.size() == expectedSize);
-        assertEquals(expectedQuestion1, questions.get(0).getQuestionText());
-        assertEquals(expectedQuestion2, questions.get(1).getQuestionText());
-        assertEquals(expectedQuestion3, questions.get(2).getQuestionText());
+        assertEquals(expectedQuestion1, questions.get(0));
+        assertEquals(expectedQuestion2, questions.get(1));
+        assertEquals(expectedQuestion3, questions.get(2));
     }
 
     @Test
@@ -98,10 +99,9 @@ public class VoterTest {
         String expectedAnswer1 = "Pat Mann";
         String expectedAnswer2 = "Dawn Keykong";
         int expectedSize = 2;
-
-        List<AnswerOptionEntity> answers = Backend.getInstance().getAllAnswersByQuestion(questionName);
+        List<Pair<String, Long>> answers = Backend.getInstance().getAllAnswersByQuestion(questionName);
         assertTrue(answers.size() == expectedSize);
-        assertEquals(expectedAnswer1, answers.get(0).getAnswerText());
-        assertEquals(expectedAnswer2, answers.get(1).getAnswerText());
+        assertEquals(expectedAnswer1, answers.get(0).getKey());
+        assertEquals(expectedAnswer2, answers.get(1).getKey());
     }
 }
