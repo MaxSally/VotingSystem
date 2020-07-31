@@ -18,7 +18,7 @@ import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.util.List;
 
-public class ConfirmController {
+public class ConfirmController extends ScreenController{
     @FXML private Pane paneQuestions;
     @FXML private Button btnCancel;
     @FXML private Button btnSubmitVote;
@@ -31,29 +31,17 @@ public class ConfirmController {
 
     public void goBack(javafx.event.ActionEvent event) throws IOException{
         //all we should have to do here is navigate them back to the voting screen.
-        navigate(event, "voting_screen.fxml");
+        switchScreen(event, "voting_screen.fxml");
     }
 
     public void cancel(javafx.event.ActionEvent event) throws IOException{
         //logout method
         //logout();
-        navigate(event, "login.fxml");
+        switchScreen(event, "login.fxml");
     }
     public void submitVotes(javafx.event.ActionEvent event) throws IOException{
         //cycle through each answer and submit vote with *submitVote()? method
-        navigate(event, "thank_you.fxml");
-    }
-    
-    public void navigate(javafx.event.ActionEvent event, String screen) throws IOException{
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(screen));
-        Parent parent = loader.load();
-
-        Scene scene = new Scene(parent);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-        window.setScene(scene);
-        window.show();
+        switchScreen(event, "thank_you.fxml");
     }
 
 
