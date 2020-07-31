@@ -79,4 +79,9 @@ public class ElectionEntity implements Election{
             throw new IllegalArgumentException("Expected question, got " + question.getClass().getSimpleName());
         }
     }
+
+    @Override
+    public String getName(){
+        return name;
+    }
 }

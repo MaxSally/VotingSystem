@@ -79,8 +79,24 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public boolean vote() {
-        return false;
+    public boolean vote(Long answerOptionIndex) {
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            VoterChoiceEntity newVote = new VoterChoiceEntity(name, answerOptionIndex);
+            session.saveOrUpdate(newVote);
+            session.getTransaction().commit();
+            return true;
+        }catch (HibernateException exception){
+            System.err.println("Encounter exception while accessing db. " + exception);
+            session.getTransaction().rollback();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean hasVoted() {
+        return hasVoted;
     }
 
     @Override
@@ -104,5 +120,10 @@ public class VoterEntity implements Voter {
         } else {
             return true;
         }
+    }
+
+    @Override
+    public void setVoterStatus(boolean status) {
+        hasVoted = status;
     }
 }

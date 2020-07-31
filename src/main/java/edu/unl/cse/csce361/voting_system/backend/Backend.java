@@ -72,4 +72,24 @@ public class Backend {
         return answerOptions;
     }
 
+    public boolean submitVote(Voter voter, Long answerOptionIndex){
+        return voter.vote(answerOptionIndex);
+    }
+
+    public boolean getVoterStatus(Voter voter){
+        return voter.hasVoted();
+    }
+
+    public void setVoterStatus(Voter voter, boolean status){
+        voter.setVoterStatus(status);
+    }
+
+    public Election getElectionByName(String electionName){
+        return ElectionEntity.getElectionByName(electionName);
+    }
+
+    public Voter getVoterBySSN(String SSN){
+        return VoterEntity.getVoterBySSN(SSN);
+    }
+
 }

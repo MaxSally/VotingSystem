@@ -5,7 +5,11 @@ public interface Voter {
 
     boolean logIn(String name, String ssn);
 
-    boolean vote();
+    boolean vote(Long answerOptionIndex);
 
     String getPastVotingDescription();
+
+    boolean hasVoted();
+
+    void setVoterStatus(boolean status);
 }

@@ -139,3 +139,5 @@ nb-configuration.xml
 xcuserdata/
 .build/
 
+
+src/test/resources/hibernate.cfg.xml
