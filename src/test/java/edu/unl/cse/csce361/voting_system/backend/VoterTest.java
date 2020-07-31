@@ -98,10 +98,23 @@ public class VoterTest {
         String questionName = "Who is the next mayor?";
         String expectedAnswer1 = "Pat Mann";
         String expectedAnswer2 = "Dawn Keykong";
+        String electionName = "Nov2020";
         int expectedSize = 2;
-        List<Pair<String, Long>> answers = Backend.getInstance().getAllAnswersByQuestion(questionName);
+
+        List<AnswerOptionEntity> answers = Backend.getInstance().getAllAnswersByQuestion(questionName, electionName);
         assertTrue(answers.size() == expectedSize);
         assertEquals(expectedAnswer1, answers.get(0).getKey());
         assertEquals(expectedAnswer2, answers.get(1).getKey());
+    }
+
+    @Test
+    public void testGetAnswerIndex() {
+        String questionText = "Shall there be a 25¢ tax on cherries?";
+        String answerText = "Yes";
+        Long expectedID = 5L;
+
+        Long actualID = AnswerOptionEntity.getAnswerOptionIndexByName(questionText, answerText);
+        System.out.println(actualID);
+        assertTrue(expectedID == actualID);
     }
 }

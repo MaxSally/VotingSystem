@@ -1,5 +1,7 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -11,6 +13,25 @@ public class AnswerOptionEntity implements  AnswerOption{
 
     private static Long idCount = 0L;
 
+    static Long getAnswerOptionIndexByName(String questionText, String answerText) {
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        Long answerIndex = null;
+        try {
+            List<AnswerOptionEntity> answers = session.createQuery("From AnswerOptionEntity where answerText = '" + answerText + "'",
+                    AnswerOptionEntity.class).list();
+            session.getTransaction().commit();
+            for(AnswerOptionEntity answerOptionEntity : answers) {
+                if(answerOptionEntity.getQuestion().getQuestionText().equals(questionText)) {
+                    answerIndex = answerOptionEntity.getPersonalID();
+                }
+            }
+        } catch (HibernateException exception) {
+            System.err.println("Could not load answerText " + answerText + ". " + exception.getMessage());
+        }
+        return answerIndex;
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -21,7 +42,7 @@ public class AnswerOptionEntity implements  AnswerOption{
     @Column
     private String answerText;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private QuestionEntity question;
 
     @OneToMany(mappedBy = "answerOption", cascade = CascadeType.ALL)
@@ -49,6 +70,14 @@ public class AnswerOptionEntity implements  AnswerOption{
     @Override
     public String getAnswerText() {
         return answerText;
+    }
+
+    public Long getPersonalID() {
+        return personalId;
+    }
+
+    public QuestionEntity getQuestion() {
+        return question;
     }
     
     private void setQuestion(String question){

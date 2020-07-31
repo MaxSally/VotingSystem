@@ -61,8 +61,8 @@ public class ElectionEntity implements Election{
     }
 
     @Override
-    public String getDescription() {
-        return null;
+    public String getElectionName() {
+        return name;
     }
 
     @Override
