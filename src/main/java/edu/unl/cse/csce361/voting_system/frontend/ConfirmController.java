@@ -1,4 +1,4 @@
-package edu.unl.cse.csce361.gui_starter;
+package edu.unl.cse.csce361.voting_system.frontend;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,14 +18,20 @@ import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.util.List;
 
-public class VoteController {
+public class ConfirmController {
     @FXML private Pane paneQuestions;
     @FXML private Button btnCancel;
     @FXML private Button btnSubmitVote;
+    @FXML private Button btnGoBack;
 
     @FXML
     private void initialize(){
-        //foreach question we'll dynamically add a text element and a dropdown (or radio buttons. dropdown might be easier) to the paneQuestions element (it scrolls)
+        //we'll dynamically add each question with answers the paneQuestions element (it scrolls)
+    }
+
+    public void goBack(javafx.event.ActionEvent event) throws IOException{
+        //all we should have to do here is navigate them back to the voting screen.
+        navigate(event, "voting_screen.fxml");
     }
 
     public void cancel(javafx.event.ActionEvent event) throws IOException{
@@ -34,8 +40,8 @@ public class VoteController {
         navigate(event, "login.fxml");
     }
     public void submitVotes(javafx.event.ActionEvent event) throws IOException{
-        //cycle through each answer and save each vote into a list (we might want to do this when they change the vote answer, just in case the session messes up.)
-        navigate(event, "confirm_screen.fxml");
+        //cycle through each answer and submit vote with *submitVote()? method
+        navigate(event, "thank_you.fxml");
     }
     
     public void navigate(javafx.event.ActionEvent event, String screen) throws IOException{
