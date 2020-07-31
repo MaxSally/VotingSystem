@@ -16,10 +16,10 @@ public class DatabasePopulator {
     public static Set<Voter> createVoters() {
         System.out.println("Creating Voter.....");
         return Set.of(
-            new VoterEntity("A", "123456789"),
-            new VoterEntity("B","123879456"),
-            new VoterEntity("C", "83948032O"),
-            new VoterEntity("D", "273832943"),
+                new VoterEntity("A", "123456789"),
+                new VoterEntity("B", "123879456"),
+                new VoterEntity("C", "83948032O"),
+                new VoterEntity("D", "273832943"),
                 new VoterEntity("E", "987678987"),
                 new VoterEntity("F", "353812739")
         );
@@ -29,11 +29,11 @@ public class DatabasePopulator {
         System.out.println("Creating Admin.....");
         return Set.of(
                 new AdminEntity("superuser 999", "this is my password"),
-                new AdminEntity("superrobot 800","password101")
+                new AdminEntity("superrobot 800", "password101")
         );
     }
 
-    public static Set<Election> createElection(){
+    public static Set<Election> createElection() {
         System.out.println("Creating election .... Hooray");
         return Set.of(
                 new ElectionEntity("Nov2020", LocalDate.of(2020, 7, 9), LocalDate.of(2020, 11, 9), false),
@@ -45,17 +45,17 @@ public class DatabasePopulator {
         System.out.println("Creating Question.....");
         return List.of(
                 new QuestionEntity("Who is the next mayor?", "Nov2020"),
-                new QuestionEntity("Who is the next city council?","Nov2020"),
-                new QuestionEntity("Who is the next Sheriff?","Nov2020"),
-                new QuestionEntity("Shall there be a 25¢ tax on cherries?","Nov2020"),
-                new QuestionEntity("Shall liquor licenses be required for electronic bars?","Nov2020"),
+                new QuestionEntity("Who is the next city council?", "Nov2020"),
+                new QuestionEntity("Who is the next Sheriff?", "Nov2020"),
+                new QuestionEntity("Shall there be a 25¢ tax on cherries?", "Nov2020"),
+                new QuestionEntity("Shall liquor licenses be required for electronic bars?", "Nov2020"),
                 new QuestionEntity("Shall electronic race tracks be held liable for electronic car crashes?",
                         "Nov2020"),
-                new QuestionEntity("How are you doing?","Nov2021")
+                new QuestionEntity("How are you doing?", "Nov2021")
         );
     }
 
-    public static List<AnswerOption> createAnswerOption(){
+    public static List<AnswerOption> createAnswerOption() {
         System.out.println("Create answer options ......");
         return List.of(
                 new AnswerOptionEntity("Who is the next mayor?", "Pat Mann"),
@@ -75,7 +75,7 @@ public class DatabasePopulator {
         );
     }
 
-    public static Set<VoterChoice> createVoterChoice(){
+    public static Set<VoterChoice> createVoterChoice() {
         System.out.println("Create voter choice/selection..........");
         return Set.of(
                 new VoterChoiceEntity("123456789", 1L),
@@ -87,9 +87,9 @@ public class DatabasePopulator {
         );
     }
 
-    public static void setVoterStatus(){
+    public static void setVoterStatus() {
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             Voter voter = VoterEntity.getVoterBySSN("123456789");
             voter.setVoterStatus(true);
             session.beginTransaction();
@@ -100,7 +100,7 @@ public class DatabasePopulator {
             session.beginTransaction();
             session.saveOrUpdate(voter);
             session.getTransaction().commit();
-        }catch (HibernateException exception){
+        } catch (HibernateException exception) {
             System.err.println("Encounter hibernate exception while setting voter status in db populator :v:" + exception);
             session.getTransaction().rollback();
         }
@@ -108,11 +108,11 @@ public class DatabasePopulator {
 
     public static void depopulateTables(Session session) {
         System.out.println("Emptying tables...");
-        session.createQuery("delete from VoterEntity").executeUpdate();
-        session.createQuery("delete from ElectionEntity").executeUpdate();
-        session.createQuery("delete from QuestionEntity").executeUpdate();
+        session.createQuery("delete from VoterChoiceEntity").executeUpdate();
         session.createQuery("delete from AnswerOptionEntity").executeUpdate();
-        session.createQuery("delete from VoterChoiceEntity").executeUpdate();;
+        session.createQuery("delete from QuestionEntity").executeUpdate();
+        session.createQuery("delete from ElectionEntity").executeUpdate();
+        session.createQuery("delete from VoterEntity").executeUpdate();
     }
 
     public static void main(String[] args) {

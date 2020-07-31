@@ -83,7 +83,7 @@ public class VoterEntity implements Voter {
         Session session = HibernateUtil.getSession();
         try{
             session.beginTransaction();
-            VoterChoiceEntity newVote = new VoterChoiceEntity(name, answerOptionIndex);
+            VoterChoiceEntity newVote = new VoterChoiceEntity(SSN, answerOptionIndex);
             session.saveOrUpdate(newVote);
             session.getTransaction().commit();
             return true;
