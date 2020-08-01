@@ -2,6 +2,7 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class ElectionEntity implements Election{
 
     @NaturalId
     @Column(length = MAXIMUM_NAME_LENGTH)
+    @ManyToOne(fetch = FetchType.LAZY)
     private String name;
 
     @Column

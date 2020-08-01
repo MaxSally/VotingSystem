@@ -14,7 +14,9 @@ public interface Voter {
 
     Map<String, String> getPastVotingDescription(String electionName);
 
-    boolean hasVoted();
+    boolean hasVoted(String electionName);
 
     void setVoterStatus(boolean status);
+
+    void addVotedElection(String electionName);
 }

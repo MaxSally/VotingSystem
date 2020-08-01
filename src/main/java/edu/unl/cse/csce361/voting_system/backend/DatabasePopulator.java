@@ -91,12 +91,12 @@ public class DatabasePopulator {
         Session session = HibernateUtil.getSession();
         try {
             Voter voter = VoterEntity.getVoterBySSN("123456789");
-            voter.setVoterStatus(true);
+            voter.addVotedElection("Nov2020");
             session.beginTransaction();
             session.saveOrUpdate(voter);
             session.getTransaction().commit();
             voter = VoterEntity.getVoterBySSN("123879456");
-            voter.setVoterStatus(true);
+            voter.addVotedElection("Nov2020");
             session.beginTransaction();
             session.saveOrUpdate(voter);
             session.getTransaction().commit();

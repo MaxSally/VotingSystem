@@ -40,6 +40,9 @@ public class VoterEntity implements Voter {
     @OneToMany(mappedBy = "voter", cascade = CascadeType.ALL)
     List<VoterChoiceEntity> voterChoices;
 
+    @OneToMany(mappedBy = "name", cascade = CascadeType.ALL)
+    Set<ElectionEntity> electionVotedIn;
+
     public VoterEntity() {
         super();
     }
@@ -52,6 +55,7 @@ public class VoterEntity implements Voter {
         }
         this.name = name;
         voterChoices = new ArrayList<>();
+        electionVotedIn = new HashSet<>();
         hasVoted = false;
     }
 
@@ -95,8 +99,8 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public boolean hasVoted() {
-        return hasVoted;
+    public boolean hasVoted(String electionName) {
+        return electionVotedIn.contains(ElectionEntity.getElectionByName(electionName));
     }
 
     @Override
@@ -150,5 +154,10 @@ public class VoterEntity implements Voter {
             System.err.println("Encounter hibernate exception while setting voter status: " + exception);
             session.getTransaction().rollback();
         }
+    }
+
+    @Override
+    public void addVotedElection(String electionName) {
+        electionVotedIn.add(ElectionEntity.getElectionByName(electionName));
     }
 }
