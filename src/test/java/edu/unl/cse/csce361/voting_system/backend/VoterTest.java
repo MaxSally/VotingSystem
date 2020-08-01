@@ -130,4 +130,20 @@ public class VoterTest {
             System.out.println("key: " + entry.getKey() + "\n value: " + entry.getValue());
         }
     }
+
+    @Test
+    public void testGetAllVoterStatus() {
+        String electionName = "Nov2020";
+        String voter1Name = "A";
+        String voter2Name = "B";
+        String voter3Name = "C";
+        AdminEntity adminEntity = new AdminEntity();
+        Map<String, String> result = adminEntity.getAllVoterStatus(electionName);
+        assertTrue(result.containsKey(voter1Name));
+        assertTrue(result.containsKey(voter2Name));
+        assertTrue(result.containsKey(voter3Name));
+        for(Map.Entry<String, String> entry : result.entrySet()) {
+            System.out.println("key: " + entry.getKey() + "\n value: " + entry.getValue());
+        }
+    }
 }
