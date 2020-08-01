@@ -82,7 +82,7 @@ public class DatabasePopulator {
                 new VoterChoiceEntity("123456789", 4L),
                 new VoterChoiceEntity("123456789", 5L),
                 new VoterChoiceEntity("123456789", 7L),
-                new VoterChoiceEntity("123456789", 8L),
+                new VoterChoiceEntity("123879456", 8L),
                 new VoterChoiceEntity("123879456", 0L)
         );
     }

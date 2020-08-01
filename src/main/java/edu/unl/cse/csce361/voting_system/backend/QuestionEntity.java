@@ -103,6 +103,4 @@ public class QuestionEntity implements Question {
             throw new IllegalArgumentException("Expected AnswerOption, got " + answerOption.getClass().getSimpleName());
         }
     }
-
-
 }

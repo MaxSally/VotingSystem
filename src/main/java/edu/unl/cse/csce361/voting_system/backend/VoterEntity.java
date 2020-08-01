@@ -100,8 +100,24 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public String getPastVotingDescription() {
-        return "";
+    public Map<String, String> getPastVotingDescription(String electionName) {
+        Set<QuestionEntity> questions = new HashSet<>();
+        questions.addAll(ElectionEntity.getElectionByName(electionName).getAssociatedQuestions());
+
+        Map<String, String> voterSelections = new HashMap<>();
+        for(VoterChoiceEntity voterChoiceEntity : voterChoices) {
+            if(questions.contains(voterChoiceEntity.getAnswerOption().getQuestion())) {
+                voterSelections.put(voterChoiceEntity.getAnswerOption().getQuestion().getQuestionText(), voterChoiceEntity.getAnswerOption().getAnswerText());
+            }
+        }
+
+        for(QuestionEntity questionEntity : questions) {
+            if(!voterSelections.containsKey(questionEntity.getQuestionText())) {
+                voterSelections.put(questionEntity.getQuestionText(), AnswerOptionEntity.NO_VOTE);
+            }
+        }
+
+        return voterSelections;
     }
 
     public void addVoter(VoterChoice voterChoice){

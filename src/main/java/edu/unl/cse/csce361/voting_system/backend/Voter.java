@@ -1,5 +1,10 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import javafx.util.Pair;
+
+import java.util.List;
+import java.util.Map;
+
 public interface Voter {
     String getName();
 
@@ -7,7 +12,7 @@ public interface Voter {
 
     boolean vote(Long answerOptionIndex);
 
-    String getPastVotingDescription();
+    Map<String, String> getPastVotingDescription(String electionName);
 
     boolean hasVoted();
 

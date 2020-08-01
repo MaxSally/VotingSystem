@@ -81,4 +81,8 @@ public class VoterChoiceEntity implements VoterChoice {
     public void setAnswerOption(AnswerOptionEntity answerOption){
         this.answerOption = answerOption;
     }
+
+    public AnswerOptionEntity getAnswerOption() {
+        return answerOption;
+    }
 }
