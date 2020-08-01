@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -22,24 +23,24 @@ public class VoterTest {
     @Before
     public void setUp() {
         backend = Backend.getInstance();
-//        Session session = HibernateUtil.getSession();
-//        session.beginTransaction();
-//        DatabasePopulator.depopulateTables(session);
-//        DatabasePopulator.createVoters().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createAdmin().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createElection().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createQuestion().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createAnswerOption().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createVoterChoice().forEach(session::saveOrUpdate);
-//        session.getTransaction().commit();
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        DatabasePopulator.depopulateTables(session);
+        DatabasePopulator.createVoters().forEach(session::saveOrUpdate);
+        DatabasePopulator.createAdmin().forEach(session::saveOrUpdate);
+        DatabasePopulator.createElection().forEach(session::saveOrUpdate);
+        DatabasePopulator.createQuestion().forEach(session::saveOrUpdate);
+        DatabasePopulator.createAnswerOption().forEach(session::saveOrUpdate);
+        DatabasePopulator.createVoterChoice().forEach(session::saveOrUpdate);
+        session.getTransaction().commit();
     }
 
     @After
     public void tearDown() {
-//        Session session = HibernateUtil.getSession();
-//        session.beginTransaction();
-//        DatabasePopulator.depopulateTables(session);
-//        session.getTransaction().commit();
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        DatabasePopulator.depopulateTables(session);
+        session.getTransaction().commit();
     }
 
     @Test
@@ -115,5 +116,18 @@ public class VoterTest {
         Long actualID = AnswerOptionEntity.getAnswerOptionIndexByName(questionText, answerText);
         System.out.println(actualID);
         assertTrue(expectedID == actualID);
+    }
+
+    @Test
+    public void testGetVoterSelection() {
+        String voterSSN = "123879456";
+        Voter voter = VoterEntity.getVoterBySSN(voterSSN);
+        String electionName = "Nov2020";
+        String question = "Who is the next mayor?";
+        Map<String, String> result = Backend.getInstance().getPastVotingDescription(voter, electionName);
+        assertTrue(result.containsKey(question));
+        for(Map.Entry<String, String> entry : result.entrySet()) {
+            System.out.println("key: " + entry.getKey() + "\n value: " + entry.getValue());
+        }
     }
 }

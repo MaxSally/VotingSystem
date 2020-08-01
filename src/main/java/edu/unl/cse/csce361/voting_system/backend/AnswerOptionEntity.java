@@ -12,6 +12,7 @@ import java.util.List;
 public class AnswerOptionEntity implements  AnswerOption{
 
     private static Long idCount = 0L;
+    public static String NO_VOTE = "no vote";
 
     static Long getAnswerOptionIndexByName(String questionText, String answerText) {
         Session session = HibernateUtil.getSession();
