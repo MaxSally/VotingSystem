@@ -1,10 +1,16 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.Boolean.TRUE;
 
@@ -57,5 +63,22 @@ public class AdminEntity implements  Admin{
     @Override
     public boolean updateQuestion(Question question, String newQuestionText) {
         return false;
+    }
+
+    public Map<String, String> getAllVoterStatus(String electionName){
+        Session session = HibernateUtil.getSession();
+        Map<String, String> voterStatus = new HashMap<>();
+        List<VoterEntity> voters = new ArrayList<>();
+        try {
+            session.beginTransaction();
+            voters = session.createQuery("SELECT voter From VoterEntity voter", VoterEntity.class).getResultList();
+            session.getTransaction().commit();
+            for(VoterEntity voterEntity : voters) {
+                voterStatus.put(voterEntity.getName(), (voterEntity.hasVoted(electionName)?"yes" : "no"));
+            }
+        } catch (HibernateException exception) {
+            System.err.println("Could not load all Voters " + exception.getMessage());
+        }
+        return voterStatus;
     }
 }

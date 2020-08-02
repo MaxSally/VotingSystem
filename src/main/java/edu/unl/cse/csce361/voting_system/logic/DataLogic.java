@@ -28,7 +28,7 @@ public class DataLogic {
     }
 
     public boolean submitVote(List<Pair<String, String>> voterSelections){
-        if(currentVoter.hasVoted()){
+        if(currentVoter.hasVoted(currentElection.getElectionName())){
             System.err.println("Voter has voted");
             return false;
         }
@@ -61,7 +61,7 @@ public class DataLogic {
             }
         }
 
-        Backend.getInstance().setVoterStatus(currentVoter, true);
+        Backend.getInstance().addVotedElection(currentVoter, currentElection.getElectionName());
         return true;
     }
 

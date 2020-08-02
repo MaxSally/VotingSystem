@@ -91,12 +91,12 @@ public class DatabasePopulator {
         Session session = HibernateUtil.getSession();
         try {
             Voter voter = VoterEntity.getVoterBySSN("123456789");
-            voter.setVoterStatus(true);
+            voter.addVotedElection("Nov2020");
             session.beginTransaction();
             session.saveOrUpdate(voter);
             session.getTransaction().commit();
             voter = VoterEntity.getVoterBySSN("123879456");
-            voter.setVoterStatus(true);
+            voter.addVotedElection("Nov2020");
             session.beginTransaction();
             session.saveOrUpdate(voter);
             session.getTransaction().commit();
@@ -127,10 +127,20 @@ public class DatabasePopulator {
             System.out.println("Starting Hibernate transaction to populate tables");
             session.beginTransaction();
             createVoters().forEach(session::saveOrUpdate);
+            session.getTransaction().commit();
+            session.beginTransaction();
             createAdmin().forEach(session::saveOrUpdate);
+            session.getTransaction().commit();
+            session.beginTransaction();
             createElection().forEach(session::saveOrUpdate);
+            session.getTransaction().commit();
+            session.beginTransaction();
             createQuestion().forEach(session::saveOrUpdate);
+            session.getTransaction().commit();
+            session.beginTransaction();
             createAnswerOption().forEach(session::saveOrUpdate);
+            session.getTransaction().commit();
+            session.beginTransaction();
             createVoterChoice().forEach(session::saveOrUpdate);
             session.getTransaction().commit();
             setVoterStatus();

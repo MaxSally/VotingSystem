@@ -9,4 +9,6 @@ public interface Election {
     String getName();
 
     List<QuestionEntity> getAssociatedQuestions();
+
+    void addVoter(VoterEntity voter);
 }

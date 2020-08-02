@@ -27,6 +27,7 @@ public class VoterEntity implements Voter {
 
     @Id
     @GeneratedValue
+    @Column(name = "ID")
     private Long voterId;
 
     @NaturalId
@@ -38,7 +39,12 @@ public class VoterEntity implements Voter {
     private boolean hasVoted;
 
     @OneToMany(mappedBy = "voter", cascade = CascadeType.ALL)
-    List<VoterChoiceEntity> voterChoices;
+    private List<VoterChoiceEntity> voterChoices;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="electionVotedIn", joinColumns={@JoinColumn(referencedColumnName="ID")}
+            , inverseJoinColumns={@JoinColumn(referencedColumnName="ID")})
+    private Set<ElectionEntity> electionVotedIn;
 
     public VoterEntity() {
         super();
@@ -52,6 +58,7 @@ public class VoterEntity implements Voter {
         }
         this.name = name;
         voterChoices = new ArrayList<>();
+        electionVotedIn = new HashSet<>();
         hasVoted = false;
     }
 
@@ -95,8 +102,8 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public boolean hasVoted() {
-        return hasVoted;
+    public boolean hasVoted(String electionName) {
+        return electionVotedIn.contains(ElectionEntity.getElectionByName(electionName));
     }
 
     @Override
@@ -139,8 +146,8 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public void setVoterStatus(boolean status) {
-        hasVoted = status;
+    public void setVoterStatus(String electionName) {
+        electionVotedIn.add(ElectionEntity.getElectionByName(electionName));
         Session session = HibernateUtil.getSession();
         try{
             session.beginTransaction();
@@ -148,6 +155,21 @@ public class VoterEntity implements Voter {
             session.getTransaction().commit();
         } catch (HibernateException exception){
             System.err.println("Encounter hibernate exception while setting voter status: " + exception);
+            session.getTransaction().rollback();
+        }
+        ElectionEntity.getElectionByName(electionName).addVoter(this);
+    }
+
+    @Override
+    public void addVotedElection(String electionName) {
+        electionVotedIn.add(ElectionEntity.getElectionByName(electionName));
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            session.saveOrUpdate(this);
+            session.getTransaction().commit();
+        } catch (HibernateException exception){
+            System.err.println("Encounter hibernate exception while adding election to list of voted election: " + exception);
             session.getTransaction().rollback();
         }
     }

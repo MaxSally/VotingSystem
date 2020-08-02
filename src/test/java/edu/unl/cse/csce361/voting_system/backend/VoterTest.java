@@ -130,4 +130,31 @@ public class VoterTest {
             System.out.println("key: " + entry.getKey() + "\n value: " + entry.getValue());
         }
     }
+
+    @Test
+    public void testGetAllVoterStatus() {
+        String electionName = "Nov2020";
+        String voter1Name = "A";
+        String voter2Name = "B";
+        String voter3Name = "C";
+        Admin adminEntity = new AdminEntity();
+        Map<String, String> result = adminEntity.getAllVoterStatus(electionName);
+        assertTrue(result.containsKey(voter1Name));
+        assertTrue(result.containsKey(voter2Name));
+        assertTrue(result.containsKey(voter3Name));
+        for(Map.Entry<String, String> entry : result.entrySet()) {
+            System.out.println("key: " + entry.getKey() + "\n value: " + entry.getValue());
+        }
+    }
+
+    // No assert since this prints out a list :v
+    @Test
+    public void testGetVotedVoterInElection(){
+        String electionName = "Nov2020";
+        ElectionEntity election = ElectionEntity.getElectionByName(electionName);
+        Set<VoterEntity> voters = election.getVoters();
+        for(VoterEntity voter: voters){
+            System.out.println(voter.getName());
+        }
+    }
 }

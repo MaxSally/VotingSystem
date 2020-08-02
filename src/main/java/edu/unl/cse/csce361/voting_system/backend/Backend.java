@@ -77,12 +77,12 @@ public class Backend {
         return voter.vote(answerOptionIndex);
     }
 
-    public boolean getVoterStatus(Voter voter){
-        return voter.hasVoted();
+    public boolean getVoterStatus(Voter voter, String electionName){
+        return voter.hasVoted(electionName);
     }
 
-    public void setVoterStatus(Voter voter, boolean status){
-        voter.setVoterStatus(status);
+    public void setVoterStatus(Voter voter, String electionName){
+        voter.setVoterStatus(electionName);
     }
 
     public Election getElectionByName(String electionName){
@@ -97,4 +97,7 @@ public class Backend {
         return voter.getPastVotingDescription(electionName);
     }
 
+    public void addVotedElection(Voter voter, String electionName) {
+        voter.addVotedElection(electionName);
+    }
 }
