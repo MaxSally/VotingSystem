@@ -6,25 +6,25 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="14.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Previous Voting Info">
+      <Text layoutX="14.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Previous Voting Info">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <TextArea fx:id="txtVoteInfo" layoutX="14.0" layoutY="94.0" prefHeight="292.0" prefWidth="313.0" />
-      <Button fx:id="btnCancel" layoutX="483.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
+      <TextArea fx:id="txtVoteInfo" layoutX="14.0" layoutY="154.0" prefHeight="292.0" prefWidth="313.0" />
+      <Button fx:id="btnCancel" layoutX="313.0" layoutY="23.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="69.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
          <font>
-            <Font size="24.0" />
+            <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnProceedToVote" layoutX="348.0" layoutY="335.0" mnemonicParsing="false" style="-fx-background-color: #1971ff;" text="Proceed to Voting" textFill="WHITE">
+      <Button fx:id="btnProceedToVote" layoutX="82.0" layoutY="516.0" mnemonicParsing="false" style="-fx-background-color: #1971ff;" text="Proceed to Voting" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
-      <Text fx:id="txtUsername" layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User's Name">
+      <Text fx:id="txtUsername" layoutX="14.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User's Name">
          <font>
             <Font size="24.0" />
          </font>
