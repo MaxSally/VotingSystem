@@ -1,6 +1,7 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Admin {
     boolean logIn(String username, String password);
@@ -14,4 +15,6 @@ public interface Admin {
     boolean removeAnswerOption(Question question, AnswerOption answerOption);
 
     boolean updateQuestion(Question question, String newQuestionText);
+
+    Map<String, String> getAllVoterStatus(String electionName);
 }

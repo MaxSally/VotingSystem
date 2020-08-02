@@ -71,7 +71,7 @@ public class AdminEntity implements  Admin{
         List<VoterEntity> voters = new ArrayList<>();
         try {
             session.beginTransaction();
-            voters = session.createNativeQuery("Select * From VoterEntity;").getResultList();
+            voters = session.createQuery("SELECT voter From VoterEntity voter", VoterEntity.class).getResultList();
             session.getTransaction().commit();
             for(VoterEntity voterEntity : voters) {
                 voterStatus.put(voterEntity.getName(), (voterEntity.hasVoted(electionName)?"yes" : "no"));
