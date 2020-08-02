@@ -16,7 +16,5 @@ public interface Voter {
 
     boolean hasVoted(String electionName);
 
-    void setVoterStatus(String electionName);
-
     void addVotedElection(String electionName);
 }
