@@ -35,8 +35,6 @@ public class VoterEntity implements Voter {
     private String SSN;
     @Column
     private String name;
-    @Column
-    private boolean hasVoted;
 
     @OneToMany(mappedBy = "voter", cascade = CascadeType.ALL)
     private List<VoterChoiceEntity> voterChoices;
@@ -59,7 +57,6 @@ public class VoterEntity implements Voter {
         this.name = name;
         voterChoices = new ArrayList<>();
         electionVotedIn = new HashSet<>();
-        hasVoted = false;
     }
 
     @Override
@@ -146,21 +143,6 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public void setVoterStatus(String electionName) {
-        electionVotedIn.add(ElectionEntity.getElectionByName(electionName));
-        Session session = HibernateUtil.getSession();
-        try{
-            session.beginTransaction();
-            session.saveOrUpdate(this);
-            session.getTransaction().commit();
-        } catch (HibernateException exception){
-            System.err.println("Encounter hibernate exception while setting voter status: " + exception);
-            session.getTransaction().rollback();
-        }
-        ElectionEntity.getElectionByName(electionName).addVoter(this);
-    }
-
-    @Override
     public void addVotedElection(String electionName) {
         electionVotedIn.add(ElectionEntity.getElectionByName(electionName));
         Session session = HibernateUtil.getSession();
@@ -172,5 +154,6 @@ public class VoterEntity implements Voter {
             System.err.println("Encounter hibernate exception while adding election to list of voted election: " + exception);
             session.getTransaction().rollback();
         }
+        ElectionEntity.getElectionByName(electionName).addVoter(this);
     }
 }
