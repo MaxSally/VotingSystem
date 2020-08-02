@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.unl.cse.csce361.voting_system.frontend.UserInfoController">
    <children>
       <Text layoutX="14.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Previous Voting Info">
          <font>
@@ -14,12 +14,12 @@
          </font>
       </Text>
       <TextArea fx:id="txtVoteInfo" layoutX="14.0" layoutY="154.0" prefHeight="292.0" prefWidth="313.0" />
-      <Button fx:id="btnCancel" layoutX="313.0" layoutY="23.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="69.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
+      <Button fx:id="btnCancel" layoutX="319.0" layoutY="20.0" mnemonicParsing="false" onAction="#logout" prefHeight="45.0" prefWidth="69.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnProceedToVote" layoutX="82.0" layoutY="516.0" mnemonicParsing="false" style="-fx-background-color: #1971ff;" text="Proceed to Voting" textFill="WHITE">
+      <Button fx:id="btnProceedToVote" layoutX="82.0" layoutY="516.0" mnemonicParsing="false" onAction="#proceed" style="-fx-background-color: #1971ff;" text="Proceed to Voting" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

@@ -31,5 +31,7 @@ public class LoginController extends ScreenController{
 //        else{
 //            txtErrorText.setText("Something is wrong. Please contact an administrator.");
 //        }
+        //just do this for now
+        switchScreen(event, "user_info.fxml");
     }
 }

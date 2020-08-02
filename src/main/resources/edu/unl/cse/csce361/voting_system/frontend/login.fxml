@@ -9,30 +9,30 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.unl.cse.csce361.voting_system.frontend.LoginController">
    <children>
-      <Label layoutX="35.0" layoutY="222.0" text="Name (First and Last)">
+      <Label layoutX="51.0" layoutY="227.0" text="Name (First and Last)">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="35.0" layoutY="319.0" text="Social Security Number">
+      <Label layoutX="50.0" layoutY="324.0" text="Social Security Number">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fx:id="imgLogo" fitHeight="143.0" fitWidth="279.0" layoutX="61.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgLogo" fitHeight="120.0" fitWidth="300.0" layoutX="51.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/pacopolis_voting.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnLogin" layoutX="150.0" layoutY="456.0" mnemonicParsing="false" style="-fx-background-color: #1971ff;" text="Log In" textFill="WHITE">
+      <Button fx:id="btnLogin" layoutX="149.0" layoutY="446.0" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #1971ff;" text="Log In" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
       <Text fx:id="txtErrorText" fill="#d30000" layoutX="3.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <TextField fx:id="txtUsername" layoutX="35.0" layoutY="254.0" prefHeight="27.0" prefWidth="273.0" />
-      <TextField fx:id="txtPassword" layoutX="35.0" layoutY="351.0" prefHeight="27.0" prefWidth="273.0" />
+      <TextField fx:id="txtUsername" layoutX="51.0" layoutY="254.0" prefHeight="27.0" prefWidth="273.0" style="-fx-pref-width: 300;" />
+      <TextField fx:id="txtPassword" layoutX="50.0" layoutY="351.0" prefHeight="27.0" prefWidth="273.0" style="-fx-pref-width: 300;" />
    </children>
 </Pane>

@@ -25,7 +25,7 @@ public class UserInfoController extends ScreenController {
         // txtVoteInfo.setText(voteInfo);
     }
 
-    public void login(javafx.event.ActionEvent event) throws IOException {
+    public void logout(javafx.event.ActionEvent event) throws IOException {
         //logout method
         //logout();
         switchScreen(event, "login.fxml");

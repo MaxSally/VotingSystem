@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.unl.cse.csce361.voting_system.frontend.ConfirmController">
    <children>
-      <Button id="btn_back" fx:id="btnGoBack" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="81.0" style="-fx-background-color: #999999;" text="Back" textFill="WHITE">
+      <Button id="btn_back" fx:id="btnGoBack" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#goBack" prefHeight="36.0" prefWidth="81.0" style="-fx-background-color: #999999;" text="Back" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnConfirmVote" layoutX="72.0" layoutY="547.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="256.0" style="-fx-background-color: #1971ff;" text="Confirm Votes and Finalize" textFill="WHITE">
+      <Button fx:id="btnConfirmVote" layoutX="72.0" layoutY="547.0" mnemonicParsing="false" onAction="#submitVotes" prefHeight="36.0" prefWidth="256.0" style="-fx-background-color: #1971ff;" text="Confirm Votes and Finalize" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -29,7 +29,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button fx:id="btnCancel" layoutX="303.0" layoutY="17.0" mnemonicParsing="false" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
+      <Button fx:id="btnCancel" layoutX="303.0" layoutY="17.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
