@@ -32,11 +32,11 @@ public class ElectionEntity implements Election{
 
     @Id
     @GeneratedValue
+    @Column(name = "ID")
     private Long electionId;
 
     @NaturalId
     @Column(length = MAXIMUM_NAME_LENGTH)
-    @ManyToOne(fetch = FetchType.LAZY)
     private String name;
 
     @Column
@@ -51,12 +51,16 @@ public class ElectionEntity implements Election{
     @OneToMany(mappedBy = "election", cascade = CascadeType.ALL)
     private List<QuestionEntity> questions;
 
+    @ManyToMany(mappedBy = "electionVotedIn", cascade = CascadeType.ALL)
+    private Set<VoterEntity> voters;
+
     public ElectionEntity(String name, LocalDate startTime, LocalDate endTime, boolean status) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.status = status;
         questions = new ArrayList<>();
+        voters = new HashSet<>();
     }
 
     public ElectionEntity() {
@@ -65,6 +69,10 @@ public class ElectionEntity implements Election{
     @Override
     public String getElectionName() {
         return name;
+    }
+
+    public Set<VoterEntity> getVoters() {
+        return voters;
     }
 
     @Override
@@ -85,5 +93,19 @@ public class ElectionEntity implements Election{
     @Override
     public String getName(){
         return name;
+    }
+
+    @Override
+    public void addVoter(VoterEntity voter){
+        voters.add(voter);
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            session.saveOrUpdate(this);
+            session.getTransaction().commit();
+        } catch (HibernateException exception){
+            System.err.println("Encounter hibernate exception while adding voter to election: " + exception);
+            session.getTransaction().rollback();
+        }
     }
 }

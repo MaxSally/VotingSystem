@@ -81,8 +81,8 @@ public class Backend {
         return voter.hasVoted(electionName);
     }
 
-    public void setVoterStatus(Voter voter, boolean status){
-        voter.setVoterStatus(status);
+    public void setVoterStatus(Voter voter, String electionName){
+        voter.setVoterStatus(electionName);
     }
 
     public Election getElectionByName(String electionName){

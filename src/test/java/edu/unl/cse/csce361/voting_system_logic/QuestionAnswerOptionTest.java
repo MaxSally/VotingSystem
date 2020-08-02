@@ -67,7 +67,7 @@ public class QuestionAnswerOptionTest {
         userSelections.add(new Pair<>("Shall liquor licenses be required for electronic bars?", "Yes"));
         userSelections.add(new Pair<>("Shall electronic race tracks be held liable for electronic car crashes?", "No"));
         DataLogic.getInstance().getAllQuestionsAndAnswers();
-        Backend.getInstance().setVoterStatus(DataLogic.getInstance().getCurrentVoter(), false);
+        Backend.getInstance().setVoterStatus(DataLogic.getInstance().getCurrentVoter(), electionName);
         boolean success = DataLogic.getInstance().submitVote(userSelections);
         assertTrue(success);
     }
