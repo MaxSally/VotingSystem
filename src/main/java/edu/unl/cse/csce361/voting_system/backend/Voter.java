@@ -12,7 +12,7 @@ public interface Voter {
 
     boolean vote(Long answerOptionIndex);
 
-    Map<String, String> getPastVotingDescription(String electionName);
+    Map<String, String> getVoterVoteResult(String electionName);
 
     boolean hasVoted(String electionName);
 
