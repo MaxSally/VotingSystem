@@ -1,9 +1,5 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
-import edu.unl.cse.csce361.voting_system.backend.Backend;
-import edu.unl.cse.csce361.voting_system.backend.DatabasePopulator;
-import edu.unl.cse.csce361.voting_system.backend.HibernateUtil;
-import edu.unl.cse.csce361.voting_system.backend.Voter;
 import javafx.util.Pair;
 import org.hibernate.Session;
 import org.junit.After;
@@ -124,7 +120,7 @@ public class VoterTest {
         Voter voter = VoterEntity.getVoterBySSN(voterSSN);
         String electionName = "Nov2020";
         String question = "Who is the next mayor?";
-        Map<String, String> result = Backend.getInstance().getPastVotingDescription(voter, electionName);
+        Map<String, String> result = Backend.getInstance().getVoterVoteResult(voter, electionName);
         assertTrue(result.containsKey(question));
         for(Map.Entry<String, String> entry : result.entrySet()) {
             System.out.println("key: " + entry.getKey() + "\n value: " + entry.getValue());

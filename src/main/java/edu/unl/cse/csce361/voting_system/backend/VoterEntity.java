@@ -104,7 +104,7 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public Map<String, String> getPastVotingDescription(String electionName) {
+    public Map<String, String> getVoterVoteResult(String electionName) {
         Set<QuestionEntity> questions = new HashSet<>();
         questions.addAll(ElectionEntity.getElectionByName(electionName).getAssociatedQuestions());
 

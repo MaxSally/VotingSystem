@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static edu.unl.cse.csce361.voting_system.backend.VoterEntity.REQUIRED_SSN_LENGTH;
 
@@ -89,8 +88,8 @@ public class Backend {
         return VoterEntity.getVoterBySSN(SSN);
     }
 
-    public Map<String, String> getPastVotingDescription(Voter voter, String electionName) {
-        return voter.getPastVotingDescription(electionName);
+    public Map<String, String> getVoterVoteResult(Voter voter, String electionName) {
+        return voter.getVoterVoteResult(electionName);
     }
 
     public void addVotedElection(Voter voter, String electionName) {
