@@ -17,28 +17,33 @@ import static org.junit.Assert.*;
 
 public class QuestionAnswerOptionTest {
     DataLogic dataLogic;
+    List<Long> answerOptionIndex;
 
     @Before
     public void setUp() {
         dataLogic = DataLogic.getInstance();
-//        Session session = HibernateUtil.getSession();
-//        session.beginTransaction();
-//        DatabasePopulator.depopulateTables(session);
-//        DatabasePopulator.createVoters().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createAdmin().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createElection().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createQuestion().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createAnswerOption().forEach(session::saveOrUpdate);
-//        DatabasePopulator.createVoterChoice().forEach(session::saveOrUpdate);
-//        session.getTransaction().commit();
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        DatabasePopulator.depopulateTables(session);
+        DatabasePopulator.createVoters().forEach(session::saveOrUpdate);
+        DatabasePopulator.createAdmin().forEach(session::saveOrUpdate);
+        DatabasePopulator.createElection().forEach(session::saveOrUpdate);
+        DatabasePopulator.createQuestion().forEach(session::saveOrUpdate);
+        DatabasePopulator.createAnswerOption().forEach(session::saveOrUpdate);
+        session.getTransaction().commit();
+        answerOptionIndex = DatabasePopulator.getAnswerOptionIndex();
+        session.beginTransaction();
+        DatabasePopulator.createVoterChoice(answerOptionIndex).forEach(session::saveOrUpdate);
+        session.getTransaction().commit();
+        DatabasePopulator.setVoterStatus();
     }
 
     @After
     public void tearDown() {
-//        Session session = HibernateUtil.getSession();
-//        session.beginTransaction();
-//        DatabasePopulator.depopulateTables(session);
-//        session.getTransaction().commit();
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        DatabasePopulator.depopulateTables(session);
+        session.getTransaction().commit();
     }
 
     @Test
@@ -67,10 +72,7 @@ public class QuestionAnswerOptionTest {
         userSelections.add(new Pair<>("Shall liquor licenses be required for electronic bars?", "Yes"));
         userSelections.add(new Pair<>("Shall electronic race tracks be held liable for electronic car crashes?", "No"));
         DataLogic.getInstance().getAllQuestionsAndAnswers();
-        Backend.getInstance().setVoterStatus(DataLogic.getInstance().getCurrentVoter(), electionName);
         boolean success = DataLogic.getInstance().submitVote(userSelections);
         assertTrue(success);
     }
-
-
 }
