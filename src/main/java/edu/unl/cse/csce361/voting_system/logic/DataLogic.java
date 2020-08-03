@@ -82,8 +82,9 @@ public class DataLogic {
         currentElection = Backend.getInstance().getElectionByName(electionName);
     }
 
-    public boolean checkVoter(String name, String SNN){
-        return Backend.getInstance().logIn(name, SNN);
+    public boolean logIn(String name, String SNN){
+        currentVoter = Backend.getInstance().logIn(name, SNN);
+        return currentVoter != null;
     }
 
     public void setCurrentVoter(String SSN){
