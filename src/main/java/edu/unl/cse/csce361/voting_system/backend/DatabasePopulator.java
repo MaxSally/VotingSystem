@@ -58,21 +58,22 @@ public class DatabasePopulator {
 
     public static List<AnswerOption> createAnswerOption() {
         System.out.println("Create answer options ......");
+        String activeElectionName = "Nov2020";
         return List.of(
-                new AnswerOptionEntity("Who is the next mayor?", "Pat Mann"),
-                new AnswerOptionEntity("Who is the next mayor?", "Dawn Keykong"),
-                new AnswerOptionEntity("Who is the next city council?", "Inky"),
-                new AnswerOptionEntity("Who is the next city council?", "Blinky"),
-                new AnswerOptionEntity("Who is the next Sheriff?", "Q. Burte"),
-                new AnswerOptionEntity("Shall there be a 25¢ tax on cherries?", "Yes"),
-                new AnswerOptionEntity("Shall there be a 25¢ tax on cherries?", "No"),
-                new AnswerOptionEntity("Shall liquor licenses be required for electronic bars?", "Yes"),
-                new AnswerOptionEntity("Shall liquor licenses be required for electronic bars?", "No"),
-                new AnswerOptionEntity("Shall electronic race tracks be held liable for electronic car crashes?", "Yes"),
-                new AnswerOptionEntity("Shall electronic race tracks be held liable for electronic car crashes?", "No"),
-                new AnswerOptionEntity("How are you doing?", "Meh"),
-                new AnswerOptionEntity("How are you doing?", "Bueno"),
-                new AnswerOptionEntity("How are you doing?", "Alright")
+                new AnswerOptionEntity(activeElectionName, "Who is the next mayor?", "Pat Mann"),
+                new AnswerOptionEntity(activeElectionName,"Who is the next mayor?", "Dawn Keykong"),
+                new AnswerOptionEntity(activeElectionName,"Who is the next city council?", "Inky"),
+                new AnswerOptionEntity(activeElectionName,"Who is the next city council?", "Blinky"),
+                new AnswerOptionEntity(activeElectionName,"Who is the next Sheriff?", "Q. Burte"),
+                new AnswerOptionEntity(activeElectionName,"Shall there be a 25¢ tax on cherries?", "Yes"),
+                new AnswerOptionEntity(activeElectionName,"Shall there be a 25¢ tax on cherries?", "No"),
+                new AnswerOptionEntity(activeElectionName,"Shall liquor licenses be required for electronic bars?", "Yes"),
+                new AnswerOptionEntity(activeElectionName,"Shall liquor licenses be required for electronic bars?", "No"),
+                new AnswerOptionEntity(activeElectionName,"Shall electronic race tracks be held liable for electronic car crashes?", "Yes"),
+                new AnswerOptionEntity(activeElectionName,"Shall electronic race tracks be held liable for electronic car crashes?", "No"),
+                new AnswerOptionEntity(activeElectionName,"How are you doing?", "Meh"),
+                new AnswerOptionEntity(activeElectionName,"How are you doing?", "Bueno"),
+                new AnswerOptionEntity(activeElectionName,"How are you doing?", "Alright")
         );
     }
 
@@ -151,8 +152,11 @@ public class DatabasePopulator {
             session.beginTransaction();
             createQuestion().forEach(session::saveOrUpdate);
             session.getTransaction().commit();
+            List<AnswerOption> answerOptions = createAnswerOption();
             session.beginTransaction();
-            createAnswerOption().forEach(session::saveOrUpdate);
+            for(AnswerOption answerOption: answerOptions){
+                session.saveOrUpdate(answerOption);
+            }
             session.getTransaction().commit();
             List<Long> answerOptionIndex = getAnswerOptionIndex();
             session.beginTransaction();

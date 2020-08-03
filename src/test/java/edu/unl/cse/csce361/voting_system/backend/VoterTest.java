@@ -34,7 +34,12 @@ public class VoterTest {
         DatabasePopulator.createAdmin().forEach(session::saveOrUpdate);
         DatabasePopulator.createElection().forEach(session::saveOrUpdate);
         DatabasePopulator.createQuestion().forEach(session::saveOrUpdate);
-        DatabasePopulator.createAnswerOption().forEach(session::saveOrUpdate);
+        session.getTransaction().commit();
+        List<AnswerOption> answerOptions = DatabasePopulator.createAnswerOption();
+        session.beginTransaction();
+        for(AnswerOption answerOption: answerOptions){
+            session.saveOrUpdate(answerOption);
+        }
         session.getTransaction().commit();
         answerOptionIndex = DatabasePopulator.getAnswerOptionIndex();
         session.beginTransaction();
