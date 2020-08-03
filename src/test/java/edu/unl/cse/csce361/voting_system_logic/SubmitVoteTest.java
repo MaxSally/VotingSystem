@@ -8,14 +8,12 @@ import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class QuestionAnswerOptionTest {
+public class SubmitVoteTest {
     DataLogic dataLogic;
     List<Long> answerOptionIndex;
 
@@ -29,7 +27,12 @@ public class QuestionAnswerOptionTest {
         DatabasePopulator.createAdmin().forEach(session::saveOrUpdate);
         DatabasePopulator.createElection().forEach(session::saveOrUpdate);
         DatabasePopulator.createQuestion().forEach(session::saveOrUpdate);
-        DatabasePopulator.createAnswerOption().forEach(session::saveOrUpdate);
+        session.getTransaction().commit();
+        List<AnswerOption> answerOptions = DatabasePopulator.createAnswerOption();
+        session.beginTransaction();
+        for(AnswerOption answerOption: answerOptions){
+            session.saveOrUpdate(answerOption);
+        }
         session.getTransaction().commit();
         answerOptionIndex = DatabasePopulator.getAnswerOptionIndex();
         session.beginTransaction();
@@ -47,19 +50,6 @@ public class QuestionAnswerOptionTest {
     }
 
     @Test
-    public void testGetAllQuestionAndAnswers(){
-        int expectedSize = 6;
-        String firstQuestion = "Who is the next mayor?";
-        String electionName = "Nov2020";
-        String voterSSN = "83948032O";
-        DataLogic.getInstance().setElection(electionName);
-        DataLogic.getInstance().setCurrentVoter(voterSSN);
-        List<QuestionAnswer> lstQA = DataLogic.getInstance().getAllQuestionsAndAnswers();
-        assertTrue(lstQA.size() == expectedSize);
-        assertEquals(firstQuestion, lstQA.get(0).getQuestionText());
-    }
-
-    @Test
     public void submitVote(){
         String electionName = "Nov2020";
         String voterSSN = "83948032O";
@@ -71,7 +61,6 @@ public class QuestionAnswerOptionTest {
         userSelections.add(new Pair<>("Shall there be a 25¢ tax on cherries?", "No"));
         userSelections.add(new Pair<>("Shall liquor licenses be required for electronic bars?", "Yes"));
         userSelections.add(new Pair<>("Shall electronic race tracks be held liable for electronic car crashes?", "No"));
-        DataLogic.getInstance().getAllQuestionsAndAnswers();
         boolean success = DataLogic.getInstance().submitVote(userSelections);
         assertTrue(success);
     }

@@ -52,9 +52,9 @@ public class AnswerOptionEntity implements  AnswerOption{
     @Column
     private boolean status;
 
-    public AnswerOptionEntity(String question, String answerText) {
+    public AnswerOptionEntity(String electionName, String question, String answerText) {
         this.answerText = answerText;
-        setQuestion(question);
+        setQuestion(question, electionName);
         status = true;
         voterChoices = new ArrayList<>();
         answerId = idCount;
@@ -81,24 +81,12 @@ public class AnswerOptionEntity implements  AnswerOption{
         return question;
     }
     
-    private void setQuestion(String question){
-        QuestionEntity questionEntity = null;
-        try {
-            questionEntity = HibernateUtil.getSession().bySimpleNaturalId(QuestionEntity.class).load(question);
-        } catch (Exception e) {
-            System.err.println("Error while loading Question: either the required Java class is not a mapped entity\n" +
-                    "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");
-            System.err.println("  " + e.getMessage());
-            System.err.println("Please inform the the developer that the error occurred in\n" +
-                    "    QuestionEntity.setQuestion(String).");
-            questionEntity = null;
-            System.err.println("Resuming, leaving " + this.toString() + " without an assigned Question.");
-        } finally {
-            if (questionEntity != null) {
-                questionEntity.addAnswerOption(this);
-            } else {
-                this.question = null;
-            }
+    private void setQuestion(String questionText, String electionName){
+        QuestionEntity questionEntity = QuestionEntity.getQuestionsByName(questionText, electionName);
+        if (questionEntity != null) {
+            questionEntity.addAnswerOption(this);
+        } else {
+            this.question = null;
         }
     }
 

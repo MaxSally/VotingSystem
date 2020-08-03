@@ -27,6 +27,7 @@ public class QuestionEntity implements Question {
             session.getTransaction().commit();
         } catch (HibernateException exception) {
             System.err.println("Could not load Question " + questionName + ". " + exception.getMessage());
+            session.getTransaction().rollback();
         }
         return question;
     }
@@ -35,7 +36,6 @@ public class QuestionEntity implements Question {
     @GeneratedValue
     private Long questionId;
 
-    @NaturalId
     @Column
     private String questionText;
 
