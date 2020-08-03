@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface Admin {
-    boolean logIn(String username, String password);
+
+    boolean logIn(String password);
 
     String getFinalResult();
 

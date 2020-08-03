@@ -25,9 +25,14 @@ public class Backend {
         return instance;
     }
 
-    public Voter logIn(String name, String ssn) {
+    public Voter voterLogIn(String name, String ssn) {
         Voter currentVoter = VoterEntity.getVoterBySSN(ssn);
         return (currentVoter != null && currentVoter.logIn(name)?currentVoter: null);
+    }
+
+    public Admin adminLogIn(String username, String password) {
+        Admin currentAdmin = AdminEntity.getAdminByUsername(username);
+        return (currentAdmin != null && currentAdmin.logIn(password)? currentAdmin : null);
     }
 
     public Voter registerToVote(String name, String ssn) {
