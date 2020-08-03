@@ -61,8 +61,8 @@ public class VoterTest {
         String name = "A";
         String ssn = "123456789";
 
-         boolean logInResult = Backend.getInstance().logIn(name, ssn);
-         assertTrue(logInResult);
+         Voter voter = Backend.getInstance().voterLogIn(name, ssn);
+         assertTrue(voter != null);
     }
 
     @Test
@@ -70,8 +70,8 @@ public class VoterTest {
         String name = "A";
         String ssn = "12345678901";
 
-        boolean logInResult = Backend.getInstance().logIn(name, ssn);
-        assertFalse(logInResult);
+        Voter voter = Backend.getInstance().voterLogIn(name, ssn);
+        assertTrue(voter == null);
     }
 
     @Test
