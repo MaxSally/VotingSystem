@@ -59,7 +59,6 @@ public class VoterTest {
         String name = "A";
         String ssn = "123456789";
 
-         assertTrue(logInResult);
          Voter voter = Backend.getInstance().voterLogIn(name, ssn);
          assertTrue(voter != null);
     }
