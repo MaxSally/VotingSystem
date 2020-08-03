@@ -83,7 +83,7 @@ public class DataLogic {
     }
 
     public boolean logIn(String name, String SNN){
-        currentVoter = Backend.getInstance().logIn(name, SNN);
+        currentVoter = Backend.getInstance().voterLogIn(name, SNN);
         return currentVoter != null;
     }
 
