@@ -3,10 +3,7 @@ package edu.unl.cse.csce361.voting_system.logic;
 import edu.unl.cse.csce361.voting_system.backend.*;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class DataLogic {
     private static DataLogic instance;
@@ -85,6 +82,10 @@ public class DataLogic {
         currentElection = Backend.getInstance().getElectionByName(electionName);
     }
 
+    public boolean checkVoter(String name, String SNN){
+        return Backend.getInstance().logIn(name, SNN);
+    }
+
     public void setCurrentVoter(String SSN){
         currentVoter = Backend.getInstance().getVoterBySSN(SSN);
     }
@@ -92,4 +93,9 @@ public class DataLogic {
     public Voter getCurrentVoter(){
         return currentVoter;
     }
+
+    public Map<String, String>getVoterVoteResult(){
+        return Backend.getInstance().getVoterVoteResult(currentVoter, currentElection.getElectionName());
+    }
 }
+
