@@ -21,10 +21,10 @@ public class DataLogic {
         return instance;
     }
 
-    public DataLogic(){
+    private DataLogic(){
         lstQuestionAnswer = new ArrayList<>();
         currentVoter = null;
-        currentElection = null;
+        currentElection = Backend.getInstance().getElectionByName("Nov2020");
     }
 
     public boolean submitVote(List<Pair<String, String>> voterSelections){
@@ -73,6 +73,7 @@ public class DataLogic {
             questionAndAnswerOption.setAnswerOptions(answerOptions);
             lstQuestionAnswer.add(questionAndAnswerOption);
         }
+        
         return lstQuestionAnswer;
     }
 

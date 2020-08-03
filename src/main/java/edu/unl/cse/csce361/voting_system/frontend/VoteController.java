@@ -12,36 +12,44 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import edu.unl.cse.csce361.voting_system.logic.DataLogic;
+import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 
 public class VoteController extends ScreenController implements Initializable{
 	@FXML
-	private ListView<String> listView;
+	private ListView<QuestionAnswer> listView;
 	
 	@FXML
 	private Label electionYear;
 	
-	ObservableList<String> data = FXCollections.observableArrayList();
+	ObservableList<QuestionAnswer> data = FXCollections.observableArrayList();
 	
-	static class Cell extends ListCell<String>{
+	static class Cell extends ListCell<QuestionAnswer>{
+		HBox hbox;
 		Label question = new Label();
-		ChoiceBox<String> answerList = new ChoiceBox<String>();
+		ChoiceBox<String> answerChoiceList = new ChoiceBox<String>();
+		
 		
 		public Cell() {
 			super();
-			HBox hbox = new HBox(question, answerList);
+			hbox = new HBox(question, answerChoiceList);
 			hbox.setSpacing(10);
 		}
 		
-		public void updateItem(String ballot, boolean empty) {
+		public void updateItem(QuestionAnswer ballot, boolean empty) {
 			super.updateItem(ballot, empty);
 			setText(null);
 			setGraphic(null);
 			
 			if(ballot != null && !empty) {
-				question.setText("hi");
-				answerList.setValue("Select your choice");
-				//answerList.setItems(null);
+				question.setText(ballot.getQuestionText());
+				System.out.println(ballot.getQuestionText());
+				answerChoiceList.setItems(FXCollections.observableArrayList(ballot.getAnswerText()));
+				setGraphic(hbox);
 			}
 		}
 	}
@@ -49,6 +57,13 @@ public class VoteController extends ScreenController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		
+		List<QuestionAnswer> questionsAndAnswer = new ArrayList<>();
+		questionsAndAnswer = DataLogic.getInstance().getAllQuestionsAndAnswers();
+		
+		for(QuestionAnswer s : questionsAndAnswer) {
+			data.add(s);
+		}
 		
 		listView.setItems(data);
 		listView.setCellFactory(param -> new Cell());
