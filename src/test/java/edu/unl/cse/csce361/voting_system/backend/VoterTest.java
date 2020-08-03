@@ -2,14 +2,12 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import javafx.util.Pair;
 import org.hibernate.Session;
-import org.hsqldb.Database;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,8 +59,8 @@ public class VoterTest {
         String name = "A";
         String ssn = "123456789";
 
-         boolean logInResult = Backend.getInstance().logIn(name, ssn);
-         assertTrue(logInResult);
+         Voter voter = Backend.getInstance().voterLogIn(name, ssn);
+         assertTrue(voter != null);
     }
 
     @Test
@@ -70,8 +68,8 @@ public class VoterTest {
         String name = "A";
         String ssn = "12345678901";
 
-        boolean logInResult = Backend.getInstance().logIn(name, ssn);
-        assertFalse(logInResult);
+        Voter voter = Backend.getInstance().voterLogIn(name, ssn);
+        assertTrue(voter == null);
     }
 
     @Test
