@@ -30,6 +30,11 @@ public class Backend {
         return (currentVoter != null && currentVoter.logIn(name)?currentVoter: null);
     }
 
+    public Admin adminLogIn(String username, String password) {
+        Admin currentAdmin = AdminEntity.getAdminByUsername(username);
+        return (currentAdmin != null && currentAdmin.logIn(password)? currentAdmin : null);
+    }
+
     public Voter registerToVote(String name, String ssn) {
         Session session = HibernateUtil.getSession();
         System.out.println("Starting Hibernate transaction...");

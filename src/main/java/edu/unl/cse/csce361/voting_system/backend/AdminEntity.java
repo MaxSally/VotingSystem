@@ -2,6 +2,7 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +16,26 @@ import java.util.Map;
 import static java.lang.Boolean.TRUE;
 
 @Entity
-public class AdminEntity implements  Admin{
+public class AdminEntity implements  Admin {
+
+    static AdminEntity getAdminByUsername(String username) {
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        AdminEntity admin = null;
+        try {
+            admin = session.bySimpleNaturalId(AdminEntity.class).load(username);
+            session.getTransaction().commit();
+        } catch (HibernateException exception) {
+            System.err.println("Could not load Admin Account " + username + ". " + exception.getMessage());
+        }
+        return admin;
+    }
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @NaturalId
     @Column
     private String username;
 
@@ -35,9 +50,13 @@ public class AdminEntity implements  Admin{
         this.password = password;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     @Override
-    public boolean logIn(String username, String password) {
-        return true;
+    public boolean logIn(String password) {
+        return this != null && this.password.equals(password);
     }
 
     @Override
