@@ -8,7 +8,7 @@ import java.util.Map;
 public interface Voter {
     String getName();
 
-    boolean logIn(String name, String ssn);
+    boolean logIn(String ssn);
 
     boolean vote(Long answerOptionIndex);
 

@@ -65,21 +65,8 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public boolean logIn(String name, String ssn) {
-        VoterEntity voterEntity = null;
-        try {
-            voterEntity = HibernateUtil.getSession().bySimpleNaturalId(VoterEntity.class).load(ssn);
-        } catch (Exception e) {
-            System.err.println("Error while loading Voter: either the required Java class is not a mapped entity\n" +
-                    "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");
-            System.err.println("  " + e.getMessage());
-            System.err.println("Please inform the the developer that the error occurred in\n" +
-                    "    VoterEntity.logIn(String, String).");
-            voterEntity = null;
-            System.err.println("Resuming, leaving " + this.toString() + " without an assigned Election.");
-            return false;
-        }
-        return voterEntity != null && voterEntity.getName().equals(name);
+    public boolean logIn(String ssn) {
+        return this.name.equals(name);
     }
 
     @Override
