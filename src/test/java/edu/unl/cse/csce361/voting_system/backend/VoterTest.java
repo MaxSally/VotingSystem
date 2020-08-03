@@ -2,10 +2,14 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import javafx.util.Pair;
 import org.hibernate.Session;
+import org.hsqldb.Database;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +19,10 @@ import static org.junit.Assert.*;
 public class VoterTest {
 
     Backend backend;
+    List<Long> answerOptionIndex;
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -27,8 +35,12 @@ public class VoterTest {
         DatabasePopulator.createElection().forEach(session::saveOrUpdate);
         DatabasePopulator.createQuestion().forEach(session::saveOrUpdate);
         DatabasePopulator.createAnswerOption().forEach(session::saveOrUpdate);
-        DatabasePopulator.createVoterChoice().forEach(session::saveOrUpdate);
         session.getTransaction().commit();
+        answerOptionIndex = DatabasePopulator.getAnswerOptionIndex();
+        session.beginTransaction();
+        DatabasePopulator.createVoterChoice(answerOptionIndex).forEach(session::saveOrUpdate);
+        session.getTransaction().commit();
+        DatabasePopulator.setVoterStatus();
     }
 
     @After
@@ -70,6 +82,8 @@ public class VoterTest {
     public void testRegisterVoterInvalidSSN() {
         String name = "Max";
         String ssn = "12121212100";
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Invalid SSN length. The required length is 9");
 
         Voter voter = Backend.getInstance().registerToVote(name, ssn);
         assertNull(voter);
@@ -107,8 +121,8 @@ public class VoterTest {
     @Test
     public void testGetAnswerIndex() {
         String questionText = "Shall there be a 25¢ tax on cherries?";
-        String answerText = "Yes";
-        Long expectedID = 5L;
+        String answerText = "No";
+        Long expectedID = answerOptionIndex.get(3);
         Long actualID = AnswerOptionEntity.getAnswerOptionIndexByName(questionText, answerText);
         System.out.println(actualID);
         assertTrue(expectedID == actualID);

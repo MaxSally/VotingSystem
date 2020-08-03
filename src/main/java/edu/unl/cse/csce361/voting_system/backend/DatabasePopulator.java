@@ -7,6 +7,7 @@ import org.hibernate.Session;
 
 import javax.persistence.PersistenceException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,15 +76,28 @@ public class DatabasePopulator {
         );
     }
 
-    public static Set<VoterChoice> createVoterChoice() {
+    public static List<Long> getAnswerOptionIndex(){
+        List<Long> answerOptionIndex = new ArrayList<>();
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next mayor?", "Dawn Keykong"));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next city council?", "Blinky"));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next Sheriff?", "Q. Burte"));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Shall there be a 25¢ tax on cherries?", "No"));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Shall liquor licenses be required for electronic bars?", "Yes"));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Shall electronic race tracks be held liable for electronic car crashes?", "No"));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next mayor?", "Pat Mann"));
+        return answerOptionIndex;
+    }
+
+    public static Set<VoterChoice> createVoterChoice( List<Long> answerOptionIndex) {
         System.out.println("Create voter choice/selection..........");
         return Set.of(
-                new VoterChoiceEntity("123456789", 1L),
-                new VoterChoiceEntity("123456789", 4L),
-                new VoterChoiceEntity("123456789", 5L),
-                new VoterChoiceEntity("123456789", 7L),
-                new VoterChoiceEntity("123879456", 8L),
-                new VoterChoiceEntity("123879456", 0L)
+                new VoterChoiceEntity("123456789", answerOptionIndex.get(0)),
+                new VoterChoiceEntity("123456789", answerOptionIndex.get(1)),
+                new VoterChoiceEntity("123456789", answerOptionIndex.get(2)),
+                new VoterChoiceEntity("123456789", answerOptionIndex.get(3)),
+                new VoterChoiceEntity("123456789", answerOptionIndex.get(4)),
+                new VoterChoiceEntity("123456789", answerOptionIndex.get(5)),
+                new VoterChoiceEntity("123879456", answerOptionIndex.get(6))
         );
     }
 
@@ -140,8 +154,9 @@ public class DatabasePopulator {
             session.beginTransaction();
             createAnswerOption().forEach(session::saveOrUpdate);
             session.getTransaction().commit();
+            List<Long> answerOptionIndex = getAnswerOptionIndex();
             session.beginTransaction();
-            createVoterChoice().forEach(session::saveOrUpdate);
+            createVoterChoice(answerOptionIndex).forEach(session::saveOrUpdate);
             session.getTransaction().commit();
             setVoterStatus();
             System.out.println("Concluding Hibernate transaction...");

@@ -24,7 +24,7 @@ public class AnswerOptionEntity implements  AnswerOption{
             session.getTransaction().commit();
             for(AnswerOptionEntity answerOptionEntity : answers) {
                 if(answerOptionEntity.getQuestion().getQuestionText().equals(questionText)) {
-                    answerIndex = answerOptionEntity.getAnswerId();
+                    answerIndex = answerOptionEntity.getId();
                 }
             }
         } catch (HibernateException exception) {
@@ -73,8 +73,8 @@ public class AnswerOptionEntity implements  AnswerOption{
         return answerText;
     }
 
-    public Long getAnswerId() {
-        return answerId;
+    public Long getId() {
+        return id;
     }
 
     public QuestionEntity getQuestion() {

@@ -56,7 +56,7 @@ public class VoterChoiceEntity implements VoterChoice {
     private void setAnswerOption(Long selectedAnswerOptionIndex){
         AnswerOptionEntity answerOptionEntity = null;
         try {
-            answerOptionEntity = HibernateUtil.getSession().bySimpleNaturalId(AnswerOptionEntity.class).load(selectedAnswerOptionIndex);
+            answerOptionEntity = HibernateUtil.getSession().byId(AnswerOptionEntity.class).load(selectedAnswerOptionIndex);
         } catch (Exception e) {
             System.err.println("Error while loading Election: either the required Java class is not a mapped entity\n" +
                     "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");

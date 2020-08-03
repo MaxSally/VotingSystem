@@ -67,7 +67,7 @@ public class Backend {
         Question question = QuestionEntity.getQuestionsByName(questionName, electionName);
         List<Pair<String, Long>> answerOptions = new ArrayList<>();
         for(AnswerOptionEntity answerOptionEntity: question.getAssociatedAnswerOption()){
-            answerOptions.add(new Pair<>(answerOptionEntity.getAnswerText(), answerOptionEntity.getAnswerId()));
+            answerOptions.add(new Pair<>(answerOptionEntity.getAnswerText(), answerOptionEntity.getId()));
         }
         return answerOptions;
     }
