@@ -1,6 +1,7 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
 import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
@@ -15,6 +16,7 @@ import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 
 public class VoteController extends ScreenController implements Initializable {
 
+	@FXML
 	private ListView<QuestionAnswer> listView;
 
 	static class Cell extends ListCell<QuestionAnswer> {
