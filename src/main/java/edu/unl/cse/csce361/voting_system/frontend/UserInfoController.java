@@ -41,7 +41,7 @@ public class UserInfoController extends ScreenController implements Initializabl
     @FXML 
     private ListView<Map.Entry<String, String>> lstVoteInfo;
 
-    private ObservableList<Map.Entry<String, String>> data = FXCollections.observableArrayList();
+    private ObservableList<Map.Entry<String, String>> data;
 	
 	static class Cell extends ListCell<Map.Entry<String, String>>{
 		VBox vbox;
@@ -69,10 +69,9 @@ public class UserInfoController extends ScreenController implements Initializabl
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		data = FXCollections.observableArrayList();
 		txtUsername.setText(DataLogic.getInstance().getCurrentVoterName());
-		
 		Map<String, String> questionAnswer = DataLogic.getInstance().getVoterVoteResult();
-		
 		for(Map.Entry<String, String> entry : questionAnswer.entrySet()) {
 			data.add(entry);
 		}

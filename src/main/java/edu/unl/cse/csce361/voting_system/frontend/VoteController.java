@@ -26,7 +26,7 @@ public class VoteController extends ScreenController implements Initializable{
 	@FXML
 	private Label electionYear;
 	
-	ObservableList<QuestionAnswer> data = FXCollections.observableArrayList();
+	private ObservableList<QuestionAnswer> data;
 	
 	static class Cell extends ListCell<QuestionAnswer>{
 		HBox hbox;
@@ -56,18 +56,8 @@ public class VoteController extends ScreenController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
-		List<QuestionAnswer> questionsAndAnswer = new ArrayList<>();
-		questionsAndAnswer = DataLogic.getInstance().getAllQuestionsAndAnswers();
-		
-		//data.clear();
-		//listView.getItems().clear();
-		
-		for(QuestionAnswer s : questionsAndAnswer) {
-			data.add(s);
-		}
-		
-		listView.setItems(data);
+		List<QuestionAnswer> questionsAndAnswer = DataLogic.getInstance().getAllQuestionsAndAnswers();
+		listView.setItems(FXCollections.observableArrayList(questionsAndAnswer));
 		listView.setCellFactory(param -> new Cell());
 	}
 

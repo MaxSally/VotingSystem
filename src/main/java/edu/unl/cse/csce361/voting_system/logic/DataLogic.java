@@ -64,14 +64,15 @@ public class DataLogic {
 
     public List<QuestionAnswer> getAllQuestionsAndAnswers(){
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(currentElection.getName());
+        List<QuestionAnswer> lstCurrentQA = new ArrayList<>();
         for(String question : questions){
             List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question, currentElection.getName());
             QuestionAndAnswerOption questionAndAnswerOption = new QuestionAndAnswerOption(currentElection.getName(), question);
             questionAndAnswerOption.setAnswerOptions(answerOptions);
-            lstQuestionAnswer.add(questionAndAnswerOption);
+            lstCurrentQA.add(questionAndAnswerOption);
         }
-        
-        return lstQuestionAnswer;
+        lstQuestionAnswer = lstCurrentQA;
+        return lstCurrentQA;
     }
 
     /*
