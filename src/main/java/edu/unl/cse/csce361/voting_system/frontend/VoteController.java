@@ -47,7 +47,6 @@ public class VoteController extends ScreenController implements Initializable{
 			
 			if(ballot != null && !empty) {
 				question.setText(ballot.getQuestionText());
-				System.out.println(ballot.getQuestionText());
 				answerChoiceList.setItems(FXCollections.observableArrayList(ballot.getAnswerText()));
 				setGraphic(hbox);
 			}
@@ -60,6 +59,9 @@ public class VoteController extends ScreenController implements Initializable{
 		
 		List<QuestionAnswer> questionsAndAnswer = new ArrayList<>();
 		questionsAndAnswer = DataLogic.getInstance().getAllQuestionsAndAnswers();
+		
+		//data.clear();
+		//listView.getItems().clear();
 		
 		for(QuestionAnswer s : questionsAndAnswer) {
 			data.add(s);
