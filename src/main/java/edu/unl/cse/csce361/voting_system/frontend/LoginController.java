@@ -1,20 +1,14 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
-//import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
 import java.io.IOException;
-
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
-public class LoginController extends ScreenController{
-    @FXML 
-    private Pane paneLogin;
+public class LoginController extends ScreenController {
     
     @FXML 
     private TextField txtUsername;
@@ -24,9 +18,6 @@ public class LoginController extends ScreenController{
     
     @FXML 
     private Text txtErrorText;
-    
-    @FXML 
-    private Button btnLogin;
 
     public void login(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();

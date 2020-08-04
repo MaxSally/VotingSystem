@@ -4,35 +4,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 
 public class VoteController extends ScreenController implements Initializable{
 	@FXML
 	private ListView<QuestionAnswer> listView;
-	
-	@FXML
-	private Label electionYear;
-	
-	private ObservableList<QuestionAnswer> data;
-	
-	static class Cell extends ListCell<QuestionAnswer>{
+
+	static class Cell extends ListCell<QuestionAnswer> {
+
 		HBox hbox;
 		Label question = new Label();
 		ChoiceBox<String> answerChoiceList = new ChoiceBox<String>();
-		
 		
 		public Cell() {
 			super();
@@ -41,6 +30,7 @@ public class VoteController extends ScreenController implements Initializable{
 		}
 		
 		public void updateItem(QuestionAnswer ballot, boolean empty) {
+
 			super.updateItem(ballot, empty);
 			setText(null);
 			setGraphic(null);
@@ -55,7 +45,6 @@ public class VoteController extends ScreenController implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		List<QuestionAnswer> questionsAndAnswer = DataLogic.getInstance().getAllQuestionsAndAnswers();
 		listView.setItems(FXCollections.observableArrayList(questionsAndAnswer));
 		listView.setCellFactory(param -> new Cell());
