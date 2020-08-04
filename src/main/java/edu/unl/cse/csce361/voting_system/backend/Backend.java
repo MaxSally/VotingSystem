@@ -59,6 +59,27 @@ public class Backend {
         return voter;
     }
 
+    public Admin registerAdminAccount(String username, String password) {
+        Session session = HibernateUtil.getSession();
+        System.out.println("Starting Hibernate transaction...");
+        Admin admin = null;
+        try {
+            admin = AdminEntity.getAdminByUsername(username);
+            if(admin == null) {
+                session.beginTransaction();
+                admin = new AdminEntity(username, password);
+                session.saveOrUpdate(admin);
+                session.getTransaction().commit();
+            } else {
+                System.err.println("An admin account with the username " + username + " already exists");
+            }
+        } catch (HibernateException exception) {
+            System.err.println("encounter hibernate problem" + exception);
+            session.getTransaction().rollback();
+        }
+        return admin;
+    }
+
     public List<String> getAllQuestionsByElection(String electionName) {
         Election election = ElectionEntity.getElectionByName(electionName);
         List<String> questionAsString = new ArrayList<>();
