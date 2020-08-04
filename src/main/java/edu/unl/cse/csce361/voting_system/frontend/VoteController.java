@@ -70,21 +70,6 @@ public class VoteController extends ScreenController implements Initializable {
     }
     
     public void submitVotes(javafx.event.ActionEvent event) throws IOException{
-    	List<String> question = new ArrayList<>();
-        //cycle through each answer and save each vote into a list (we might want to do this when they change the vote answer, just in case the session messes up.)
-        //DataLogic.getInstance().submitVote(null);
-    	//alertScreen("ARE YOU SURE?", "Be sure to review your answer", "If your answers are correct, click CONFIRM", "GO BACK", "CONFIRM");
-    	//question.add(listView.getItems().get(0).getQuestionText());
-    	//question.add(listView);
-    	/*
-    	List<Pair<String, String>> questionsWithSelectedAnswersList = new ArrayList<>();
-    	//Pair<String, String> questionWithSelectedAnswer = new Pair<String, String>(null, null);
-    	for(int i = 0; i < selectedAnswer.size(); i++) {
-			 questionsWithSelectedAnswersList.add(new Pair<String, String>(listView.getItems().get(i).getQuestionText(), selectedAnswer.get(i)));
-		}
-    	*/
-    	
-    	//System.out.println(questionsWithSelectedAnswersList);
     	DataLogic.getInstance().submitVote(selectedAnswer);
     	switchScreen(event, "confirm_screen.fxml");
 
