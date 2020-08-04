@@ -9,7 +9,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -55,12 +57,12 @@ public class SubmitVoteTest {
         String voterSSN = "83948032O";
         DataLogic.getInstance().setElection(electionName);
         DataLogic.getInstance().setCurrentVoter(voterSSN);
-        List<Pair<String, String>>  userSelections = new ArrayList<>();
-        userSelections.add(new Pair<>("Who is the next mayor?", "Pat Mann"));
-        userSelections.add(new Pair<>("Who is the next city council?", "Inky"));
-        userSelections.add(new Pair<>("Shall there be a 25¢ tax on cherries?", "No"));
-        userSelections.add(new Pair<>("Shall liquor licenses be required for electronic bars?", "Yes"));
-        userSelections.add(new Pair<>("Shall electronic race tracks be held liable for electronic car crashes?", "No"));
+        Map<String, String> userSelections = new HashMap<>();
+        userSelections.put("Who is the next mayor?", "Pat Mann");
+        userSelections.put("Who is the next city council?", "Inky");
+        userSelections.put("Shall there be a 25¢ tax on cherries?", "No");
+        userSelections.put("Shall liquor licenses be required for electronic bars?", "Yes");
+        userSelections.put("Shall electronic race tracks be held liable for electronic car crashes?", "No");
         boolean success = DataLogic.getInstance().submitVote(userSelections);
         assertTrue(success);
     }

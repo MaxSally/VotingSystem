@@ -24,16 +24,17 @@ public class DataLogic {
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
     }
 
+
     public boolean checkIfVoted(){
         return currentVoter.hasVoted(currentElection.getName());
     }
 
-    public boolean submitVote(List<Pair<String, String>> voterSelections) {
+    public boolean submitVote(Map<String, String> voterSelections) {
         if(currentVoter.hasVoted(currentElection.getElectionName())){
             System.err.println("Voter has voted");
             return false;
         }
-        for(Pair<String, String> vote : voterSelections) {
+        for(Map.Entry<String, String> vote : voterSelections.entrySet()) {
             String questionText = vote.getKey();
             String answerText = vote.getValue();
             Set<String> answeredQuestion = new HashSet<>();
