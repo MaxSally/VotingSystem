@@ -24,6 +24,10 @@ public class DataLogic {
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
     }
 
+    public boolean checkIfVoted(){
+        return currentVoter.hasVoted(currentElection.getName());
+    }
+
     public boolean submitVote(List<Pair<String, String>> voterSelections) {
         if(currentVoter.hasVoted(currentElection.getElectionName())){
             System.err.println("Voter has voted");

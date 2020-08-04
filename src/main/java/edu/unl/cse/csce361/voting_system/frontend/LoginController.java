@@ -24,8 +24,13 @@ public class LoginController extends ScreenController {
         String ssn = txtPassword.getText();
 
         if(DataLogic.getInstance().logIn(username, ssn)){
+            if(DataLogic.getInstance().checkIfVoted()){
+                switchScreen(event, "user_info.fxml");
+            }
+            else{
+                switchScreen(event, "voting_screen.fxml");
+            }
             txtErrorText.setText("");
-            switchScreen(event, "user_info.fxml");
         }
         else{
             txtErrorText.setText("Something is wrong. Please contact an administrator.");
