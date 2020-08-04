@@ -40,3 +40,5 @@ computers or from a shared computer at a polling location.
 
 -   The system may be implemented in text-mode or with a GUI.
 
+Citations: pacopolis_voting.png made by Cody Bye
+
