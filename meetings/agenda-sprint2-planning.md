@@ -22,7 +22,7 @@ August 5, 2020
 
 ### Checklist to close-out Sprint 1
 
-No later than 4:20pm EDT (UTC-5) on April 22:
+No later than 5pm CDT (UTC-5) on August 5:
 
 -   [ ] Make sure project is ready for Sprint 1 grading:
     -   [ ] Code compiles and runs
