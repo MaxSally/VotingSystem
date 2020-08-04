@@ -1,7 +1,6 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -13,7 +12,8 @@ import java.util.ResourceBundle;
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 
-public class VoteController extends ScreenController implements Initializable{
+public class VoteController extends ScreenController implements Initializable {
+	
 	@FXML
 	private ListView<QuestionAnswer> listView;
 
@@ -47,6 +47,7 @@ public class VoteController extends ScreenController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		List<QuestionAnswer> questionsAndAnswer = DataLogic.getInstance().getAllQuestionsAndAnswers();
 		listView.setItems(FXCollections.observableArrayList(questionsAndAnswer));
+
 		listView.setCellFactory(param -> new Cell());
 	}
 
@@ -57,7 +58,9 @@ public class VoteController extends ScreenController implements Initializable{
     }
     public void submitVotes(javafx.event.ActionEvent event) throws IOException{
         //cycle through each answer and save each vote into a list (we might want to do this when they change the vote answer, just in case the session messes up.)
-        switchScreen(event, "confirm_screen.fxml");
+        //DataLogic.getInstance().submitVote(null);
+    	//alertScreen("ARE YOU SURE?", "Be sure to review your answer", "If your answers are correct, click CONFIRM", "GO BACK", "CONFIRM");
+    	switchScreen(event, "confirm_screen.fxml");
     }
 
 }
