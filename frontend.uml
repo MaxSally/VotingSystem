@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>edu.unl.cse.csce361.voting_system.frontend.ConfirmController</OriginalElement>
+  <nodes>
+    <node x="760.0" y="0.0">javafx.fxml.Initializable</node>
+    <node x="23.0" y="521.0">edu.unl.cse.csce361.voting_system.frontend.Main</node>
+    <node x="212.00000000000006" y="179.0">edu.unl.cse.csce361.voting_system.frontend.LoginController</node>
+    <node x="0.0" y="222.0">edu.unl.cse.csce361.voting_system.frontend.ThankYouController</node>
+    <node x="670.0" y="157.0">edu.unl.cse.csce361.voting_system.frontend.UserInfoController</node>
+    <node x="341.75000000000006" y="0.0">edu.unl.cse.csce361.voting_system.frontend.ScreenController</node>
+    <node x="0.0" y="419.0">javafx.application</node>
+    <node x="970.0" y="124.0">edu.unl.cse.csce361.voting_system.frontend.ConfirmController</node>
+    <node x="407.00000000000006" y="168.0">edu.unl.cse.csce361.voting_system.frontend.VoteController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.UserInfoController" target="edu.unl.cse.csce361.voting_system.frontend.ScreenController">
+      <point x="-70.00000000000006" y="-92.0" />
+      <point x="740.0" y="94.0" />
+      <point x="518.1500000000001" y="94.0" />
+      <point x="50.40000000000009" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.VoteController" target="edu.unl.cse.csce361.voting_system.frontend.ScreenController">
+      <point x="-60.75" y="-81.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.VoteController" target="javafx.fxml.Initializable">
+      <point x="60.75" y="-81.0" />
+      <point x="589.25" y="104.0" />
+      <point x="800.0" y="104.0" />
+      <point x="-80.0" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.ConfirmController" target="javafx.fxml.Initializable">
+      <point x="60.0" y="-125.0" />
+      <point x="1150.0" y="74.0" />
+      <point x="960.0" y="74.0" />
+      <point x="80.0" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.Main" target="javafx.application">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.ThankYouController" target="edu.unl.cse.csce361.voting_system.frontend.ScreenController">
+      <point x="0.0" y="-27.0" />
+      <point x="96.0" y="94.0" />
+      <point x="366.9500000000001" y="94.0" />
+      <point x="-100.79999999999995" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.UserInfoController" target="javafx.fxml.Initializable">
+      <point x="69.99999999999994" y="-92.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.ConfirmController" target="edu.unl.cse.csce361.voting_system.frontend.ScreenController">
+      <point x="-60.0" y="-125.0" />
+      <point x="1030.0" y="84.0" />
+      <point x="568.5500000000002" y="84.0" />
+      <point x="100.80000000000007" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.frontend.LoginController" target="edu.unl.cse.csce361.voting_system.frontend.ScreenController">
+      <point x="0.0" y="-70.0" />
+      <point x="299.50000000000006" y="104.0" />
+      <point x="417.3500000000001" y="104.0" />
+      <point x="-50.39999999999998" y="27.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="488.5" y="368.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

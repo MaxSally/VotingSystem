@@ -1,48 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>JAVA</ID>
-  <OriginalElement>edu.unl.cse.csce361.voting_system.backend.VoterChoiceEntity</OriginalElement>
+  <OriginalElement>edu.unl.cse.csce361.voting_system.backend.Admin</OriginalElement>
   <nodes>
-    <node x="807.0" y="763.0">edu.unl.cse.csce361.voting_system.backend.VoterChoiceEntity</node>
-    <node x="0.0" y="1056.0">edu.unl.cse.csce361.voting_system.backend.DatabasePopulator</node>
-    <node x="0.0" y="785.0">edu.unl.cse.csce361.voting_system.backend.QuestionEntity</node>
-    <node x="348.0" y="190.0">edu.unl.cse.csce361.voting_system.backend.ElectionEntity</node>
-    <node x="6.5" y="659.0">edu.unl.cse.csce361.voting_system.backend.Question</node>
-    <node x="662.0" y="104.0">edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity</node>
-    <node x="0.0" y="0.0">edu.unl.cse.csce361.voting_system.backend.Voter</node>
-    <node x="361.0" y="1056.0">edu.unl.cse.csce361.voting_system.backend.HibernateUtil</node>
-    <node x="807.0" y="659.0">edu.unl.cse.csce361.voting_system.backend.VoterChoice</node>
-    <node x="751.0" y="0.0">edu.unl.cse.csce361.voting_system.backend.AnswerOption</node>
-    <node x="355.0" y="0.0">edu.unl.cse.csce361.voting_system.backend.Election</node>
-    <node x="365.0" y="659.0">edu.unl.cse.csce361.voting_system.backend.Backend</node>
-    <node x="0.0" y="234.0">edu.unl.cse.csce361.voting_system.backend.VoterEntity</node>
+    <node x="1245.4107142857142" y="0.0">edu.unl.cse.csce361.voting_system.backend.Admin</node>
+    <node x="1096.088095238095" y="76.0">javax.persistence.Entity</node>
+    <node x="1820.588095238095" y="386.0">edu.unl.cse.csce361.voting_system.backend.VoterChoiceEntity</node>
+    <node x="1110.588095238095" y="309.0">edu.unl.cse.csce361.voting_system.backend.AdminEntity</node>
+    <node x="442.0" y="701.0">edu.unl.cse.csce361.voting_system.backend.DatabasePopulator</node>
+    <node x="2133.588095238095" y="353.0">edu.unl.cse.csce361.voting_system.backend.QuestionEntity</node>
+    <node x="821.5880952380951" y="298.0">edu.unl.cse.csce361.voting_system.backend.ElectionEntity</node>
+    <node x="2220.088095238095" y="65.0">edu.unl.cse.csce361.voting_system.backend.Question</node>
+    <node x="322.9999999999999" y="76.0">edu.unl.cse.csce361.voting_system.backend.FinalResult</node>
+    <node x="1478.588095238095" y="298.0">edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity</node>
+    <node x="0.0" y="11.0">edu.unl.cse.csce361.voting_system.backend.Voter</node>
+    <node x="803.0" y="701.0">edu.unl.cse.csce361.voting_system.backend.HibernateUtil</node>
+    <node x="1893.838095238095" y="76.0">edu.unl.cse.csce361.voting_system.backend.VoterChoice</node>
+    <node x="417.9999999999999" y="407.0">edu.unl.cse.csce361.voting_system.backend.FinalResultEntity</node>
+    <node x="1648.0880952380953" y="76.0">edu.unl.cse.csce361.voting_system.backend.AnswerOption</node>
+    <node x="755.9380952380951" y="33.0">edu.unl.cse.csce361.voting_system.backend.Election</node>
+    <node x="0.0" y="701.0">edu.unl.cse.csce361.voting_system.backend.Backend</node>
+    <node x="75.75" y="276.0">edu.unl.cse.csce361.voting_system.backend.VoterEntity</node>
   </nodes>
   <notes />
   <edges>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity" target="edu.unl.cse.csce361.voting_system.backend.AnswerOption">
+      <point x="80.50000000000011" y="-168.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.FinalResultEntity" target="edu.unl.cse.csce361.voting_system.backend.FinalResult">
+      <point x="-95.0" y="-59.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.VoterChoiceEntity" target="javax.persistence.Entity">
+      <point x="-73.25" y="-80.0" />
+      <point x="1893.838095238095" y="236.0" />
+      <point x="1191.945238095238" y="236.0" />
+      <point x="34.85714285714289" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.VoterEntity" target="javax.persistence.Entity">
+      <point x="75.75000000000023" y="-190.0" />
+      <point x="303.0000000000002" y="236.0" />
+      <point x="1104.8023809523809" y="236.0" />
+      <point x="-52.28571428571422" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.QuestionEntity" target="javax.persistence.Entity">
+      <point x="-80.0" y="-113.0" />
+      <point x="2213.588095238095" y="226.0" />
+      <point x="1209.3738095238093" y="226.0" />
+      <point x="52.28571428571422" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.AdminEntity" target="javax.persistence.Entity">
+      <point x="-87.0" y="-157.0" />
+      <point x="1197.588095238095" y="256.0" />
+      <point x="1157.088095238095" y="256.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity" target="javax.persistence.Entity">
+      <point x="-80.49999999999989" y="-168.0" />
+      <point x="1559.0880952380953" y="246.0" />
+      <point x="1174.5166666666664" y="246.0" />
+      <point x="17.42857142857133" y="27.0" />
+    </edge>
     <edge source="edu.unl.cse.csce361.voting_system.backend.ElectionEntity" target="edu.unl.cse.csce361.voting_system.backend.Election">
-      <point x="0.0" y="-168.0" />
+      <point x="-67.25" y="-168.0" />
+      <point x="888.8380952380951" y="226.0" />
+      <point x="883.4380952380951" y="226.0" />
       <point x="0.0" y="70.0" />
     </edge>
-    <edge source="edu.unl.cse.csce361.voting_system.backend.QuestionEntity" target="edu.unl.cse.csce361.voting_system.backend.Question">
-      <point x="0.0" y="-113.0" />
-      <point x="0.0" y="38.0" />
-    </edge>
-    <edge source="edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity" target="edu.unl.cse.csce361.voting_system.backend.AnswerOption">
-      <point x="0.0" y="-168.0" />
-      <point x="0.0" y="27.0" />
-    </edge>
-    <edge source="edu.unl.cse.csce361.voting_system.backend.VoterChoiceEntity" target="edu.unl.cse.csce361.voting_system.backend.VoterChoice">
-      <point x="0.0" y="-80.0" />
-      <point x="0.0" y="27.0" />
-    </edge>
     <edge source="edu.unl.cse.csce361.voting_system.backend.VoterEntity" target="edu.unl.cse.csce361.voting_system.backend.Voter">
-      <point x="0.0" y="-190.0" />
+      <point x="-75.74999999999977" y="-190.0" />
       <point x="0.0" y="92.0" />
     </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.ElectionEntity" target="javax.persistence.Entity">
+      <point x="67.25" y="-168.0" />
+      <point x="1023.3380952380951" y="256.0" />
+      <point x="1139.6595238095238" y="256.0" />
+      <point x="-17.42857142857133" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.FinalResultEntity" target="javax.persistence.Entity">
+      <point x="95.0" y="-59.0" />
+      <point x="702.9999999999999" y="246.0" />
+      <point x="1122.2309523809522" y="246.0" />
+      <point x="-34.85714285714289" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.QuestionEntity" target="edu.unl.cse.csce361.voting_system.backend.Question">
+      <point x="80.0" y="-113.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.VoterChoiceEntity" target="edu.unl.cse.csce361.voting_system.backend.VoterChoice">
+      <point x="73.25" y="-80.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="edu.unl.cse.csce361.voting_system.backend.AdminEntity" target="edu.unl.cse.csce361.voting_system.backend.Admin">
+      <point x="87.0" y="-157.0" />
+      <point x="1371.588095238095" y="256.0" />
+      <point x="1419.4107142857142" y="256.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.5045180722891566" x="550.0" y="654.0000000000001" />
+  <settings layout="Hierarchic Group" zoom="0.40384615384615385" x="1264.0" y="519.5" />
   <SelectedNodes>
-    <node>edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity</node>
+    <node>edu.unl.cse.csce361.voting_system.backend.Admin</node>
   </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
