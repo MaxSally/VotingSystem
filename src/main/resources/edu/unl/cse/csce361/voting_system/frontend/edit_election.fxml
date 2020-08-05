@@ -6,15 +6,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.unl.cse.csce361.voting_system.frontend.EditElectionController">
    <children>
-      <Button fx:id="btnCancel" layoutX="317.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" prefHeight="45.0" prefWidth="69.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
+      <Button fx:id="btnCancel" layoutX="317.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancel" prefHeight="45.0" prefWidth="69.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
       <ListView fx:id="lstElectionData" layoutY="82.0" prefHeight="434.0" prefWidth="400.0" />
-      <Button layoutX="105.0" layoutY="535.0" mnemonicParsing="false" onAction="#createUser" style="-fx-background-color: #1971ff;" text="Finish Editing Election" textFill="WHITE">
+      <Button fx:id="btnFinishEdit" layoutX="105.0" layoutY="535.0" mnemonicParsing="false" onAction="#submitElectionEdit" style="-fx-background-color: #1971ff;" text="Finish Editing Election" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
