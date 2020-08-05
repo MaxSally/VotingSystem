@@ -5,16 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-import javafx.scene.layout.HBox;
-import javafx.util.Pair;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
@@ -27,12 +19,6 @@ public class CreateUserController extends ScreenController {
 
     @FXML
     private TextView txtSSN;   
-	
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-    }
     
     public void createUser(){
         String username = txtUsername.getText();
@@ -40,6 +26,10 @@ public class CreateUserController extends ScreenController {
         String ssn = txtSSN.getText();
 
         DataLogic.getInstance().createNewUser(username, ssn);
+        
+        //might add message and sleep for 2 seconds before switching screens
+
+        switchScreen(event, "login.fxml");
     }
 
     public void cancel(javafx.event.ActionEvent event) throws IOException{
