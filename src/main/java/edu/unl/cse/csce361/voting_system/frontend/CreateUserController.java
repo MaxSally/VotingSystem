@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
-import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 
 public class CreateUserController extends ScreenController {
 
