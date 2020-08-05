@@ -67,7 +67,7 @@ public class ConfirmController extends ScreenController implements Initializable
         switchScreen(event, "login.fxml");
     }
     public void submitVotes(javafx.event.ActionEvent event) throws IOException{
-        //cycle through each answer and submit vote with *submitVote()? method
+        //TODO move the submit votes from the voting screen to here. Pull vote info from locally saved vote information
         switchScreen(event, "thank_you.fxml");
     }
 }
