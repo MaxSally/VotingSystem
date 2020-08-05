@@ -70,6 +70,7 @@ public class VoteController extends ScreenController implements Initializable {
     }
     
     public void submitVotes(javafx.event.ActionEvent event) throws IOException{
+		//TODO modify this method to save the vote information in a local variable and navigate to confirm page. Move submitVote method to confirm screen.
     	DataLogic.getInstance().submitVote(selectedAnswer);
     	switchScreen(event, "thankYou_screen.fxml");
     }
