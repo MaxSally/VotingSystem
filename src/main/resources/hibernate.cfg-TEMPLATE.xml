@@ -11,13 +11,13 @@
             com.mysql.cj.jdbc.Driver
         </property>
         <property name="connection.url">
-            jdbc:mysql://cse.unl.edu/USERNAME?serverTimezone=America/Chicago
+            jdbc:mysql://cse.unl.edu/username?serverTimezone=America/Chicago
         </property>
         <property name="connection.username">
-            USERNAME
+            username
         </property>
         <property name="connection.password">
-            MYSQL_PASSWORD
+            password
         </property>
 
         <!-- Echo executed SQL to stdout? -->
@@ -44,5 +44,6 @@
         <mapping class="edu.unl.cse.csce361.voting_system.backend.QuestionEntity"/>
         <mapping class="edu.unl.cse.csce361.voting_system.backend.VoterChoiceEntity"/>
         <mapping class="edu.unl.cse.csce361.voting_system.backend.VoterEntity"/>
+
     </session-factory>
 </hibernate-configuration>

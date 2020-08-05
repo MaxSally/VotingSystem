@@ -37,7 +37,7 @@ public class DatabasePopulator {
     public static Set<Election> createElection() {
         System.out.println("Creating election .... Hooray");
         return Set.of(
-                new ElectionEntity("Nov2020", LocalDate.of(2020, 7, 9), LocalDate.of(2020, 11, 9), false),
+                new ElectionEntity("Nov2020", LocalDate.of(2020, 10, 9), LocalDate.of(2020, 11, 9), true),
                 new ElectionEntity("Nov2021", LocalDate.of(2021, 7, 9), LocalDate.of(2021, 11, 9), false)
         );
     }

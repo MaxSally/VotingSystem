@@ -9,13 +9,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class SubmitVoteTest {
+public class GetAllQuestionAndAnswerOptionTest {
     DataLogic dataLogic;
     List<Long> answerOptionIndex;
 
@@ -52,18 +50,15 @@ public class SubmitVoteTest {
     }
 
     @Test
-    public void submitVote(){
+    public void testGetAllQuestionAndAnswers(){
+        int expectedSize = 6;
+        String firstQuestion = "Who is the next mayor?";
         String electionName = "Nov2020";
         String voterSSN = "83948032O";
         DataLogic.getInstance().setElection(electionName);
         DataLogic.getInstance().setCurrentVoter(voterSSN);
-        Map<String, String> userSelections = new HashMap<>();
-        userSelections.put("Who is the next mayor?", "Pat Mann");
-        userSelections.put("Who is the next city council?", "Inky");
-        userSelections.put("Shall there be a 25¢ tax on cherries?", "No");
-        userSelections.put("Shall liquor licenses be required for electronic bars?", "Yes");
-        userSelections.put("Shall electronic race tracks be held liable for electronic car crashes?", "No");
-        boolean success = DataLogic.getInstance().submitVote(userSelections);
-        assertTrue(success);
+        List<QuestionAnswer> lstQA = DataLogic.getInstance().getAllQuestionsAndAnswers();
+        assertTrue(lstQA.size() == expectedSize);
+        assertEquals(firstQuestion, lstQA.get(0).getQuestionText());
     }
 }
