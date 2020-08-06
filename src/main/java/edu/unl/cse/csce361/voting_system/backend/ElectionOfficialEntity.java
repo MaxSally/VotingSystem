@@ -1,9 +1,13 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class ElectionOfficialEntity extends AdminEntity implements ElectionOfficial {
@@ -63,7 +67,24 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean updateQuestion(String electionName, String originalQuestionText, String updatedQuestionText) {
-        return false;
+        if(ElectionEntity.getElectionByName(electionName).getStatus()) {
+            return false;
+        }
+        QuestionEntity question = QuestionEntity.getQuestionsByName(originalQuestionText, electionName);
+        if(question == null) {
+            return false;
+        }
+        question.setQuestionText(updatedQuestionText);
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        try {
+            session.saveOrUpdate(question);
+            session.getTransaction().commit();
+        } catch (HibernateException exception) {
+            System.err.println("Could not update Question " + originalQuestionText + ". " + exception.getMessage());
+            session.getTransaction().rollback();
+        }
+        return true;
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class QuestionAnswerTest {
+public class CreateNewElectionQuestionAnswerTest {
 
     Backend backend;
     List<Long> answerOptionIndex;
