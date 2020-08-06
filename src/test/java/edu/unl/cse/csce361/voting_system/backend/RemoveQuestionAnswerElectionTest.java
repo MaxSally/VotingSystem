@@ -1,5 +1,6 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import javafx.util.Pair;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
@@ -76,6 +77,42 @@ public class RemoveQuestionAnswerElectionTest {
         for(AnswerOptionEntity answerOptionEntity : QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption()) {
             assertFalse(answerOptionEntity.getStatus());
         }
+    }
+
+    @Test
+    public void testRemoveAnswerFromInactiveElection() {
+        String electionName = "Nov2021";
+        String questionText = "How are you doing?";
+        String answerText = "Meh";
+        ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
+        boolean result = admin.removeAnswer(QuestionEntity.getQuestionsByName(questionText, electionName), answerText);
+        List<AnswerOptionEntity> answers = QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption();
+        boolean answerTextStatus = false;
+        for(AnswerOptionEntity answerOption : answers) {
+            if(answerOption.getAnswerText().equals(answerText)) {
+                answerTextStatus = answerOption.getStatus();
+            }
+        }
+        assertTrue(result);
+        assertFalse(answerTextStatus);
+    }
+
+    @Test
+    public void testRemoveAnswerFromActiveElection() {
+        String electionName = "Nov2020";
+        String questionText = "Who is the next mayor?";
+        String answerText = "Pat Mann";
+        ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
+        boolean result = admin.removeAnswer(QuestionEntity.getQuestionsByName(questionText, electionName), answerText);
+        List<AnswerOptionEntity> answers = QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption();
+        boolean answerTextStatus = false;
+        for(AnswerOptionEntity answerOption : answers) {
+            if(answerOption.getAnswerText().equals(answerText)) {
+                answerTextStatus = answerOption.getStatus();
+            }
+        }
+        assertFalse(result);
+        assertTrue(answerTextStatus);
     }
 
 }

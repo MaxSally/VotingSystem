@@ -158,23 +158,33 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         }
         List<AnswerOptionEntity> correspondingAnswers = question.getAssociatedAnswerOption();
         for(AnswerOptionEntity answerOptionEntity : correspondingAnswers) {
-            answerOptionEntity.setStatus(false);
-            try {
-                session.beginTransaction();
-                session.saveOrUpdate(answerOptionEntity);
-                session.getTransaction().commit();
-            } catch (HibernateException exception) {
-                System.err.println("Could not remove corresponding answer " + answerOptionEntity.getAnswerText() + ". " + exception.getMessage());
-                session.getTransaction().rollback();
-                return false;
-            }
+            removeAnswer(question, answerOptionEntity.getAnswerText());
+
         }
         return true;
     }
 
     @Override
     public boolean removeAnswer(Question question, String answerText) {
-        return false;
+        if(question == null) {
+            return false;
+        }
+        if(question.getElection().getStatus()) {
+            return false;
+        }
+        AnswerOptionEntity answer = AnswerOptionEntity.getAnswerOptionByQuestionAndAnswerOptionName(question.getQuestionText(), answerText);
+        answer.setStatus(false);
+        Session session = HibernateUtil.getSession();
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(answer);
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException exception) {
+            System.err.println("Could not remove answer " + answerText + ". " + exception.getMessage());
+            session.getTransaction().rollback();
+            return false;
+        }
     }
 
     @Override
