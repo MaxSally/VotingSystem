@@ -89,7 +89,25 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean updateAnswer(Question question, String originalAnswerText, String updatedAnswerText) {
-        return false;
+        if(question == null) {
+            return false;
+        }
+        if(question.getElection().getStatus()) {
+            return false;
+        }
+        AnswerOptionEntity answer = AnswerOptionEntity.getAnswerOptionByQuestionAndAnswerOptionName(question.getQuestionText(),
+                originalAnswerText);
+        answer.setAnswerText(updatedAnswerText);
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        try {
+            session.saveOrUpdate(answer);
+            session.getTransaction().commit();
+        } catch (HibernateException exception) {
+            System.err.println("Could not update answer " + originalAnswerText + ". " + exception.getMessage());
+            session.getTransaction().rollback();
+        }
+        return true;
     }
 
     @Override

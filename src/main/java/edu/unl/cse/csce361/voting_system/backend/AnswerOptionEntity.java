@@ -33,6 +33,25 @@ public class AnswerOptionEntity implements  AnswerOption{
         return answerIndex;
     }
 
+    static AnswerOptionEntity getAnswerOptionByQuestionAndAnswerOptionName(String questionText, String answerText) {
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        AnswerOptionEntity answer = null;
+        try {
+            List<AnswerOptionEntity> answers = session.createQuery("From AnswerOptionEntity where answerText = '" + answerText + "'",
+                    AnswerOptionEntity.class).list();
+            session.getTransaction().commit();
+            for(AnswerOptionEntity answerOptionEntity : answers) {
+                if(answerOptionEntity.getQuestion().getQuestionText().equals(questionText)) {
+                    answer = answerOptionEntity;
+                }
+            }
+        } catch (HibernateException exception) {
+            System.err.println("Could not load answerText " + answerText + ". " + exception.getMessage());
+        }
+        return answer;
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -102,5 +121,9 @@ public class AnswerOptionEntity implements  AnswerOption{
         }else {
             throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
         }
+    }
+
+    public void setAnswerText(String updateAnswerText) {
+        answerText = updateAnswerText;
     }
 }
