@@ -35,7 +35,7 @@ public class ElectionEntity implements Election{
     @Column(name = "ID")
     private Long electionId;
 
-    @NaturalId
+    @NaturalId (mutable = true)
     @Column(length = MAXIMUM_NAME_LENGTH)
     private String name;
 
@@ -56,8 +56,10 @@ public class ElectionEntity implements Election{
 
     public ElectionEntity(String name, LocalDate startTime, LocalDate endTime, boolean status) {
         this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        if(startTime.isBefore(endTime)) {
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
         this.status = status;
         questions = new ArrayList<>();
         voters = new HashSet<>();
@@ -112,5 +114,10 @@ public class ElectionEntity implements Election{
     @Override
     public boolean getStatus() {
         return status;
+    }
+
+    @Override
+    public void setElectionName(String updatedElectionName) {
+        name = updatedElectionName;
     }
 }

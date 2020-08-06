@@ -80,11 +80,12 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         try {
             session.saveOrUpdate(question);
             session.getTransaction().commit();
+            return true;
         } catch (HibernateException exception) {
             System.err.println("Could not update Question " + originalQuestionText + ". " + exception.getMessage());
             session.getTransaction().rollback();
+            return false;
         }
-        return true;
     }
 
     @Override
@@ -103,11 +104,35 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         try {
             session.saveOrUpdate(answer);
             session.getTransaction().commit();
+            return true;
         } catch (HibernateException exception) {
             System.err.println("Could not update answer " + originalAnswerText + ". " + exception.getMessage());
             session.getTransaction().rollback();
+            return false;
         }
-        return true;
+    }
+
+    @Override
+    public boolean updateElectionName(String originalElectionName, String updatedElectionName) {
+        Election election = ElectionEntity.getElectionByName(originalElectionName);
+        if(election == null) {
+            return false;
+        }
+        if(election.getStatus()) {
+            return false;
+        }
+        election.setElectionName(updatedElectionName);
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        try {
+            session.saveOrUpdate(election);
+            session.getTransaction().commit();
+            return true;
+        } catch (HibernateException exception) {
+            System.err.println("Could not update election name " + originalElectionName + ". " + exception.getMessage());
+            session.getTransaction().rollback();
+            return false;
+        }
     }
 
     @Override

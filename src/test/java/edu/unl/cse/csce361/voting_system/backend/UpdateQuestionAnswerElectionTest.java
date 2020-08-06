@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class UpdateQuestionAnswerTest {
+public class UpdateQuestionAnswerElectionTest {
 
     Backend backend;
     List<Long> answerOptionIndex;
@@ -115,5 +115,23 @@ public class UpdateQuestionAnswerTest {
         }
         assertTrue(result);
         assertTrue(hasAnswerText);
+    }
+
+    @Test
+    public void testUpdateElectionNameToActiveElection() {
+        String originalElectionName = "Nov2020";
+        String updatedElectionName = "Dec2020";
+        ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
+        boolean result = admin.updateElectionName(originalElectionName, updatedElectionName);
+        assertFalse(result);
+    }
+
+    @Test
+    public void testUpdateElectionNameToInactiveElection() {
+        String originalElectionName = "Nov2021";
+        String updatedElectionName = "Dec2021";
+        ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
+        boolean result = admin.updateElectionName(originalElectionName, updatedElectionName);
+        assertTrue(result);
     }
 }

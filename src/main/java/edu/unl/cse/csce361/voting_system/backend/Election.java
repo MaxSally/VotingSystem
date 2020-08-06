@@ -13,4 +13,6 @@ public interface Election {
     void addVoter(VoterEntity voter);
 
     boolean getStatus();
+
+    void setElectionName(String updatedElectionName);
 }

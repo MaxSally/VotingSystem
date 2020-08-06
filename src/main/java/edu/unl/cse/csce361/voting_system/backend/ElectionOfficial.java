@@ -14,6 +14,8 @@ public interface ElectionOfficial {
 
     boolean updateAnswer(Question question, String originalAnswerText, String updatedAnswerText);
 
+    boolean updateElectionName(String originalElectionName, String updatedElectionName);
+
     boolean removeQuestion(String electionName, String questionText);
 
     boolean removeAnswer(Question question, String answerText);
