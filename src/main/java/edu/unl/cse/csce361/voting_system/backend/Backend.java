@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -120,5 +121,55 @@ public class Backend {
 
     public void addVotedElection(Voter voter, String electionName) {
         voter.addVotedElection(electionName);
+    }
+
+    public boolean createNewElection(ElectionOfficial electionOfficial, String electionName, LocalDate startTime,
+                                     LocalDate endTime, boolean status) {
+        return electionOfficial.createElection(electionName, startTime, endTime, false);
+    }
+
+    public boolean createNewQuestion(ElectionOfficial electionOfficial, String electionName, String questionText) {
+        return electionOfficial.createQuestion(electionName, questionText);
+    }
+
+    public boolean createNewAnswer(ElectionOfficial electionOfficial, String questionText, String answerText,
+                                   String electionName) {
+        return electionOfficial.createAnswer(QuestionEntity.getQuestionsByName(questionText, electionName), answerText);
+    }
+
+    public boolean updateElectionName(ElectionOfficial electionOfficial, String originalElectionName,
+                                      String updatedElectionName) {
+        return electionOfficial.updateElectionName(originalElectionName, updatedElectionName);
+    }
+
+    public boolean updateQuestion(ElectionOfficial electionOfficial, String electionName, String originalQuestionText,
+                                  String updatedQuestionText) {
+        return electionOfficial.updateQuestion(electionName, originalQuestionText, updatedQuestionText);
+    }
+
+    public boolean updateAnswer(ElectionOfficial electionOfficial, String questionText, String originalAnswerText,
+                                String updatedAnswerText, String electionName) {
+        return electionOfficial.updateAnswer(QuestionEntity.getQuestionsByName(questionText, electionName),
+                originalAnswerText, updatedAnswerText);
+    }
+
+    public boolean removeElection(ElectionOfficial electionOfficial, String electionName) {
+        return electionOfficial.removeElection(electionName);
+    }
+
+    public boolean removeQuestion(ElectionOfficial electionOfficial, String electionName, String questionText) {
+        return electionOfficial.removeQuestion(electionName, questionText);
+    }
+
+    public boolean removeAnswer(ElectionOfficial electionOfficial, String questionText, String answerText, String electionName) {
+        return electionOfficial.removeAnswer(QuestionEntity.getQuestionsByName(questionText, electionName), answerText);
+    }
+
+    public boolean startElection(ElectionOfficial electionOfficial, String electionName) {
+        return electionOfficial.startElection(electionName);
+    }
+
+    public boolean endElection(ElectionOfficial electionOfficial, String electionName) {
+        return electionOfficial.endElection(electionName);
     }
 }
