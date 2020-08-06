@@ -115,8 +115,8 @@ public class ElectionEntity implements Election{
     }
 
     @Override
-    public boolean getStatus() {
-        return status;
+    public boolean getAvailability() {
+        return status || isRemoved;
     }
 
     @Override

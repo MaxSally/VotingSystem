@@ -1,6 +1,5 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
-import javafx.util.Pair;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
@@ -115,4 +114,21 @@ public class RemoveQuestionAnswerElectionTest {
         assertTrue(answerTextStatus);
     }
 
+    @Test
+    public void testRemoveInactiveElection() {
+        String electionName = "Nov2021";
+        ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
+        boolean result = admin.removeElection(electionName);
+        assertTrue(result);
+        assertTrue(ElectionEntity.getElectionByName(electionName).getAvailability());
+    }
+
+    @Test
+    public void testRemoveActiveElection() {
+        String electionName = "Nov2020";
+        ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
+        boolean result = admin.removeElection(electionName);
+        assertFalse(result);
+        assertFalse(ElectionEntity.getElectionByName(electionName).isRemoved());
+    }
 }

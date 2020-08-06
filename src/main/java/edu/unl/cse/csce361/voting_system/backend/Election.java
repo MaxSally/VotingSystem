@@ -12,7 +12,7 @@ public interface Election {
 
     void addVoter(VoterEntity voter);
 
-    boolean getStatus();
+    boolean getAvailability();
 
     void setElectionName(String updatedElectionName);
 }
