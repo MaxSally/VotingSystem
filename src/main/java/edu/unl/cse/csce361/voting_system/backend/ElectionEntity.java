@@ -108,4 +108,9 @@ public class ElectionEntity implements Election{
             session.getTransaction().rollback();
         }
     }
+
+    @Override
+    public boolean getStatus() {
+        return status;
+    }
 }

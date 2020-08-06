@@ -11,4 +11,6 @@ public interface Election {
     List<QuestionEntity> getAssociatedQuestions();
 
     void addVoter(VoterEntity voter);
+
+    boolean getStatus();
 }

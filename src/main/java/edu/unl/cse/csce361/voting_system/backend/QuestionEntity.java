@@ -19,7 +19,7 @@ public class QuestionEntity implements Question {
         try {
             List<QuestionEntity> questions = session.createQuery("From QuestionEntity where questionText = '" + questionName + "'", QuestionEntity.class).list();
             for(QuestionEntity questionEntity : questions) {
-                if(questionEntity.getElectionName().equals(electionName)) {
+                if(questionEntity.getElection().getElectionName().equals(electionName)) {
                     question = questionEntity;
                     break;
                 }
@@ -60,8 +60,9 @@ public class QuestionEntity implements Question {
         return questionText;
     }
 
-    public String getElectionName() {
-        return election.getElectionName();
+    @Override
+    public Election getElection() {
+        return election;
     }
 
     @Override

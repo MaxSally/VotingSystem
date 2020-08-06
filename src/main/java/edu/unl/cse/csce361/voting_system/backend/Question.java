@@ -6,4 +6,6 @@ public interface Question {
     String getQuestionText();
 
     List<AnswerOptionEntity> getAssociatedAnswerOption();
+
+    Election getElection();
 }

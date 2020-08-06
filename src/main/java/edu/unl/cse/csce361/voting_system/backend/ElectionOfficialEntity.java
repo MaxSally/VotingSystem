@@ -16,19 +16,49 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         super(username, password);
     }
 
+    public ElectionOfficialEntity() {
+
+    }
+
     @Override
     public boolean createQuestion(String electionName, String questionText) {
-        return false;
+        if(ElectionEntity.getElectionByName(electionName).getStatus()) {
+            return false;
+        }
+        if(QuestionEntity.getQuestionsByName(questionText, electionName) == null) {
+            Question question = new QuestionEntity(questionText, electionName);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean createAnswer(Question question, String answerText) {
-        return false;
+        if(question == null) {
+            System.err.println("that question does not exist");
+            return false;
+        }
+        if(question.getElection().getStatus()) {
+            return false;
+        }
+        if(AnswerOptionEntity.getAnswerOptionIndexByName(question.getQuestionText(), answerText) == null) {
+            AnswerOption answer = new AnswerOptionEntity(question.getElection().getElectionName(), question.getQuestionText(),
+                    answerText);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean createElection(String name, LocalDate startTime, LocalDate endTime, boolean status) {
-        return false;
+        if(ElectionEntity.getElectionByName(name) == null) {
+            Election election = new ElectionEntity(name, startTime, endTime, status);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

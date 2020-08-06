@@ -71,9 +71,9 @@ public class DatabasePopulator {
                 new AnswerOptionEntity(activeElectionName,"Shall liquor licenses be required for electronic bars?", "No"),
                 new AnswerOptionEntity(activeElectionName,"Shall electronic race tracks be held liable for electronic car crashes?", "Yes"),
                 new AnswerOptionEntity(activeElectionName,"Shall electronic race tracks be held liable for electronic car crashes?", "No"),
-                new AnswerOptionEntity(activeElectionName,"How are you doing?", "Meh"),
-                new AnswerOptionEntity(activeElectionName,"How are you doing?", "Bueno"),
-                new AnswerOptionEntity(activeElectionName,"How are you doing?", "Alright")
+                new AnswerOptionEntity("Nov2021","How are you doing?", "Meh"),
+                new AnswerOptionEntity("Nov2021","How are you doing?", "Bueno"),
+                new AnswerOptionEntity("Nov2021","How are you doing?", "Alright")
         );
     }
 

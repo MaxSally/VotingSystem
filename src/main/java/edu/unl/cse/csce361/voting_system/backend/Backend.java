@@ -102,8 +102,8 @@ public class Backend {
         return voter.vote(answerOptionIndex);
     }
 
-    public boolean getVoterStatus(Voter voter, String electionName){
-        return voter.hasVoted(electionName);
+    public Map<String, String> getAllVoterStatus(Admin admin, String electionName){
+        return admin.getAllVoterStatus(electionName);
     }
 
     public Election getElectionByName(String electionName){
