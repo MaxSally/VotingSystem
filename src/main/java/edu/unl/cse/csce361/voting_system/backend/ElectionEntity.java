@@ -131,4 +131,9 @@ public class ElectionEntity implements Election{
     public void setRemoved(boolean removed) {
         isRemoved = removed;
     }
+
+    @Override
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }

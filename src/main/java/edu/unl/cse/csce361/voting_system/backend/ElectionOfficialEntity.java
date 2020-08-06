@@ -215,12 +215,22 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     }
 
     @Override
-    public boolean startElection(Election election) {
+    public boolean startElection(String electionName) {
+        ElectionEntity election = ElectionEntity.getElectionByName(electionName);
+        if(election != null) {
+            election.setStatus(true);
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean endElection(Election election) {
+    public boolean endElection(String electionName) {
+        ElectionEntity election = ElectionEntity.getElectionByName(electionName);
+        if(election != null) {
+            election.setStatus(false);
+            return true;
+        }
         return false;
     }
 }

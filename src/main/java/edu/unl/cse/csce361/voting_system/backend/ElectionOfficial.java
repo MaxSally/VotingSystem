@@ -22,7 +22,7 @@ public interface ElectionOfficial {
 
     boolean removeElection(String electionName);
 
-    boolean startElection(Election election);
+    boolean startElection(String electionName);
 
-    boolean endElection(Election election);
+    boolean endElection(String electionName);
 }

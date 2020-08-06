@@ -15,4 +15,6 @@ public interface Election {
     boolean getAvailability();
 
     void setElectionName(String updatedElectionName);
+
+    void setStatus(boolean status);
 }
