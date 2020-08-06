@@ -1,5 +1,6 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import java.util.List;
 import java.util.Map;
 
 public interface Admin {
@@ -13,4 +14,6 @@ public interface Admin {
     boolean startElection(String electionName);
 
     boolean endElection(String electionName);
+
+    List<Map<String, String>> getAllVoterVoteResult(String electionName);
 }

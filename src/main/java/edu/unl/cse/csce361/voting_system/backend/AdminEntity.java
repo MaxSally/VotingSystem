@@ -128,4 +128,22 @@ public class AdminEntity implements  Admin {
         }
         return answerToQuestionVoteCount;
     }
+
+    @Override
+    public List<Map<String, String>> getAllVoterVoteResult(String electionName) {
+        List<Map<String, String>> allVoterVoteResults = new ArrayList<>();
+        try {
+            Session session = HibernateUtil.getSession();
+            session.beginTransaction();
+            List<VoterEntity> voters = session.createQuery("SELECT voter From VoterEntity voter", VoterEntity.class).getResultList();
+            session.getTransaction().commit();
+            for(VoterEntity voterEntity : voters) {
+                if(voterEntity.hasVoted(electionName))
+                    allVoterVoteResults.add(voterEntity.getVoterVoteResult(electionName));
+            }
+        } catch (HibernateException exception) {
+            System.err.println("Could not load all Voters " + exception.getMessage());
+        }
+        return allVoterVoteResults;
+    }
 }

@@ -49,6 +49,10 @@ public class FinalResultTest {
         session.getTransaction().commit();
     }
 
+    /*
+
+    This test does not have assert since it is easier right now to look at the result.
+     */
     @Test
     public void testGetAllFinalResult(){
         String electionName = "Nov2020";
@@ -58,6 +62,18 @@ public class FinalResultTest {
             System.out.println("Question: " + questions.getKey().getQuestionText());
             for(Map.Entry<AnswerOptionEntity, Long> answers : questions.getValue().entrySet()){
                 System.out.format("Answer: %s: %d\n", answers.getKey().getAnswerText(), answers.getValue());
+            }
+        }
+    }
+
+    @Test
+    public void testGetAllVoterVoteResult(){
+        String electionName = "Nov2020";
+        Admin admin = new AdminEntity("hello", "idk");
+        List<Map<String, String>> allVoterResult = admin.getAllVoterVoteResult(electionName);
+        for(Map<String, String> result : allVoterResult){
+            for(Map.Entry<String, String> choice: result.entrySet()){
+                System.out.println(choice.getKey() + " " + choice.getValue());
             }
         }
     }
