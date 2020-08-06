@@ -1,19 +1,17 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
-public class ElectionsController extends ScreenController {
+public class ElectionsController extends ScreenController implements Initializable{
 
 	@FXML
-    private ListView lstElections;
+    private ListView<String> lstElections;
 	
 	
 	@Override
@@ -24,12 +22,12 @@ public class ElectionsController extends ScreenController {
 
     }
 
-    public void editElection(Election election){
+    public void editElection(){
         //current election equals the argument election
         //open edit_election.fxml
     }
 
-    public void goToAdd(){
+    public void goToAdd(javafx.event.ActionEvent event) throws IOException{
         switchScreen(event, "add_election.fxml");
     }
     

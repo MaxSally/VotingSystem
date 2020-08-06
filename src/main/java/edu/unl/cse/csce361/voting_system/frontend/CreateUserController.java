@@ -14,17 +14,17 @@ import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 public class CreateUserController extends ScreenController {
 
 	@FXML
-    private TextView txtUsername;
+    private TextField txtUsername;
 
     @FXML
-    private TextView txtSSN;   
+    private TextField txtSSN;   
     
-    public void createUser(){
+    public void createUser(javafx.event.ActionEvent event) throws IOException{
         String username = txtUsername.getText();
         //TODO encrypt ssn
         String ssn = txtSSN.getText();
 
-        DataLogic.getInstance().createNewUser(username, ssn);
+        //DataLogic.getInstance().createNewUser(username, ssn);
         
         //might add message and sleep for 2 seconds before switching screens
 

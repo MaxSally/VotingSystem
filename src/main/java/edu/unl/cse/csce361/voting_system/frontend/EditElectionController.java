@@ -1,6 +1,5 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,10 +10,10 @@ import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
-public class EditElectionController extends ScreenController {
+public class EditElectionController extends ScreenController implements Initializable{
 
 	@FXML
-    private ListView lstElectionData;
+    private ListView<String> lstElectionData;
 
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -28,7 +27,7 @@ public class EditElectionController extends ScreenController {
 
     }
 
-    public void submitElectionEdit(){
+    public void submitElectionEdit(javafx.event.ActionEvent event) throws IOException{
         //get information from dynamically created form elements
         //submit that information
         switchScreen(event, "election_screen.fxml");

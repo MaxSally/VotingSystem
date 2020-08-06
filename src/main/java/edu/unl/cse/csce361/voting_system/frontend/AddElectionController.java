@@ -11,10 +11,10 @@ import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
-public class AddElectionController extends ScreenController {
+public class AddElectionController extends ScreenController implements Initializable{
 
 	@FXML
-    private ListView lstElectionData;
+    private ListView<String> lstElectionData;
 
 
     @Override
@@ -28,7 +28,7 @@ public class AddElectionController extends ScreenController {
     }
 
 
-    public void addElection(){
+    public void addElection(javafx.event.ActionEvent event) throws IOException{
         //get election data from all procedurally generated form elements and create a new election
 
         switchScreen(event, "election_screen.fxml");

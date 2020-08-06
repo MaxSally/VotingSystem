@@ -104,5 +104,9 @@ public class DataLogic {
     public Map<String, String>getVoterVoteResult() {
         return Backend.getInstance().getVoterVoteResult(currentVoter, currentElection.getElectionName());
     }
+    
+    public String getCurrentElectionName() {
+    	return currentElection.getName();
+    }
 }
 
