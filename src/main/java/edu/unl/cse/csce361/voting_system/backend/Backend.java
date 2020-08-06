@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -171,5 +172,22 @@ public class Backend {
 
     public boolean endElection(Admin admin, String electionName) {
         return admin.endElection(electionName);
+    }
+
+    public Map<String, Map<String, Long>> getFinalResult(Admin admin, String electionName){
+        Map<QuestionEntity, Map<AnswerOptionEntity, Long>> finalResult = admin.getFinalResult(electionName);
+        Map<String, Map<String, Long>> finalResultAsString = new HashMap<>();
+        for(Map.Entry<QuestionEntity, Map<AnswerOptionEntity, Long>> question: finalResult.entrySet()){
+            Map<String, Long> finalResultAsStringEachQuestion = new HashMap<>();
+            for(Map.Entry<AnswerOptionEntity, Long> answers: question.getValue().entrySet()){
+                finalResultAsStringEachQuestion.put(answers.getKey().getAnswerText(), answers.getValue());
+            }
+            finalResultAsString.put(question.getKey().getQuestionText(), finalResultAsStringEachQuestion);
+        }
+        return finalResultAsString;
+    }
+
+    public List<Map<String, String>> getAllVoterVoteResult(Admin admin, String electionName){
+        return admin.getAllVoterVoteResult(electionName);
     }
 }
