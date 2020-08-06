@@ -175,13 +175,17 @@ public class Backend {
     }
 
     public Map<String, Map<String, Long>> getFinalResult(Admin admin, String electionName){
+        Long voterCount = VoterEntity.getVoterCountVotedInElection(electionName);
         Map<QuestionEntity, Map<AnswerOptionEntity, Long>> finalResult = admin.getFinalResult(electionName);
         Map<String, Map<String, Long>> finalResultAsString = new HashMap<>();
         for(Map.Entry<QuestionEntity, Map<AnswerOptionEntity, Long>> question: finalResult.entrySet()){
             Map<String, Long> finalResultAsStringEachQuestion = new HashMap<>();
+            Long totalCastedVote = 0L;
             for(Map.Entry<AnswerOptionEntity, Long> answers: question.getValue().entrySet()){
                 finalResultAsStringEachQuestion.put(answers.getKey().getAnswerText(), answers.getValue());
+                totalCastedVote += answers.getValue();
             }
+            finalResultAsStringEachQuestion.put("No vote", voterCount - totalCastedVote);
             finalResultAsString.put(question.getKey().getQuestionText(), finalResultAsStringEachQuestion);
         }
         return finalResultAsString;

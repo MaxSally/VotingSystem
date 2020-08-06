@@ -25,6 +25,26 @@ public class VoterEntity implements Voter {
         return voter;
     }
 
+    static Long getVoterCountVotedInElection(String electionName){
+        Long voterCount = 0L;
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            List<VoterEntity> voters = session.createQuery("SELECT voter From VoterEntity voter", VoterEntity.class).getResultList();
+            session.getTransaction().commit();
+            for(VoterEntity voter: voters){
+                if(voter.hasVoted(electionName)){
+                    voterCount++;
+                }
+            }
+
+        }catch (HibernateException exception){
+            System.err.println("Could not load all Voters " + exception.getMessage());
+            session.getTransaction().rollback();
+        }
+        return voterCount;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "ID")

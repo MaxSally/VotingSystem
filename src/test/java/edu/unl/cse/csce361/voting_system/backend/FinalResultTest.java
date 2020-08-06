@@ -57,11 +57,11 @@ public class FinalResultTest {
     public void testGetAllFinalResult(){
         String electionName = "Nov2020";
         Admin admin = new AdminEntity("hello", "idk");
-        Map<QuestionEntity, Map<AnswerOptionEntity, Long>> finalResult = admin.getFinalResult(electionName);
-        for(Map.Entry<QuestionEntity, Map<AnswerOptionEntity, Long>> questions : finalResult.entrySet()){
-            System.out.println("Question: " + questions.getKey().getQuestionText());
-            for(Map.Entry<AnswerOptionEntity, Long> answers : questions.getValue().entrySet()){
-                System.out.format("Answer: %s: %d\n", answers.getKey().getAnswerText(), answers.getValue());
+        Map<String, Map<String, Long>> finalResult = Backend.getInstance().getFinalResult(admin, electionName);
+        for(Map.Entry<String, Map<String, Long>> questions : finalResult.entrySet()){
+            System.out.println("Question: " + questions.getKey());
+            for(Map.Entry<String, Long> answers : questions.getValue().entrySet()){
+                System.out.format("Answer: %s: %d\n", answers.getKey(), answers.getValue());
             }
         }
     }
