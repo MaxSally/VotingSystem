@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.Boolean.TRUE;
-
 @Entity
 public class AdminEntity implements  Admin {
 
@@ -50,38 +48,9 @@ public class AdminEntity implements  Admin {
         this.password = password;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     @Override
     public boolean logIn(String password) {
         return this != null && this.password.equals(password);
-    }
-
-    @Override
-    public String getFinalResult() {
-        return null;
-    }
-
-    @Override
-    public boolean createQuestion(String questionText, List<String> answerOption) {
-        return false;
-    }
-
-    @Override
-    public boolean updateAnswerOption(Question question, List<String> answerOption) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAnswerOption(Question question, AnswerOption answerOption) {
-        return false;
-    }
-
-    @Override
-    public boolean updateQuestion(Question question, String newQuestionText) {
-        return false;
     }
 
     public Map<String, String> getAllVoterStatus(String electionName){
@@ -99,5 +68,64 @@ public class AdminEntity implements  Admin {
             System.err.println("Could not load all Voters " + exception.getMessage());
         }
         return voterStatus;
+    }
+
+    @Override
+    public boolean startElection(String electionName) {
+        ElectionEntity election = ElectionEntity.getElectionByName(electionName);
+        if(election != null) {
+            election.setStatus(true);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean endElection(String electionName) {
+        ElectionEntity election = ElectionEntity.getElectionByName(electionName);
+        if(election != null) {
+            election.setStatus(false);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Map<QuestionEntity, Map<AnswerOptionEntity, Long>> getFinalResult(String electionName){
+        if(!endElection(electionName)){
+            System.err.println("cannot end election " + electionName);
+            return null;
+        }
+        List<QuestionEntity> questions = ElectionEntity.getElectionByName(electionName).getAssociatedQuestions();
+        Map<QuestionEntity, Map<AnswerOptionEntity, Long>> finalResult = new HashMap<>();
+        for(QuestionEntity question : questions){
+            Map<AnswerOptionEntity, Long> finalResultEachQuestion = getFinalResultForEachQuestion(electionName, question);
+            finalResult.put(question, finalResultEachQuestion);
+        }
+        return finalResult;
+    }
+
+    public Map<AnswerOptionEntity, Long> getFinalResultForEachQuestion(String electionName, QuestionEntity question){
+        List<AnswerOptionEntity> answerOptions = question.getAssociatedAnswerOption();
+        Map<AnswerOptionEntity, Long> answerToQuestionVoteCount = new HashMap<>();
+        Long mostVoteCount = 0L;
+        AnswerOptionEntity mostVoteSelection = null;
+        for(AnswerOptionEntity answerOptionEntity : answerOptions){
+            Session session = HibernateUtil.getSession();
+            try{
+                session.beginTransaction();
+                Integer voteCount = session.createQuery("From VoterChoiceEntity where answerOption_id = " + answerOptionEntity.getId(),
+                        VoterChoiceEntity.class).list().size();
+                answerToQuestionVoteCount.put(answerOptionEntity, (long) voteCount);
+                /*
+                pending for settling tie.
+                 */
+                session.getTransaction().commit();
+            }catch(HibernateException exception){
+                System.err.println("Encounter problems while counting votes " + exception);
+                session.getTransaction().rollback();
+            }
+        }
+        return answerToQuestionVoteCount;
     }
 }
