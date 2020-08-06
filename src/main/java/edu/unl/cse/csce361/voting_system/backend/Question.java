@@ -8,4 +8,6 @@ public interface Question {
     List<AnswerOptionEntity> getAssociatedAnswerOption();
 
     Election getElection();
+
+    void setStatus(boolean status);
 }

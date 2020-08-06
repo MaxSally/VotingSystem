@@ -2,7 +2,6 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -48,19 +47,23 @@ public class ElectionEntity implements Election{
     @Column
     private boolean status;
 
+    @Column
+    private boolean isRemoved;
+
     @OneToMany(mappedBy = "election", cascade = CascadeType.ALL)
     private List<QuestionEntity> questions;
 
     @ManyToMany(mappedBy = "electionVotedIn", cascade = CascadeType.ALL)
     private Set<VoterEntity> voters;
 
-    public ElectionEntity(String name, LocalDate startTime, LocalDate endTime, boolean status) {
+    public ElectionEntity(String name, LocalDate startTime, LocalDate endTime, boolean status, boolean isRemoved) {
         this.name = name;
         if(startTime.isBefore(endTime)) {
             this.startTime = startTime;
             this.endTime = endTime;
         }
         this.status = status;
+        this.isRemoved = isRemoved;
         questions = new ArrayList<>();
         voters = new HashSet<>();
     }
@@ -119,5 +122,13 @@ public class ElectionEntity implements Election{
     @Override
     public void setElectionName(String updatedElectionName) {
         name = updatedElectionName;
+    }
+
+    public boolean isRemoved() {
+        return isRemoved;
+    }
+
+    public void setRemoved(boolean removed) {
+        isRemoved = removed;
     }
 }

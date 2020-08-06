@@ -58,7 +58,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     @Override
     public boolean createElection(String name, LocalDate startTime, LocalDate endTime, boolean status) {
         if(ElectionEntity.getElectionByName(name) == null) {
-            Election election = new ElectionEntity(name, startTime, endTime, status);
+            Election election = new ElectionEntity(name, startTime, endTime, status, false);
             return true;
         } else {
             return false;
@@ -137,11 +137,48 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean removeQuestion(String electionName, String questionText) {
-        return false;
+        Election election = ElectionEntity.getElectionByName(electionName);
+        if(election == null || election.getStatus()) {
+            return false;
+        }
+        Question question = QuestionEntity.getQuestionsByName(questionText, electionName);
+        if(question == null) {
+            return false;
+        }
+        question.setStatus(false);
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        try {
+            session.saveOrUpdate(question);
+            session.getTransaction().commit();
+        } catch (HibernateException exception) {
+            System.err.println("Could not remove question " + questionText + ". " + exception.getMessage());
+            session.getTransaction().rollback();
+            return false;
+        }
+        List<AnswerOptionEntity> correspondingAnswers = question.getAssociatedAnswerOption();
+        for(AnswerOptionEntity answerOptionEntity : correspondingAnswers) {
+            answerOptionEntity.setStatus(false);
+            try {
+                session.beginTransaction();
+                session.saveOrUpdate(answerOptionEntity);
+                session.getTransaction().commit();
+            } catch (HibernateException exception) {
+                System.err.println("Could not remove corresponding answer " + answerOptionEntity.getAnswerText() + ". " + exception.getMessage());
+                session.getTransaction().rollback();
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean removeAnswer(Question question, String answerText) {
+        return false;
+    }
+
+    @Override
+    public boolean removeElection(String electionName) {
         return false;
     }
 

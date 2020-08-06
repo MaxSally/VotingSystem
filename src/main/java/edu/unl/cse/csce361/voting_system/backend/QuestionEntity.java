@@ -39,6 +39,9 @@ public class QuestionEntity implements Question {
     @Column
     private String questionText;
 
+    @Column
+    private boolean status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private ElectionEntity election;
 
@@ -52,6 +55,7 @@ public class QuestionEntity implements Question {
         super();
         this.questionText = questionText;
         setElection(election);
+        this.status = true;
         answerOptions = new ArrayList<>();
     }
 
@@ -107,5 +111,13 @@ public class QuestionEntity implements Question {
 
     public void setQuestionText(String updatedQuestionText) {
         questionText = updatedQuestionText;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public boolean getStatus() {
+        return status;
     }
 }

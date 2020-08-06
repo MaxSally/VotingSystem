@@ -126,4 +126,8 @@ public class AnswerOptionEntity implements  AnswerOption{
     public void setAnswerText(String updateAnswerText) {
         answerText = updateAnswerText;
     }
+
+    public boolean getStatus() {
+        return status;
+    }
 }

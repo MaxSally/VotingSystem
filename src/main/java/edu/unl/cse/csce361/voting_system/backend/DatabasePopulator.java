@@ -1,6 +1,5 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.Session;
@@ -8,7 +7,6 @@ import org.hibernate.Session;
 import javax.persistence.PersistenceException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,8 +35,8 @@ public class DatabasePopulator {
     public static Set<Election> createElection() {
         System.out.println("Creating election .... Hooray");
         return Set.of(
-                new ElectionEntity("Nov2020", LocalDate.of(2020, 10, 9), LocalDate.of(2020, 11, 9), true),
-                new ElectionEntity("Nov2021", LocalDate.of(2021, 7, 9), LocalDate.of(2021, 11, 9), false)
+                new ElectionEntity("Nov2020", LocalDate.of(2020, 10, 9), LocalDate.of(2020, 11, 9), true, false),
+                new ElectionEntity("Nov2021", LocalDate.of(2021, 7, 9), LocalDate.of(2021, 11, 9), false, false)
         );
     }
 
