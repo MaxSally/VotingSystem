@@ -112,13 +112,5 @@ public class DataLogic {
             return false;
         }
     }
-
-    public boolean isAuditor() {
-        if(!Backend.getInstance().isElectionOfficial()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
 
