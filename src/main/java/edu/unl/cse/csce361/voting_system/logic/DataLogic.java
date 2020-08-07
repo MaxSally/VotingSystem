@@ -9,6 +9,7 @@ public class DataLogic {
     private List<QuestionAnswer> lstQuestionAnswer;
     private Voter currentVoter;
     private Election currentElection;
+    private Admin currentAdmin;
 
     public static DataLogic getInstance(){
         if(instance == null){
@@ -20,6 +21,7 @@ public class DataLogic {
     private DataLogic(){
         lstQuestionAnswer = new ArrayList<>();
         currentVoter = null;
+        currentAdmin = Backend.getInstance().getAdminByUsername("superrobot 800");
         // next sprint we will dynamically change the current election
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
     }
@@ -105,8 +107,21 @@ public class DataLogic {
         return Backend.getInstance().getVoterVoteResult(currentVoter, currentElection.getElectionName());
     }
     
+    public boolean adminLogIn(String name, String password) {
+        currentAdmin = Backend.getInstance().adminLogIn(name, password);
+        return currentAdmin != null;
+    }
+    
     public String getCurrentElectionName() {
     	return currentElection.getName();
+    }
+    
+    public Map<String, String> getAllVoterStatus(){
+    	return Backend.getInstance().getAllVoterStatus(currentAdmin, currentElection.getName());
+    }
+    
+    public VoterStatus getVoterAndStatus(String name, String status) {
+    	return new VoterStatus(name, status);
     }
 }
 

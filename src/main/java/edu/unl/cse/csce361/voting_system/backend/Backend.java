@@ -195,7 +195,13 @@ public class Backend {
         return admin.getAllVoterVoteResult(electionName);
     }
     
+
     public Map<String, List<String>> getAllWinner(Admin admin, String electionName){
         return admin.getFinalWinner(electionName);
+    }
+    
+    public Admin getAdminByUsername(String username) {
+    	return AdminEntity.getAdminByUsername(username);
+
     }
 }
