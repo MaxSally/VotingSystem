@@ -40,3 +40,7 @@ computers or from a shared computer at a polling location.
 
 -   The system may be implemented in text-mode or with a GUI.
 
+Extra Credit Possibilities Implemented:
+-   Pair Programming (specifically between Chloe Galinsky and Max Nguyen)
+-   GUI Accessibility, specifically in terms of color (contrast and good ratios),
+as well as making sure text is large enough for those reading it
