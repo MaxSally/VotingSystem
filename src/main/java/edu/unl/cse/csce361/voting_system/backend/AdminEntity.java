@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity.ABSTAIN_VOTE;
+
 
 @Entity
 public class AdminEntity implements  Admin {
@@ -51,7 +53,7 @@ public class AdminEntity implements  Admin {
 
     @Override
     public boolean logIn(String password) {
-        return this != null && this.password.equals(password);
+        return this.password.equals(password);
     }
 
     public Map<String, String> getAllVoterStatus(String electionName){
@@ -72,28 +74,28 @@ public class AdminEntity implements  Admin {
     }
 
     @Override
-    public Map<QuestionEntity, Map<AnswerOptionEntity, Long>> getFinalResult(String electionName) {
+    public Map<String, Map<String, Long>> getFinalResult(String electionName) {
         List<QuestionEntity> questions = ElectionEntity.getElectionByName(electionName).getAssociatedQuestions();
-        Map<QuestionEntity, Map<AnswerOptionEntity, Long>> finalResult = new HashMap<>();
+        Map<String, Map<String, Long>> finalResult = new HashMap<>();
         for(QuestionEntity question : questions){
-            Map<AnswerOptionEntity, Long> finalResultEachQuestion = getFinalResultForEachQuestion(electionName, question);
-            finalResult.put(question, finalResultEachQuestion);
+            //can be simplified to one line but hard to debug
+            Map<String , Long> finalResultEachQuestion = getFinalResultForEachQuestion(electionName, question);
+            finalResult.put(question.getQuestionText(), finalResultEachQuestion);
         }
         return finalResult;
     }
 
-    public Map<AnswerOptionEntity, Long> getFinalResultForEachQuestion(String electionName, QuestionEntity question){
+    public Map<String, Long> getFinalResultForEachQuestion(String electionName, QuestionEntity question){
         List<AnswerOptionEntity> answerOptions = question.getAssociatedAnswerOption();
-        Map<AnswerOptionEntity, Long> answerToQuestionVoteCount = new HashMap<>();
-        Long mostVoteCount = 0L;
         AnswerOptionEntity mostVoteSelection = null;
+        Map<String, Long> answerToQuestionVoteCount = new HashMap<>();
         for(AnswerOptionEntity answerOptionEntity : answerOptions){
             Session session = HibernateUtil.getSession();
             try{
                 session.beginTransaction();
-                Integer voteCount = session.createQuery("From VoterChoiceEntity where answerOption_id = " + answerOptionEntity.getId(),
+                int voteCount = session.createQuery("From VoterChoiceEntity where answerOption_id = " + answerOptionEntity.getId(),
                         VoterChoiceEntity.class).list().size();
-                answerToQuestionVoteCount.put(answerOptionEntity, (long) voteCount);
+                answerToQuestionVoteCount.put(answerOptionEntity.getAnswerText(), (long) voteCount);
                 session.getTransaction().commit();
             }catch(HibernateException exception){
                 System.err.println("Encounter problems while counting votes " + exception);
@@ -123,21 +125,24 @@ public class AdminEntity implements  Admin {
 
     @Override
     public Map<String, List<String>> getFinalWinner(String electionName){
-        Map<QuestionEntity, Map<AnswerOptionEntity, Long>> finalResult = getFinalResult(electionName);
+        Map<String, Map<String, Long>> finalResult = getFinalResult(electionName);
         Map<String, List<String>> winners = new HashMap<>();
-        for(Map.Entry<QuestionEntity, Map<AnswerOptionEntity, Long>> question: finalResult.entrySet()){
+        for(Map.Entry<String, Map<String, Long>> question: finalResult.entrySet()){
             List<String> winnerByQuestion = new ArrayList<>();
             Long maxVote = 0L;
-            for(Map.Entry<AnswerOptionEntity, Long> answers: question.getValue().entrySet()){
+            for(Map.Entry<String, Long> answers: question.getValue().entrySet()){
+                if(answers.getKey().equals(ABSTAIN_VOTE)){
+                    continue;
+                }
                 if(maxVote < answers.getValue()){
                     maxVote = answers.getValue();
                     winnerByQuestion.clear();
-                    winnerByQuestion.add(answers.getKey().getAnswerText());
-                }else if(maxVote == answers.getValue()){
-                    winnerByQuestion.add(answers.getKey().getAnswerText());
+                    winnerByQuestion.add(answers.getKey());
+                }else if(maxVote.equals(answers.getValue())){
+                    winnerByQuestion.add(answers.getKey());
                 }
             }
-            winners.put(question.getKey().getQuestionText(), winnerByQuestion);
+            winners.put(question.getKey(), winnerByQuestion);
         }
         return winners;
     }

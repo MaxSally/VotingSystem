@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity.ABSTAIN_VOTE;
+
 @Entity
 public class QuestionEntity implements Question {
 
@@ -49,12 +51,22 @@ public class QuestionEntity implements Question {
     public QuestionEntity() {
     }
 
-    public QuestionEntity(String questionText, String election) {
+    public QuestionEntity(String questionText, String electionName) {
         super();
         this.questionText = questionText;
-        setElection(election);
+        setElection(electionName);
         this.status = true;
         answerOptions = new ArrayList<>();
+        AnswerOptionEntity abstainVote = new AnswerOptionEntity(electionName, questionText, ABSTAIN_VOTE);
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            session.saveOrUpdate(abstainVote);
+            session.getTransaction().commit();
+        }catch (HibernateException exception){
+            System.err.println("Encounter hibernate problems while adding abstain vote to the database " + exception);
+            session.getTransaction().rollback();
+        }
     }
 
     @Override

@@ -124,7 +124,7 @@ public class VoterEntity implements Voter {
 
         for(QuestionEntity questionEntity : questions) {
             if(!voterSelections.containsKey(questionEntity.getQuestionText())) {
-                voterSelections.put(questionEntity.getQuestionText(), AnswerOptionEntity.NO_VOTE);
+                voterSelections.put(questionEntity.getQuestionText(), AnswerOptionEntity.ABSTAIN_VOTE);
             }
         }
 

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity.ABSTAIN_VOTE;
+
 public class DatabasePopulator {
 
     public static Set<Voter> createVoters() {
@@ -84,6 +86,11 @@ public class DatabasePopulator {
         answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Shall liquor licenses be required for electronic bars?", "Yes"));
         answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Shall electronic race tracks be held liable for electronic car crashes?", "No"));
         answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next mayor?", "Pat Mann"));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next city council?", ABSTAIN_VOTE));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next Sheriff?", ABSTAIN_VOTE));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Shall there be a 25¢ tax on cherries?", ABSTAIN_VOTE));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Shall liquor licenses be required for electronic bars?", ABSTAIN_VOTE));
+        answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Shall electronic race tracks be held liable for electronic car crashes?", ABSTAIN_VOTE));
         return answerOptionIndex;
     }
 
@@ -96,7 +103,12 @@ public class DatabasePopulator {
                 new VoterChoiceEntity("123456789", answerOptionIndex.get(3)),
                 new VoterChoiceEntity("123456789", answerOptionIndex.get(4)),
                 new VoterChoiceEntity("123456789", answerOptionIndex.get(5)),
-                new VoterChoiceEntity("123879456", answerOptionIndex.get(6))
+                new VoterChoiceEntity("123879456", answerOptionIndex.get(6)),
+                new VoterChoiceEntity("123879456", answerOptionIndex.get(7)),
+                new VoterChoiceEntity("123879456", answerOptionIndex.get(8)),
+                new VoterChoiceEntity("123879456", answerOptionIndex.get(9)),
+                new VoterChoiceEntity("123879456", answerOptionIndex.get(10)),
+                new VoterChoiceEntity("123879456", answerOptionIndex.get(11))
         );
     }
 

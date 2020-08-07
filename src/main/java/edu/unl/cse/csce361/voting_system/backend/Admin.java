@@ -9,7 +9,7 @@ public interface Admin {
 
     Map<String, String> getAllVoterStatus(String electionName);
 
-    Map<QuestionEntity, Map<AnswerOptionEntity, Long>> getFinalResult(String electionName);
+    Map<String, Map<String, Long>> getFinalResult(String electionName);
 
     List<Map<String, String>> getAllVoterVoteResult(String electionName);
 

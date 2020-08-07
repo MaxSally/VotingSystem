@@ -34,10 +34,10 @@ public class DataLogic {
             System.err.println("Voter has voted");
             return false;
         }
+        Set<String> answeredQuestion = new HashSet<>();
         for(Map.Entry<String, String> vote : voterSelections.entrySet()) {
             String questionText = vote.getKey();
             String answerText = vote.getValue();
-            Set<String> answeredQuestion = new HashSet<>();
             for(QuestionAnswer questionAnswer: lstQuestionAnswer) {
                 if(!questionAnswer.getQuestionText().equals(questionText)) {
                     continue;
@@ -62,7 +62,6 @@ public class DataLogic {
 
             }
         }
-
         Backend.getInstance().addVotedElection(currentVoter, currentElection.getElectionName());
         return true;
     }
