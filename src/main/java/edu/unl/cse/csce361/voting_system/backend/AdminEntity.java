@@ -87,7 +87,6 @@ public class AdminEntity implements  Admin {
 
     public Map<String, Long> getFinalResultForEachQuestion(String electionName, QuestionEntity question){
         List<AnswerOptionEntity> answerOptions = question.getAssociatedAnswerOption();
-        AnswerOptionEntity mostVoteSelection = null;
         Map<String, Long> answerToQuestionVoteCount = new HashMap<>();
         for(AnswerOptionEntity answerOptionEntity : answerOptions){
             Session session = HibernateUtil.getSession();

@@ -30,7 +30,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
             return false;
         }
         if(QuestionEntity.getQuestionsByName(questionText, electionName) == null) {
-            Question question = new QuestionEntity(questionText, electionName);
+            new QuestionEntity(questionText, electionName);
             return true;
         } else {
             return false;
@@ -39,15 +39,11 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean createAnswer(Question question, String answerText) {
-        if(question == null) {
-            System.err.println("that question does not exist");
-            return false;
-        }
-        if(question.getElection().getAvailability()) {
+        if(question == null || question.getElection().getAvailability()) {
             return false;
         }
         if(AnswerOptionEntity.getAnswerOptionIndexByName(question.getQuestionText(), answerText) == null) {
-            AnswerOption answer = new AnswerOptionEntity(question.getElection().getElectionName(), question.getQuestionText(),
+            new AnswerOptionEntity(question.getElection().getElectionName(), question.getQuestionText(),
                     answerText);
             return true;
         } else {
@@ -58,7 +54,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     @Override
     public boolean createElection(String name, LocalDate startTime, LocalDate endTime, boolean status) {
         if(ElectionEntity.getElectionByName(name) == null) {
-            Election election = new ElectionEntity(name, startTime, endTime, status, false);
+            new ElectionEntity(name, startTime, endTime, status, false);
             return true;
         } else {
             return false;
@@ -90,10 +86,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean updateAnswer(Question question, String originalAnswerText, String updatedAnswerText) {
-        if(question == null) {
-            return false;
-        }
-        if(question.getElection().getAvailability()) {
+        if(question == null || question.getElection().getAvailability()) {
             return false;
         }
         AnswerOptionEntity answer = AnswerOptionEntity.getAnswerOptionByQuestionAndAnswerOptionName(question.getQuestionText(),
@@ -115,10 +108,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     @Override
     public boolean updateElectionName(String originalElectionName, String updatedElectionName) {
         Election election = ElectionEntity.getElectionByName(originalElectionName);
-        if(election == null) {
-            return false;
-        }
-        if(election.getAvailability()) {
+        if(election == null || election.getAvailability()) {
             return false;
         }
         election.setElectionName(updatedElectionName);
@@ -167,10 +157,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean removeAnswer(Question question, String answerText) {
-        if(question == null) {
-            return false;
-        }
-        if(question.getElection().getAvailability()) {
+        if(question == null || question.getElection().getAvailability()) {
             return false;
         }
         AnswerOptionEntity answer = AnswerOptionEntity.getAnswerOptionByQuestionAndAnswerOptionName(question.getQuestionText(), answerText);
@@ -233,6 +220,4 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         }
         return false;
     }
-
-
 }
