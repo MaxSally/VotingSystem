@@ -1,13 +1,9 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
@@ -17,8 +13,8 @@ public class AddElectionController extends ScreenController implements Initializ
     private ListView<String> lstElectionData;
 
 
-    @Override
-	public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+	public void initialize() {
         //initially create a single question in a pane (textView)
         //below the question, in the same pane is a list of answers (one answer by default) with a plus button that adds a new TextView element that accepts an answer
 
