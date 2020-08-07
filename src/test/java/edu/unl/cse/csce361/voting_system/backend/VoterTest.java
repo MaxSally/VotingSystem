@@ -60,7 +60,7 @@ public class VoterTest {
         String ssn = "123456789";
 
         Voter voter = Backend.getInstance().voterLogIn(name, ssn);
-        assertTrue(voter != null);
+        assertNotNull(voter);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class VoterTest {
         String ssn = "12345678901";
 
         Voter voter = Backend.getInstance().voterLogIn(name, ssn);
-        assertTrue(voter == null);
+        assertNull(voter);
 
     }
 
@@ -102,7 +102,7 @@ public class VoterTest {
         int expectedSize = 6;
         
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
-        assertTrue(questions.size() == expectedSize);
+        assertEquals(questions.size(), expectedSize);
         assertEquals(expectedQuestion1, questions.get(0));
         assertEquals(expectedQuestion2, questions.get(1));
         assertEquals(expectedQuestion3, questions.get(2));
@@ -117,7 +117,7 @@ public class VoterTest {
         int expectedSize = 2;
 
         List<Pair<String, Long>> answers = Backend.getInstance().getAllAnswersByQuestion(questionName, electionName);
-        assertTrue(answers.size() == expectedSize);
+        assertEquals(answers.size(), expectedSize);
         assertEquals(expectedAnswer1, answers.get(0).getKey());
         assertEquals(expectedAnswer2, answers.get(1).getKey());
     }
@@ -129,7 +129,7 @@ public class VoterTest {
         Long expectedID = answerOptionIndex.get(3);
         Long actualID = AnswerOptionEntity.getAnswerOptionIndexByName(questionText, answerText);
         System.out.println(actualID);
-        assertTrue(expectedID == actualID);
+        assertSame(expectedID, actualID);
     }
 
     @Test

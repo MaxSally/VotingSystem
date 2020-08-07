@@ -18,8 +18,6 @@ public class ElectionsController extends ScreenController implements Initializab
 	public void initialize(URL location, ResourceBundle resources) {
         //foreach election add election name to lstElections
         //give each one a click event (edit election method) that assigns the election we're editing to a local variable and opens a view that pulls up that information.
-
-
     }
 
     public void editElection(){

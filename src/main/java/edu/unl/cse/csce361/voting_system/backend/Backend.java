@@ -194,4 +194,8 @@ public class Backend {
     public List<Map<String, String>> getAllVoterVoteResult(Admin admin, String electionName){
         return admin.getAllVoterVoteResult(electionName);
     }
+    
+    public Map<String, List<String>> getAllWinner(Admin admin, String electionName){
+        return admin.getFinalWinner(electionName);
+    }
 }

@@ -77,4 +77,17 @@ public class FinalResultTest {
             }
         }
     }
+
+    @Test
+    public void testGetFinalWinner(){
+        String electionName = "Nov2020";
+        Admin admin = new AdminEntity("hello", "idk");
+        Map<String, List<String>> winners = admin.getFinalWinner(electionName);
+        for(Map.Entry<String, List<String>> winnerByQuestion : winners.entrySet()){
+            System.out.println(winnerByQuestion.getKey());
+            for(String answers : winnerByQuestion.getValue()){
+                System.out.println(answers);
+            }
+        }
+    }
 }

@@ -58,7 +58,7 @@ public class GetAllQuestionAndAnswerOptionTest {
         DataLogic.getInstance().setElection(electionName);
         DataLogic.getInstance().setCurrentVoter(voterSSN);
         List<QuestionAnswer> lstQA = DataLogic.getInstance().getAllQuestionsAndAnswers();
-        assertTrue(lstQA.size() == expectedSize);
+        assertEquals(expectedSize, lstQA.size());
         assertEquals(firstQuestion, lstQA.get(0).getQuestionText());
     }
 }

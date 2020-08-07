@@ -126,6 +126,7 @@ public class DatabasePopulator {
         session.createQuery("delete from QuestionEntity").executeUpdate();
         session.createQuery("delete from ElectionEntity").executeUpdate();
         session.createQuery("delete from VoterEntity").executeUpdate();
+        session.createQuery("delete from AdminEntity").executeUpdate();
     }
 
     public static void main(String[] args) {

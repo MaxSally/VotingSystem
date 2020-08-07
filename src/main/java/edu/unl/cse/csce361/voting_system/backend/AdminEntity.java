@@ -94,9 +94,6 @@ public class AdminEntity implements  Admin {
                 Integer voteCount = session.createQuery("From VoterChoiceEntity where answerOption_id = " + answerOptionEntity.getId(),
                         VoterChoiceEntity.class).list().size();
                 answerToQuestionVoteCount.put(answerOptionEntity, (long) voteCount);
-                /*
-                pending for settling tie.
-                 */
                 session.getTransaction().commit();
             }catch(HibernateException exception){
                 System.err.println("Encounter problems while counting votes " + exception);
@@ -122,5 +119,26 @@ public class AdminEntity implements  Admin {
             System.err.println("Could not load all Voters " + exception.getMessage());
         }
         return allVoterVoteResults;
+    }
+
+    @Override
+    public Map<String, List<String>> getFinalWinner(String electionName){
+        Map<QuestionEntity, Map<AnswerOptionEntity, Long>> finalResult = getFinalResult(electionName);
+        Map<String, List<String>> winners = new HashMap<>();
+        for(Map.Entry<QuestionEntity, Map<AnswerOptionEntity, Long>> question: finalResult.entrySet()){
+            List<String> winnerByQuestion = new ArrayList<>();
+            Long maxVote = 0L;
+            for(Map.Entry<AnswerOptionEntity, Long> answers: question.getValue().entrySet()){
+                if(maxVote < answers.getValue()){
+                    maxVote = answers.getValue();
+                    winnerByQuestion.clear();
+                    winnerByQuestion.add(answers.getKey().getAnswerText());
+                }else if(maxVote == answers.getValue()){
+                    winnerByQuestion.add(answers.getKey().getAnswerText());
+                }
+            }
+            winners.put(question.getKey().getQuestionText(), winnerByQuestion);
+        }
+        return winners;
     }
 }

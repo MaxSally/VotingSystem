@@ -1,17 +1,20 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class EditElectionController extends ScreenController implements Initializable{
+public class EditElectionController extends ScreenController implements Initializable {
 
 	@FXML
     private ListView<String> lstElectionData;
 
-    @FXML
-	public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         //initially create a single question in a pane (textView)
         //below the question, in the same pane is a list of answers (one answer by default) with a plus button that adds a new TextView element that accepts an answer
 
@@ -19,7 +22,6 @@ public class EditElectionController extends ScreenController implements Initiali
         //button to remove question in the pane (small x, link?)
 
         //this list will initially be populated by the current election
-
     }
 
     public void submitElectionEdit(javafx.event.ActionEvent event) throws IOException{
@@ -32,6 +34,7 @@ public class EditElectionController extends ScreenController implements Initiali
         //TODO unassign selected election
         switchScreen(event, "election_screen.fxml");
     }
+
 
 
 }
