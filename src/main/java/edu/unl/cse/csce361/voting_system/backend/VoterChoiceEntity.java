@@ -1,8 +1,5 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-
 import javax.persistence.*;
 import java.util.List;
 

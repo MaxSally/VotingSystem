@@ -3,7 +3,6 @@ package edu.unl.cse.csce361.voting_system.backend;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.lang.Boolean.TRUE;
 
 @Entity
 public class AdminEntity implements  Admin {
