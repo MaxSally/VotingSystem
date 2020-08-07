@@ -166,12 +166,12 @@ public class Backend {
         return electionOfficial.removeAnswer(QuestionEntity.getQuestionsByName(questionText, electionName), answerText);
     }
 
-    public boolean startElection(Admin admin, String electionName) {
-        return admin.startElection(electionName);
+    public boolean startElection(ElectionOfficial electionOfficial, String electionName) {
+        return electionOfficial.startElection(electionName);
     }
 
-    public boolean endElection(Admin admin, String electionName) {
-        return admin.endElection(electionName);
+    public boolean endElection(ElectionOfficial electionOfficial, String electionName) {
+        return electionOfficial.endElection(electionName);
     }
 
     public Map<String, Map<String, Long>> getFinalResult(Admin admin, String electionName){

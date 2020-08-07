@@ -11,9 +11,5 @@ public interface Admin {
 
     Map<QuestionEntity, Map<AnswerOptionEntity, Long>> getFinalResult(String electionName);
 
-    boolean startElection(String electionName);
-
-    boolean endElection(String electionName);
-
     List<Map<String, String>> getAllVoterVoteResult(String electionName);
 }

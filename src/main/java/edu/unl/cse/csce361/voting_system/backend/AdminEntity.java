@@ -71,31 +71,7 @@ public class AdminEntity implements  Admin {
     }
 
     @Override
-    public boolean startElection(String electionName) {
-        ElectionEntity election = ElectionEntity.getElectionByName(electionName);
-        if(election != null) {
-            election.setStatus(true);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean endElection(String electionName) {
-        ElectionEntity election = ElectionEntity.getElectionByName(electionName);
-        if(election != null) {
-            election.setStatus(false);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public Map<QuestionEntity, Map<AnswerOptionEntity, Long>> getFinalResult(String electionName){
-        if(!endElection(electionName)){
-            System.err.println("cannot end election " + electionName);
-            return null;
-        }
+    public Map<QuestionEntity, Map<AnswerOptionEntity, Long>> getFinalResult(String electionName) {
         List<QuestionEntity> questions = ElectionEntity.getElectionByName(electionName).getAssociatedQuestions();
         Map<QuestionEntity, Map<AnswerOptionEntity, Long>> finalResult = new HashMap<>();
         for(QuestionEntity question : questions){

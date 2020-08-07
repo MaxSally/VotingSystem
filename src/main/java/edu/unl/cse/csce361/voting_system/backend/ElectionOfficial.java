@@ -21,4 +21,8 @@ public interface ElectionOfficial {
     boolean removeAnswer(Question question, String answerText);
 
     boolean removeElection(String electionName);
+
+    boolean startElection(String electionName);
+
+    boolean endElection(String electionName);
 }
