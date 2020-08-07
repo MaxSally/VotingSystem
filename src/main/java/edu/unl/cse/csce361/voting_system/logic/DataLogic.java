@@ -104,5 +104,21 @@ public class DataLogic {
     public Map<String, String>getVoterVoteResult() {
         return Backend.getInstance().getVoterVoteResult(currentVoter, currentElection.getElectionName());
     }
+
+    public boolean isElectionOfficial() {
+        if(Backend.getInstance().isElectionOfficial()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isAuditor() {
+        if(!Backend.getInstance().isElectionOfficial()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
