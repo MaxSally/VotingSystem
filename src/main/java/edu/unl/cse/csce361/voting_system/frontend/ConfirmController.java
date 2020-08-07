@@ -1,6 +1,5 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,17 +13,8 @@ public class ConfirmController extends ScreenController implements Initializable
 	
 	@FXML
 	private ListView<String> listView;
-	
-	@FXML
-	private Label userName;
-	
-	@FXML Label ssnValue;
-	
-	@FXML
-	private Label electionYear;
-	
-	private ObservableList<String> data;
-	
+
+
 	static class Cell extends ListCell<String>{
 		Label question = new Label();
 		ChoiceBox<String> answerList = new ChoiceBox<String>();
@@ -51,7 +41,7 @@ public class ConfirmController extends ScreenController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
+		private ObservableList<String> data = null;
 		listView.setItems(data);
 		listView.setCellFactory(param -> new Cell());
 	}

@@ -17,7 +17,7 @@ public class DatabasePopulator {
         return Set.of(
                 new VoterEntity("A", "123456789"),
                 new VoterEntity("B", "123879456"),
-                new VoterEntity("C", "83948032O"),
+                new VoterEntity("C", "839480320"),
                 new VoterEntity("D", "273832943"),
                 new VoterEntity("E", "987678987"),
                 new VoterEntity("F", "353812739")

@@ -3,7 +3,6 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ public class QuestionEntity implements Question {
             for(QuestionEntity questionEntity : questions) {
                 if(questionEntity.getElection().getElectionName().equals(electionName)) {
                     question = questionEntity;
-                    break;
                 }
             }
             session.getTransaction().commit();

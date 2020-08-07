@@ -85,7 +85,7 @@ public class VoterEntity implements Voter {
     }
 
     @Override
-    public boolean logIn(String ssn) {
+    public boolean logIn(String name) {
         return this.name.equals(name);
     }
 
