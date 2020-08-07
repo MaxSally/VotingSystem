@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.BallotResult;
+
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 import edu.unl.cse.csce361.voting_system.logic.VoterStatus;
 import javafx.collections.FXCollections;
@@ -20,7 +21,7 @@ public class AuditorController implements Initializable{
 
 	@FXML
 	private TableView<VoterStatus> voterTable;
-	
+
 	@FXML
 	private TableColumn<VoterStatus, String> voterName;
 	
@@ -54,7 +55,7 @@ public class AuditorController implements Initializable{
 
 		voterName.setCellValueFactory(new PropertyValueFactory<VoterStatus, String>("name"));
         voterStatus.setCellValueFactory(new PropertyValueFactory<VoterStatus, String>("status"));
-		
+        
 		voterTable.setItems(voterList);
 		
 		//ballot table

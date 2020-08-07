@@ -130,6 +130,6 @@ public class DataLogic {
     public BallotResult getBallotResult(String questionText, String answerOptionText, Long votes) {
     	return new BallotResult(questionText, answerOptionText, votes);
     }
- 
+
 }
 
