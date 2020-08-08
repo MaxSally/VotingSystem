@@ -21,7 +21,7 @@ public class DataLogic {
     private DataLogic(){
         lstQuestionAnswer = new ArrayList<>();
         currentVoter = null;
-        currentAdmin = Backend.getInstance().getAdminByUsername("superrobot 800");
+        currentAdmin = Backend.getInstance().getAdminByUsername("superuser 999");
         // next sprint we will dynamically change the current election
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
     }
@@ -123,5 +123,14 @@ public class DataLogic {
     public VoterStatus getVoterAndStatus(String name, String status) {
     	return new VoterStatus(name, status);
     }
+    
+    public Map<String, Map<String, Long>> getFinalResult(){
+    	return Backend.getInstance().getFinalResult(currentAdmin, currentElection.getName());
+    }
+    
+    public BallotResult getBallotResult(String questionText, String answerOptionText, Long votes) {
+    	return new BallotResult(questionText, answerOptionText, votes);
+    }
+ 
 }
 
