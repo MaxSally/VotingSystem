@@ -18,14 +18,14 @@ public class AddElectionController extends ScreenController implements Initializ
     public void addElection(javafx.event.ActionEvent event) throws IOException{
         //get election data from all procedurally generated form elements and create a new election
 
-        switchScreen(event, "election_screen.fxml");
+        switchScreen(event, "elections_screen.fxml");
     }
     
     
 
     public void cancel(javafx.event.ActionEvent event) throws IOException{
 
-        switchScreen(event, "election_screen.fxml");
+        switchScreen(event, "elections_screen.fxml");
     }
 
 
