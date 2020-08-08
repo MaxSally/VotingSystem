@@ -10,7 +10,6 @@ public class DataLogic {
     private Voter currentVoter;
     private Election currentElection;
     private Admin currentAdmin;
-    private Election currentEditElection;
 
     public static DataLogic getInstance(){
         if(instance == null){
@@ -25,8 +24,6 @@ public class DataLogic {
         currentAdmin = Backend.getInstance().getAdminByUsername("superuser 999");
         // next sprint we will dynamically change the current election
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
-        currentEditElection = Backend.getInstance().getElectionByName("Nov2020");;
-
     }
 
 
@@ -132,14 +129,6 @@ public class DataLogic {
     
     public BallotResult getBallotResult(String questionText, String answerOptionText, Long votes) {
     	return new BallotResult(questionText, answerOptionText, votes);
-    }
-    
-    public void setCurrentEditElection(String electionName) {
-    	currentEditElection = Backend.getInstance().getElectionByName(electionName);;
-    }
-    
-    public String getCurrentEditElectionName() {
-    	return currentEditElection.getName();
     }
  
 }
