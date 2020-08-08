@@ -57,7 +57,7 @@ public class AdminTest {
         String password = "this is my password";
 
         Admin admin = Backend.getInstance().adminLogIn(username, password);
-        assertTrue(admin != null);
+        assertNotNull(admin);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class AdminTest {
         String password = "testaccount";
 
         Admin admin = Backend.getInstance().registerAdminAccount(username, password);
-        assertEquals(admin.getPassword(), password);
+        assertNotNull(admin);
     }
 
 }
