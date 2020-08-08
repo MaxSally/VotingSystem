@@ -54,7 +54,7 @@ public class AuditorController implements Initializable{
 
 		voterName.setCellValueFactory(new PropertyValueFactory<VoterStatus, String>("name"));
         voterStatus.setCellValueFactory(new PropertyValueFactory<VoterStatus, String>("status"));
-        
+
 		voterTable.setItems(voterList);
 		
 		//ballot table
