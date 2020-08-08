@@ -107,5 +107,21 @@ public class DataLogic {
     public String getCurrentElectionName() {
     	return currentElection.getName();
     }
+
+    public boolean isElectionOfficial() {
+        if(Backend.getInstance().isElectionOfficial()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isAuditor() {
+        if(!Backend.getInstance().isElectionOfficial()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 

@@ -13,6 +13,7 @@ import static edu.unl.cse.csce361.voting_system.backend.VoterEntity.REQUIRED_SSN
 public class Backend {
 
     private static Backend instance;
+    private Admin currentAdmin;
 
     private Backend() {
         super();
@@ -114,6 +115,10 @@ public class Backend {
         return VoterEntity.getVoterBySSN(SSN);
     }
 
+    public Admin getAdminByUsername(String username) {
+        return AdminEntity.getAdminByUsername(username);
+    }
+
     public Map<String, String> getVoterVoteResult(Voter voter, String electionName) {
         return voter.getVoterVoteResult(electionName);
     }
@@ -183,4 +188,6 @@ public class Backend {
     public Map<String, List<String>> getAllWinner(Admin admin, String electionName){
         return admin.getFinalWinner(electionName);
     }
+
+    public boolean isElectionOfficial() { return currentAdmin instanceof ElectionOfficialEntity; }
 }
