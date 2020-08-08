@@ -1,11 +1,12 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
 
-import java.awt.*;
 import java.io.IOException;
-
-import edu.unl.cse.csce361.voting_system.logic.DataLogic;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.ResourceBundle;
 
 public class CreateUserController extends ScreenController {
 

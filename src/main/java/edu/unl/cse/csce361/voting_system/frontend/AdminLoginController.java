@@ -6,7 +6,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
-public class LoginController extends ScreenController {
+public class AdminLoginController extends ScreenController {
     
     @FXML 
     private TextField txtUsername;
@@ -17,29 +17,26 @@ public class LoginController extends ScreenController {
     @FXML 
     private Text txtErrorText;
 
-    public void createUser(javafx.event.ActionEvent event) throws IOException{
-        switchScreen(event, "create_user.fxml");
-    }
-
-    public void adminLogin(javafx.event.ActionEvent event) throws IOException{
-        switchScreen(event, "admin_login.fxml");
+    public void cancel(javafx.event.ActionEvent event) throws IOException{
+        switchScreen(event, "login.fxml");
     }
 
     public void login(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
         String ssn = txtPassword.getText();
 
-        if(DataLogic.getInstance().logIn(username, ssn)){
-            if(DataLogic.getInstance().checkIfVoted()){
-                switchScreen(event, "user_info.fxml");
+        if(DataLogic.getInstance().adminLogIn(username, ssn)){
+
+            if(true){
+                switchScreen(event, "election_screen.fxml");
             }
             else{
-                switchScreen(event, "voting_screen.fxml");
+                switchScreen(event, "auditor.fxml");
             }
             txtErrorText.setText("");
         }
         else{
-            txtErrorText.setText("Error. Name or SSN must be wrong.");
+            txtErrorText.setText("Error. Username or Password must be wrong.");
         }
     }
 }
