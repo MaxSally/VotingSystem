@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.BallotResult;
-
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 import edu.unl.cse.csce361.voting_system.logic.VoterStatus;
 import javafx.collections.FXCollections;

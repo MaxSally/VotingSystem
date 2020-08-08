@@ -41,14 +41,8 @@
           </Tab>
         </tabs>
       </TabPane>
-<<<<<<< HEAD
-      <Label layoutX="149.0" layoutY="31.0" text="Current Election:" />
-      <Label layoutX="143.0" layoutY="6.0" prefHeight="17.0" prefWidth="115.0" text="Welcome Auditor!" AnchorPane.leftAnchor="143.0" AnchorPane.rightAnchor="142.0" />
-      <Label layoutX="182.0" layoutY="50.0" text="Label" />
-=======
       <Label layoutX="147.0" layoutY="6.0" text="Welcome Auditor!" />
       <Label layoutX="150.0" layoutY="31.0" text="Current Election:" />
       <Label layoutX="183.0" layoutY="50.0" text="Label" />
->>>>>>> Implemented table to view a list of voter in auditor screen
    </children>
 </AnchorPane>
