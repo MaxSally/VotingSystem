@@ -5,8 +5,6 @@ import java.util.Map;
 
 public interface Admin {
 
-    String getPassword();
-
     boolean logIn(String password);
 
     Map<String, String> getAllVoterStatus(String electionName);
