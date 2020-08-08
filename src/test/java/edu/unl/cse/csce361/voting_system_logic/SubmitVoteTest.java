@@ -21,7 +21,7 @@ public class SubmitVoteTest extends TestTemplate {
     @Test
     public void submitVote(){
         String electionName = "Nov2020";
-        String voterSSN = "83948032O";
+        String voterSSN = "839480320";
         DataLogic.getInstance().setElection(electionName);
         DataLogic.getInstance().setCurrentVoter(voterSSN);
         Map<String, String> userSelections = new HashMap<>();
@@ -30,6 +30,8 @@ public class SubmitVoteTest extends TestTemplate {
         userSelections.put("Shall there be a 25¢ tax on cherries?", "No");
         userSelections.put("Shall liquor licenses be required for electronic bars?", "Yes");
         userSelections.put("Shall electronic race tracks be held liable for electronic car crashes?", "No");
+        userSelections.put("Who is the next Sheriff?", AnswerOption.ABSTAIN_VOTE);
+        DataLogic.getInstance().getAllQuestionsAndAnswers();
         boolean success = DataLogic.getInstance().submitVote(userSelections);
         assertTrue(success);
     }
