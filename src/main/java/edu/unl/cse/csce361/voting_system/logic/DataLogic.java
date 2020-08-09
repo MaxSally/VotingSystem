@@ -31,7 +31,6 @@ public class DataLogic {
 
     }
 
-
     public boolean checkIfVoted(){
         return currentVoter.hasVoted(currentElection.getName());
     }
