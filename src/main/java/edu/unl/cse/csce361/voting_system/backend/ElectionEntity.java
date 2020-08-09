@@ -154,4 +154,14 @@ public class ElectionEntity implements Election{
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    @Override
+    public LocalDate getStartTime() {
+        return startTime;
+    }
+
+    @Override
+    public LocalDate getEndTime() {
+        return endTime;
+    }
 }
