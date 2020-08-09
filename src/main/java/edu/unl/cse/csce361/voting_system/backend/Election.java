@@ -11,7 +11,7 @@ public interface Election {
 
     void addVoter(VoterEntity voter);
 
-    boolean getAvailability();
+    boolean isAvailableForEdit();
 
     void setElectionName(String updatedElectionName);
 

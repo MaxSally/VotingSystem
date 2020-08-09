@@ -78,7 +78,7 @@ public class RemoveQuestionAnswerElectionTest extends TestTemplate {
         ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
         boolean result = admin.removeElection(electionName);
         assertTrue(result);
-        assertTrue(ElectionEntity.getElectionByName(electionName).getAvailability());
+        assertFalse(ElectionEntity.getElectionByName(electionName).isAvailableForEdit());
     }
 
     @Test

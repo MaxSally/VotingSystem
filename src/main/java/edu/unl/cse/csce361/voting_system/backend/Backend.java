@@ -190,4 +190,8 @@ public class Backend {
     }
 
     public boolean isElectionOfficial() { return currentAdmin instanceof ElectionOfficialEntity; }
+
+    public List<Election> getAllInactiveElections(){
+        return ElectionEntity.getAllInactiveElection();
+    }
 }

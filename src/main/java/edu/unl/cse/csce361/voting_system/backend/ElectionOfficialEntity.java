@@ -26,8 +26,8 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean createQuestion(String electionName, String questionText) {
-        if(ElectionEntity.getElectionByName(electionName).getAvailability()) {
-            return false;
+        if(!ElectionEntity.getElectionByName(electionName).isAvailableForEdit()) {
+            return true;
         }
         boolean status = false;
         if(QuestionEntity.getQuestionsByName(questionText, electionName) == null) {
@@ -48,7 +48,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean createAnswer(Question question, String answerText) {
-        if(question == null || question.getElection().getAvailability()) {
+        if(question == null || !question.getElection().isAvailableForEdit()) {
             return false;
         }
         boolean status = false;
@@ -90,7 +90,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean updateQuestion(String electionName, String originalQuestionText, String updatedQuestionText) {
-        if(ElectionEntity.getElectionByName(electionName).getAvailability()) {
+        if(!ElectionEntity.getElectionByName(electionName).isAvailableForEdit()) {
             return false;
         }
         boolean status = false;
@@ -114,7 +114,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean updateAnswer(Question question, String originalAnswerText, String updatedAnswerText) {
-        if(question == null || question.getElection().getAvailability()) {
+        if(question == null || !question.getElection().isAvailableForEdit()) {
             return false;
         }
         boolean status = false;
@@ -137,7 +137,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     @Override
     public boolean updateElectionName(String originalElectionName, String updatedElectionName) {
         Election election = ElectionEntity.getElectionByName(originalElectionName);
-        if(election == null || election.getAvailability()) {
+        if(election == null || !election.isAvailableForEdit()) {
             return false;
         }
         boolean status = false;
@@ -158,7 +158,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     @Override
     public boolean removeQuestion(String electionName, String questionText) {
         Election election = ElectionEntity.getElectionByName(electionName);
-        if(election == null || election.getAvailability()) {
+        if(election == null || !election.isAvailableForEdit()) {
             return false;
         }
         Question question = QuestionEntity.getQuestionsByName(questionText, electionName);
@@ -191,7 +191,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean removeAnswer(Question question, String answerText) {
-        if(question == null || question.getElection().getAvailability()) {
+        if(question == null || !question.getElection().isAvailableForEdit()) {
             return false;
         }
         AnswerOptionEntity answer = AnswerOptionEntity.getAnswerOptionByQuestionAndAnswerOptionName(question.getQuestionText(), answerText);
@@ -212,7 +212,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     @Override
     public boolean removeElection(String electionName) {
         ElectionEntity election = ElectionEntity.getElectionByName(electionName);
-        if(election == null || election.getAvailability()) {
+        if(election == null || !election.isAvailableForEdit()) {
             return false;
         }
         boolean status = false;
