@@ -29,12 +29,21 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         if(ElectionEntity.getElectionByName(electionName).getAvailability()) {
             return false;
         }
+        boolean status = false;
         if(QuestionEntity.getQuestionsByName(questionText, electionName) == null) {
-            new QuestionEntity(questionText, electionName);
-            return true;
-        } else {
-            return false;
+            Question question = new QuestionEntity(questionText, electionName);
+            Session session = HibernateUtil.getSession();
+            session.beginTransaction();
+            try {
+                session.saveOrUpdate(question);
+                session.getTransaction().commit();
+                status = true;
+            } catch (HibernateException exception) {
+                System.err.println("Could not create Question " + questionText + ". " + exception.getMessage());
+                session.getTransaction().rollback();
+            }
         }
+        return status;
     }
 
     @Override
@@ -42,23 +51,41 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         if(question == null || question.getElection().getAvailability()) {
             return false;
         }
+        boolean status = false;
         if(AnswerOptionEntity.getAnswerOptionIndexByName(question.getQuestionText(), answerText) == null) {
-            new AnswerOptionEntity(question.getElection().getElectionName(), question.getQuestionText(),
+            AnswerOption answerOption = new AnswerOptionEntity(question.getElection().getElectionName(), question.getQuestionText(),
                     answerText);
-            return true;
-        } else {
-            return false;
+            Session session = HibernateUtil.getSession();
+            session.beginTransaction();
+            try {
+                session.saveOrUpdate(answerOption);
+                session.getTransaction().commit();
+                status = true;
+            } catch (HibernateException exception) {
+                System.err.println("Could not create Answer " + answerText + ". " + exception.getMessage());
+                session.getTransaction().rollback();
+            }
         }
+        return status;
     }
 
     @Override
     public boolean createElection(String name, LocalDate startTime, LocalDate endTime, boolean status) {
+        boolean success = false;
         if(ElectionEntity.getElectionByName(name) == null) {
-            new ElectionEntity(name, startTime, endTime, status, false);
-            return true;
-        } else {
-            return false;
+            Election election = new ElectionEntity(name, startTime, endTime, status, false);
+            Session session = HibernateUtil.getSession();
+            session.beginTransaction();
+            try {
+                session.saveOrUpdate(election);
+                session.getTransaction().commit();
+                success = true;
+            } catch (HibernateException exception) {
+                System.err.println("Could not create Election " + name + ". " + exception.getMessage());
+                session.getTransaction().rollback();
+            }
         }
+        return success;
     }
 
     @Override
@@ -66,6 +93,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         if(ElectionEntity.getElectionByName(electionName).getAvailability()) {
             return false;
         }
+        boolean status = false;
         QuestionEntity question = QuestionEntity.getQuestionsByName(originalQuestionText, electionName);
         if(question == null) {
             return false;
@@ -76,12 +104,12 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         try {
             session.saveOrUpdate(question);
             session.getTransaction().commit();
-            return true;
+            status = true;
         } catch (HibernateException exception) {
             System.err.println("Could not update Question " + originalQuestionText + ". " + exception.getMessage());
             session.getTransaction().rollback();
-            return false;
         }
+        return status;
     }
 
     @Override
@@ -89,6 +117,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         if(question == null || question.getElection().getAvailability()) {
             return false;
         }
+        boolean status = false;
         AnswerOptionEntity answer = AnswerOptionEntity.getAnswerOptionByQuestionAndAnswerOptionName(question.getQuestionText(),
                 originalAnswerText);
         answer.setAnswerText(updatedAnswerText);
@@ -97,12 +126,12 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         try {
             session.saveOrUpdate(answer);
             session.getTransaction().commit();
-            return true;
+            status =  true;
         } catch (HibernateException exception) {
             System.err.println("Could not update answer " + originalAnswerText + ". " + exception.getMessage());
             session.getTransaction().rollback();
-            return false;
         }
+        return status;
     }
 
     @Override
@@ -111,18 +140,19 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         if(election == null || election.getAvailability()) {
             return false;
         }
+        boolean status = false;
         election.setElectionName(updatedElectionName);
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         try {
             session.saveOrUpdate(election);
             session.getTransaction().commit();
-            return true;
+            status = true;
         } catch (HibernateException exception) {
             System.err.println("Could not update election name " + originalElectionName + ". " + exception.getMessage());
             session.getTransaction().rollback();
-            return false;
         }
+        return status;
     }
 
     @Override
@@ -135,11 +165,15 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         if(question == null) {
             return false;
         }
+        boolean status = false;
         List<AnswerOptionEntity> correspondingAnswers = question.getAssociatedAnswerOption();
         for(AnswerOptionEntity answerOptionEntity : correspondingAnswers) {
             if(!removeAnswer(question, answerOptionEntity.getAnswerText())) {
-                return false;
+                status = true;
             }
+        }
+        if(status) {
+            return false;
         }
         question.setStatus(false);
         Session session = HibernateUtil.getSession();
@@ -181,11 +215,15 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         if(election == null || election.getAvailability()) {
             return false;
         }
+        boolean status = false;
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
         for(String question : questions) {
             if(!removeQuestion(electionName, question)) {
-                return false;
+                status = true;
             }
+        }
+        if(status) {
+            return false;
         }
         election.setRemoved(true);
         Session session = HibernateUtil.getSession();
