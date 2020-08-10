@@ -207,5 +207,9 @@ public class DataLogic {
         Backend.getInstance().registerToVote(name, ssn);
     }
 
+    public void registerNewAdmin(String name, String ssn, boolean electionOfficial){
+        Backend.getInstance().registerAdminAccount(name, ssn, electionOfficial);
+    }
+
 }
 

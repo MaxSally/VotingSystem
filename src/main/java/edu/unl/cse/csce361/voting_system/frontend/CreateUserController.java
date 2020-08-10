@@ -5,8 +5,6 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -20,7 +18,7 @@ public class CreateUserController extends ScreenController {
     @FXML
     private TextField txtSSN;   
     
-    public void createUser(javafx.event.ActionEvent event) throws IOException, NoSuchAlgorithmException{
+    public void createUser(javafx.event.ActionEvent event) throws IOException{
         String username = txtUsername.getText();
         String ssn = encryptSSN(txtSSN.getText());
 

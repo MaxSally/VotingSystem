@@ -4,6 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javafx.stage.Stage;
 
@@ -22,17 +24,25 @@ public abstract class ScreenController {
         window.show();
     }
 
-    private String encryptSSN(String ssn){
+    public String encryptSSN(String ssn){
         //using MD5 for this project for expediency 
         //actual production code could use a better encryption
-        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-        messageDigest.update(ssn.getBytes());
-        byte[] ssnBytes = messageDigest.digest();
-        StringBuilder build = new StringBuilder();
-        for(int i=0; i< ssnBytes.length ;i++)
-        {
-            build.append(Integer.toString((ssnBytes[i] & 0xff) + 0x100, 16).substring(1));
+        String hashed = "";
+        try{
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(ssn.getBytes());
+            byte[] ssnBytes = messageDigest.digest();
+            StringBuilder build = new StringBuilder();
+            for(int i=0; i< ssnBytes.length ;i++)
+            {
+                build.append(Integer.toString((ssnBytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            hashed = build.toString();
         }
-        return build.toString();
+        catch (NoSuchAlgorithmException e) 
+        {
+            e.printStackTrace();
+        }
+        return hashed;
     }
 }

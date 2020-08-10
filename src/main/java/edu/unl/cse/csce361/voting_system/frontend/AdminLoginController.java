@@ -21,6 +21,10 @@ public class AdminLoginController extends ScreenController {
         switchScreen(event, "login.fxml");
     }
 
+    public void createAdmin(javafx.event.ActionEvent event) throws IOException{
+        switchScreen(event, "create_admin.fxml");
+    }
+
     public void login(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
         String password = encryptSSN(txtPassword.getText());
