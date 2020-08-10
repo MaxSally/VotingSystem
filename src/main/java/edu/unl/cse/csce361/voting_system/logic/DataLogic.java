@@ -143,40 +143,59 @@ public class DataLogic {
         return currentEditElection.getName();
     }
 
-    public void createNewElection(String electionName, List<QuestionAnswer> questions, LocalDate startTime, LocalDate endTime, boolean status) {
+    public void createNewElectionFromModel(String electionName, List<QuestionAnswer> questions, LocalDate startTime, LocalDate endTime, boolean status) {
         if (currentAdmin instanceof ElectionOfficial) {
-            Backend.getInstance().createNewElection((ElectionOfficial) currentAdmin, electionName, startTime, endTime, status);
+            Backend.getInstance().createNewElection((ElectionOfficial) currentAdmin, 
+            		electionName, startTime, endTime, status);
 
             for (QuestionAnswer question : questions) {
-                Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, electionName, question.getQuestionText());
+                Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
+                		electionName, question.getQuestionText());
                 List<String> answerList = question.getAnswerText();
                 for (String answers : answerList) {
-                    Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, question.getQuestionText(), answers, electionName);
+                    Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
+                    		question.getQuestionText(), answers, electionName);
                 }
             }
         }
     }
-    public void updateElection(String electionName, List<QuestionAnswer> questions, LocalDate startTime, LocalDate endTime, boolean status){
-        List<QuestionAnswer> oldQuestions = getAllEditableQuestionsAnswers();
-        if (currentAdmin instanceof ElectionOfficial) {
-            Backend.getInstance().updateElectionName((ElectionOfficial) currentAdmin, currentElection.getName(), electionName);
-
-            for (int i = 0; i < questions.size(); i++ ) {
-                Backend.getInstance().updateQuestion((ElectionOfficial) currentAdmin, electionName, oldQuestions.get(i).getQuestionText(), questions.get(i).getQuestionText());
-
-                //for (int j = 0; j < ) {
-                  //  Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, question.getQuestionText(), answers, electionName);
-              //  }
-            }
-        }
-
+    
+    public void addNewQuestion(String electionName, String newQuestionText) {
+    	Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
+        		electionName, newQuestionText);
     }
-    public List<QuestionAnswer> getAllEditableQuestionsAnswers() {
-        List<String> questions = Backend.getInstance().getAllQuestionsByElection(currentEditElection.getName());
+    
+    public void addNewAnswerOption(String electionName, String questionText, String newAnswerText) {
+    	Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
+        		questionText, newAnswerText, electionName);
+    }
+    
+    public void removeQuestion(String electionName, String questionText){
+        Backend.getInstance().removeQuestion((ElectionOfficial) currentAdmin, electionName, questionText);
+    }
+    
+    public void removeAnswer(String electionName, String questionText, String answerText){
+        Backend.getInstance().removeAnswer((ElectionOfficial) currentAdmin, questionText, answerText, electionName);
+    }
+    
+    public void updateElectionName(String originalElectionName, String updatedElectionName){
+        Backend.getInstance().updateElectionName((ElectionOfficial) currentAdmin, originalElectionName, updatedElectionName);
+    }
+    
+    public void updateQuestion(String electionName, String originalQuestionText, String updatedQuestionText){
+        Backend.getInstance().updateQuestion((ElectionOfficial) currentAdmin, electionName, originalQuestionText, updatedQuestionText);
+    }
+    
+    public void updateAnswer(String questionText, String originalAnswerText, String updatedAnswerText, String electionName){
+        Backend.getInstance().updateAnswer((ElectionOfficial) currentAdmin, questionText, originalAnswerText, updatedAnswerText, electionName);
+    }
+    
+    public List<QuestionAnswer> getQuestionAnswerByElection(String electionName) {
+        List<String> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
         List<QuestionAnswer> lstCurrentQA = new ArrayList<>();
         for(String question : questions) {
-            List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question, currentEditElection.getName());
-            QuestionAndAnswerOption questionAndAnswerOption = new QuestionAndAnswerOption(currentEditElection.getName(), question);
+            List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question, electionName);
+            QuestionAndAnswerOption questionAndAnswerOption = new QuestionAndAnswerOption(electionName, question);
             questionAndAnswerOption.setAnswerOptions(answerOptions);
             lstCurrentQA.add(questionAndAnswerOption);
         }

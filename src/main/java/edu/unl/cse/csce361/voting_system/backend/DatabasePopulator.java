@@ -174,7 +174,9 @@ public class DatabasePopulator {
             session.getTransaction().commit();
             List<Question> questions = createQuestion();
             session.beginTransaction();
-            questions.forEach(session::saveOrUpdate);
+            for(Question question: questions){
+            session.saveOrUpdate(question);
+            }
             session.getTransaction().commit();
             List<AnswerOption> answerOptions = createAnswerOption();
             session.beginTransaction();

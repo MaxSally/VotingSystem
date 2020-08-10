@@ -25,13 +25,6 @@ public class EditElectionController extends ScreenController implements Initiali
 	@FXML
     private ListView<QuestionAnswer> lstElectionData;
 	
-	@FXML 
-	private Label electionName;
-	
-	
-	@FXML
-	private ChoiceBox<String> electionStatus;
-	
 	class Cell extends ListCell<QuestionAnswer> {
 
 		VBox questionVbox;
@@ -76,6 +69,8 @@ public class EditElectionController extends ScreenController implements Initiali
 			setGraphic(null);
 			
 			if(ballot != null && !empty) {
+				questionText.setText(ballot.getQuestionText());
+				//answerOptionText.setText(ballot.getAnswerText());
 				setGraphic(vbox);
 				
 			}
@@ -99,8 +94,6 @@ public class EditElectionController extends ScreenController implements Initiali
         elections.put("e_3", election);*/
         ///////////////////////TODO DELETE THE ABOVE CODE WHEN DONE TESTING OR HAVE LOGIC METHOD!!!//////////////////////////////////////
         
-        electionName.setText(DataLogic.getInstance().getCurrentEditElectionName());
-
 		List<QuestionAnswer> questionsAndAnswer = DataLogic.getInstance().getAllQuestionsAndAnswers();
 		lstElectionData.setItems(FXCollections.observableArrayList(questionsAndAnswer));
 		
