@@ -27,7 +27,7 @@ public class LoginController extends ScreenController {
 
     public void login(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
-        String ssn = txtPassword.getText();
+        String ssn = encryptSSN(txtPassword.getText());
 
         if(DataLogic.getInstance().logIn(username, ssn)){
             if(DataLogic.getInstance().checkIfVoted()){
