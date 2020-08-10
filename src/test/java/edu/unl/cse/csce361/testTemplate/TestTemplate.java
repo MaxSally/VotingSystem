@@ -1,13 +1,12 @@
 package edu.unl.cse.csce361.testTemplate;
 
-import edu.unl.cse.csce361.voting_system.backend.AnswerOption;
-import edu.unl.cse.csce361.voting_system.backend.DatabasePopulator;
-import edu.unl.cse.csce361.voting_system.backend.HibernateUtil;
-import edu.unl.cse.csce361.voting_system.backend.Question;
+import edu.unl.cse.csce361.voting_system.backend.*;
 import org.hibernate.Session;
+import org.hsqldb.Database;
 import org.junit.After;
 import org.junit.Before;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +27,11 @@ public class TestTemplate {
         DatabasePopulator.createAdmin().forEach(session::saveOrUpdate);
         session.getTransaction().commit();
         session.beginTransaction();
-        DatabasePopulator.createElection().forEach(session::saveOrUpdate);
+        DatabasePopulator.createElectionOfficial().forEach(session::saveOrUpdate);
+        session.getTransaction().commit();
+        Set<Election> elections = DatabasePopulator.createElection();
+        session.beginTransaction();
+        elections.forEach(session::saveOrUpdate);
         session.getTransaction().commit();
         List<Question> questions = DatabasePopulator.createQuestion();
         session.beginTransaction();

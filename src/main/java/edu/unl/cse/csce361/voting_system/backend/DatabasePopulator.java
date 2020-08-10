@@ -34,6 +34,14 @@ public class DatabasePopulator {
         );
     }
 
+    public static Set<ElectionOfficial> createElectionOfficial(){
+        System.out.println("Creating election officials");
+        return Set.of(
+                new ElectionOfficialEntity("Batman", "Batman123"),
+                new ElectionOfficialEntity("NuclearFusion", "WhatIsIt")
+        );
+    }
+
     public static Set<Election> createElection() {
         System.out.println("Creating election .... Hooray");
         return Set.of(
@@ -158,10 +166,15 @@ public class DatabasePopulator {
             createAdmin().forEach(session::saveOrUpdate);
             session.getTransaction().commit();
             session.beginTransaction();
-            createElection().forEach(session::saveOrUpdate);
+            createElectionOfficial().forEach(session::saveOrUpdate);
             session.getTransaction().commit();
+            Set<Election> elections = createElection();
             session.beginTransaction();
-            createQuestion().forEach(session::saveOrUpdate);
+            elections.forEach(session::saveOrUpdate);
+            session.getTransaction().commit();
+            List<Question> questions = createQuestion();
+            session.beginTransaction();
+            questions.forEach(session::saveOrUpdate);
             session.getTransaction().commit();
             List<AnswerOption> answerOptions = createAnswerOption();
             session.beginTransaction();
