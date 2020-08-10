@@ -12,7 +12,7 @@ public class DataLogic {
     private Voter currentVoter;
     private Election currentElection;
     private Admin currentAdmin;
-    private Election currentEditElection;
+    private ElectionOfficial currentOfficial;
 
     public static DataLogic getInstance(){
         if(instance == null){
@@ -27,7 +27,7 @@ public class DataLogic {
         currentAdmin = Backend.getInstance().getAdminByUsername("superuser 999");
         // next sprint we will dynamically change the current election
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
-        currentEditElection = Backend.getInstance().getElectionByName("Nov2020");;
+        currentOfficial = null;
 
     }
 
@@ -135,26 +135,18 @@ public class DataLogic {
         return new BallotResult(questionText, answerOptionText, votes);
     }
 
-    public void setCurrentEditElection(String electionName) {
-        currentEditElection = Backend.getInstance().getElectionByName(electionName);;
-    }
-
-    public String getCurrentEditElectionName() {
-        return currentEditElection.getName();
-    }
-
-    public void createNewElectionFromModel(String electionName, List<QuestionAnswer> questions, LocalDate startTime, LocalDate endTime, boolean status) {
+    public void createNewElectionFromModel(String electionName, Map<String, List<String>> questions, LocalDate startTime, LocalDate endTime, boolean status) {
         if (currentAdmin instanceof ElectionOfficial) {
             Backend.getInstance().createNewElection((ElectionOfficial) currentAdmin, 
             		electionName, startTime, endTime, status);
 
-            for (QuestionAnswer question : questions) {
+            for (Map.Entry<String, List<String>> question : questions.entrySet()) {
                 Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
-                		electionName, question.getQuestionText());
-                List<String> answerList = question.getAnswerText();
-                for (String answers : answerList) {
+                		electionName, question.getKey());
+                List<String> answerList = question.getValue();
+                for (String answer : answerList) {
                     Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
-                    		question.getQuestionText(), answers, electionName);
+                    		question.getKey(), answer, electionName);
                 }
             }
         }

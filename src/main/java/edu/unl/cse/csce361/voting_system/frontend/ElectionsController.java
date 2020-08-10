@@ -16,33 +16,13 @@ import java.util.ResourceBundle;
 
 public class ElectionsController extends ScreenController implements Initializable{
 
-	@FXML
-    private ComboBox comboElections;
+
 	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
         // temporary array for testing.
-        List<String> answers = new ArrayList<String>();
-        answers.add("a_A");
-        answers.add("a_B");
-        answers.add("a_C");
-        Map<String,List<String>> election = new HashMap<String,List<String>>();
-        election.put("q_1", answers);
-        election.put("q_2", answers);
-        election.put("q_3", answers);
-        Map<String, Map<String,List<String>>> elections = new HashMap<String, Map<String,List<String>>>();
-        elections.put("e_1", election);
-        elections.put("e_2", election);
-        elections.put("e_3", election);
-        ///////////////////////DELETE THE ABOVE CODE!!!//////////////////////////////////////
-
-
-        // foreach election add election name to lstElections
-        // give each one a click event (edit election method) that assigns the election we're editing to a local variable and opens a view that pulls up that information.
-        for(Map.Entry<String, Map<String,List<String>>> elec: elections.entrySet()){
-            comboElections.getItems().add(elec.getKey());
-        }
+        
     }
 
     public void editElection(javafx.event.ActionEvent event) throws IOException{

@@ -190,7 +190,9 @@ public class Backend {
         return admin.getFinalWinner(electionName);
     }
 
-    public boolean isElectionOfficial() { return currentAdmin instanceof ElectionOfficialEntity; }
+    public boolean isElectionOfficial() { 
+    	return currentAdmin instanceof ElectionOfficialEntity; 
+    }
 
     public List<Election> getAllInactiveElections(){
         return ElectionEntity.getAllInactiveElection();
