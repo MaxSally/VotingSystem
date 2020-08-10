@@ -185,6 +185,7 @@ public class Backend {
         return admin.getAllVoterVoteResult(electionName);
     }
     
+
     public Map<String, List<String>> getAllWinner(Admin admin, String electionName){
         return admin.getFinalWinner(electionName);
     }
@@ -202,4 +203,5 @@ public class Backend {
     public LocalDate getEndTimeForElection(String currentElection){
         return ElectionEntity.getElectionByName(currentElection).getEndTime();
     }
+
 }

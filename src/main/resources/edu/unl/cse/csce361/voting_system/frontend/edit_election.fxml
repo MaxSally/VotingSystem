@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.unl.cse.csce361.voting_system.frontend.EditElectionController">
    <children>
@@ -13,16 +14,27 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <ListView fx:id="lstElectionData" layoutY="82.0" prefHeight="434.0" prefWidth="400.0" />
+      <ListView fx:id="lstElectionData" layoutY="82.0" prefHeight="394.0" prefWidth="400.0" />
       <Button fx:id="btnFinishEdit" layoutX="105.0" layoutY="535.0" mnemonicParsing="false" onAction="#submitElectionEdit" style="-fx-background-color: #1971ff;" text="Finish Editing Election" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
-      <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Election Name">
+      <Label layoutX="96.0" layoutY="490.0" text="Election Status: ">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font size="18.0" />
          </font>
-      </Text>
+      </Label>
+      <ChoiceBox fx:id="electionStatus" layoutX="248.0" layoutY="488.0" prefHeight="27.0" prefWidth="138.0" />
+      <Label fx:id="electionName" layoutX="11.0" layoutY="46.0" text="Label">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="11.0" layoutY="14.0" text="Edit">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
