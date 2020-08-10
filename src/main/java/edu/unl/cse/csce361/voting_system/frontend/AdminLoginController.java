@@ -23,9 +23,9 @@ public class AdminLoginController extends ScreenController {
 
     public void login(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
-        String ssn = txtPassword.getText();
+        String password = txtPassword.getText();
 
-        if(DataLogic.getInstance().adminLogIn(username, ssn)){
+        if(DataLogic.getInstance().adminLogIn(username, password)){
 
             if(DataLogic.getInstance().isElectionOfficial()){
                 switchScreen(event, "election_screen.fxml");
