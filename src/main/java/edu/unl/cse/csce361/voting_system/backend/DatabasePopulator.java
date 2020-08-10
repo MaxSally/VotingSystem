@@ -160,8 +160,11 @@ public class DatabasePopulator {
             session.beginTransaction();
             createElection().forEach(session::saveOrUpdate);
             session.getTransaction().commit();
+            List<Question> questions = createQuestion();
             session.beginTransaction();
-            createQuestion().forEach(session::saveOrUpdate);
+            for(Question question: questions){
+            session.saveOrUpdate(question);
+            }
             session.getTransaction().commit();
             List<AnswerOption> answerOptions = createAnswerOption();
             session.beginTransaction();
