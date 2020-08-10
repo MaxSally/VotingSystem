@@ -26,46 +26,74 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean createQuestion(String electionName, String questionText) {
-        if(ElectionEntity.getElectionByName(electionName).getAvailability()) {
-            return false;
-        }
-        if(QuestionEntity.getQuestionsByName(questionText, electionName) == null) {
-            new QuestionEntity(questionText, electionName);
+        if(!ElectionEntity.getElectionByName(electionName).isAvailableForEdit()) {
             return true;
-        } else {
-            return false;
         }
+        boolean status = false;
+        if(QuestionEntity.getQuestionsByName(questionText, electionName) == null) {
+            Question question = new QuestionEntity(questionText, electionName);
+            Session session = HibernateUtil.getSession();
+            session.beginTransaction();
+            try {
+                session.saveOrUpdate(question);
+                session.getTransaction().commit();
+                status = true;
+            } catch (HibernateException exception) {
+                System.err.println("Could not create Question " + questionText + ". " + exception.getMessage());
+                session.getTransaction().rollback();
+            }
+        }
+        return status;
     }
 
     @Override
     public boolean createAnswer(Question question, String answerText) {
-        if(question == null || question.getElection().getAvailability()) {
+        if(question == null || !question.getElection().isAvailableForEdit()) {
             return false;
         }
+        boolean status = false;
         if(AnswerOptionEntity.getAnswerOptionIndexByName(question.getQuestionText(), answerText) == null) {
-            new AnswerOptionEntity(question.getElection().getElectionName(), question.getQuestionText(),
+            AnswerOption answerOption = new AnswerOptionEntity(question.getElection().getElectionName(), question.getQuestionText(),
                     answerText);
-            return true;
-        } else {
-            return false;
+            Session session = HibernateUtil.getSession();
+            session.beginTransaction();
+            try {
+                session.saveOrUpdate(answerOption);
+                session.getTransaction().commit();
+                status = true;
+            } catch (HibernateException exception) {
+                System.err.println("Could not create Answer " + answerText + ". " + exception.getMessage());
+                session.getTransaction().rollback();
+            }
         }
+        return status;
     }
 
     @Override
     public boolean createElection(String name, LocalDate startTime, LocalDate endTime, boolean status) {
+        boolean success = false;
         if(ElectionEntity.getElectionByName(name) == null) {
-            new ElectionEntity(name, startTime, endTime, status, false);
-            return true;
-        } else {
-            return false;
+            Election election = new ElectionEntity(name, startTime, endTime, status, false);
+            Session session = HibernateUtil.getSession();
+            session.beginTransaction();
+            try {
+                session.saveOrUpdate(election);
+                session.getTransaction().commit();
+                success = true;
+            } catch (HibernateException exception) {
+                System.err.println("Could not create Election " + name + ". " + exception.getMessage());
+                session.getTransaction().rollback();
+            }
         }
+        return success;
     }
 
     @Override
     public boolean updateQuestion(String electionName, String originalQuestionText, String updatedQuestionText) {
-        if(ElectionEntity.getElectionByName(electionName).getAvailability()) {
+        if(!ElectionEntity.getElectionByName(electionName).isAvailableForEdit()) {
             return false;
         }
+        boolean status = false;
         QuestionEntity question = QuestionEntity.getQuestionsByName(originalQuestionText, electionName);
         if(question == null) {
             return false;
@@ -76,19 +104,20 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         try {
             session.saveOrUpdate(question);
             session.getTransaction().commit();
-            return true;
+            status = true;
         } catch (HibernateException exception) {
             System.err.println("Could not update Question " + originalQuestionText + ". " + exception.getMessage());
             session.getTransaction().rollback();
-            return false;
         }
+        return status;
     }
 
     @Override
     public boolean updateAnswer(Question question, String originalAnswerText, String updatedAnswerText) {
-        if(question == null || question.getElection().getAvailability()) {
+        if(question == null || !question.getElection().isAvailableForEdit()) {
             return false;
         }
+        boolean status = false;
         AnswerOptionEntity answer = AnswerOptionEntity.getAnswerOptionByQuestionAndAnswerOptionName(question.getQuestionText(),
                 originalAnswerText);
         answer.setAnswerText(updatedAnswerText);
@@ -97,49 +126,54 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         try {
             session.saveOrUpdate(answer);
             session.getTransaction().commit();
-            return true;
+            status =  true;
         } catch (HibernateException exception) {
             System.err.println("Could not update answer " + originalAnswerText + ". " + exception.getMessage());
             session.getTransaction().rollback();
-            return false;
         }
+        return status;
     }
 
     @Override
     public boolean updateElectionName(String originalElectionName, String updatedElectionName) {
         Election election = ElectionEntity.getElectionByName(originalElectionName);
-        if(election == null || election.getAvailability()) {
+        if(election == null || !election.isAvailableForEdit()) {
             return false;
         }
+        boolean status = false;
         election.setElectionName(updatedElectionName);
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         try {
             session.saveOrUpdate(election);
             session.getTransaction().commit();
-            return true;
+            status = true;
         } catch (HibernateException exception) {
             System.err.println("Could not update election name " + originalElectionName + ". " + exception.getMessage());
             session.getTransaction().rollback();
-            return false;
         }
+        return status;
     }
 
     @Override
     public boolean removeQuestion(String electionName, String questionText) {
         Election election = ElectionEntity.getElectionByName(electionName);
-        if(election == null || election.getAvailability()) {
+        if(election == null || !election.isAvailableForEdit()) {
             return false;
         }
         Question question = QuestionEntity.getQuestionsByName(questionText, electionName);
         if(question == null) {
             return false;
         }
+        boolean status = false;
         List<AnswerOptionEntity> correspondingAnswers = question.getAssociatedAnswerOption();
         for(AnswerOptionEntity answerOptionEntity : correspondingAnswers) {
             if(!removeAnswer(question, answerOptionEntity.getAnswerText())) {
-                return false;
+                status = true;
             }
+        }
+        if(status) {
+            return false;
         }
         question.setStatus(false);
         Session session = HibernateUtil.getSession();
@@ -157,7 +191,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
 
     @Override
     public boolean removeAnswer(Question question, String answerText) {
-        if(question == null || question.getElection().getAvailability()) {
+        if(question == null || !question.getElection().isAvailableForEdit()) {
             return false;
         }
         AnswerOptionEntity answer = AnswerOptionEntity.getAnswerOptionByQuestionAndAnswerOptionName(question.getQuestionText(), answerText);
@@ -178,14 +212,18 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     @Override
     public boolean removeElection(String electionName) {
         ElectionEntity election = ElectionEntity.getElectionByName(electionName);
-        if(election == null || election.getAvailability()) {
+        if(election == null || !election.isAvailableForEdit()) {
             return false;
         }
+        boolean status = false;
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
         for(String question : questions) {
             if(!removeQuestion(electionName, question)) {
-                return false;
+                status = true;
             }
+        }
+        if(status) {
+            return false;
         }
         election.setRemoved(true);
         Session session = HibernateUtil.getSession();

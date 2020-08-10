@@ -28,6 +28,25 @@ public class ElectionEntity implements Election{
         return election;
     }
 
+    static List<Election> getAllInactiveElection(){
+        List<Election> inactiveElections = new ArrayList<>();
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            List<ElectionEntity> allElections= session.createQuery("SELECT election From ElectionEntity election", ElectionEntity.class).getResultList();
+            session.getTransaction().commit();
+            for(ElectionEntity election: allElections){
+                if(election.isAvailableForEdit()){
+                    inactiveElections.add(election);
+                }
+            }
+        }catch (HibernateException exception){
+            System.err.println("Could not load all elections " + exception.getMessage());
+            session.getTransaction().rollback();
+        }
+        return inactiveElections;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "ID")
@@ -114,8 +133,8 @@ public class ElectionEntity implements Election{
     }
 
     @Override
-    public boolean getAvailability() {
-        return status || isRemoved;
+    public boolean isAvailableForEdit() {
+        return !status && !isRemoved;
     }
 
     @Override
@@ -134,5 +153,15 @@ public class ElectionEntity implements Election{
     @Override
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public LocalDate getStartTime() {
+        return startTime;
+    }
+
+    @Override
+    public LocalDate getEndTime() {
+        return endTime;
     }
 }

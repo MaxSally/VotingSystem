@@ -1,5 +1,8 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
+import net.bytebuddy.asm.Advice;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface Election {
@@ -11,9 +14,13 @@ public interface Election {
 
     void addVoter(VoterEntity voter);
 
-    boolean getAvailability();
+    boolean isAvailableForEdit();
 
     void setElectionName(String updatedElectionName);
 
     void setStatus(boolean status);
+
+    LocalDate getStartTime();
+
+    LocalDate getEndTime();
 }

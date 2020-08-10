@@ -191,4 +191,17 @@ public class Backend {
     }
 
     public boolean isElectionOfficial() { return currentAdmin instanceof ElectionOfficialEntity; }
+
+    public List<Election> getAllInactiveElections(){
+        return ElectionEntity.getAllInactiveElection();
+    }
+
+    public LocalDate getStartTimeForElection(String currentElection){
+        return ElectionEntity.getElectionByName(currentElection).getStartTime();
+    }
+
+    public LocalDate getEndTimeForElection(String currentElection){
+        return ElectionEntity.getElectionByName(currentElection).getEndTime();
+    }
+
 }
