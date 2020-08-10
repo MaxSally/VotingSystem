@@ -68,11 +68,7 @@ public class VoterEntity implements Voter {
     }
 
     public VoterEntity(String name, String SSN) {
-        if(validateSSN(SSN)) {
-            this.SSN= SSN;
-        } else {
-            this.SSN = "";
-        }
+    	this.SSN = SSN;
         this.name = name;
         voterChoices = new ArrayList<>();
         electionVotedIn = new HashSet<>();
@@ -137,14 +133,6 @@ public class VoterEntity implements Voter {
             voterChoiceEntity.setVoter(this);
         }else {
             throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
-        }
-    }
-
-    static boolean validateSSN(String ssn) {
-        if(ssn.length() != REQUIRED_SSN_LENGTH) {
-            throw new IllegalArgumentException("Invalid SSN length. The required length is " + REQUIRED_SSN_LENGTH);
-        } else {
-            return true;
         }
     }
 

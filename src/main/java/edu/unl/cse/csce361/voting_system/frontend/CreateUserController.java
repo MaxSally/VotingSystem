@@ -5,8 +5,12 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
 public class CreateUserController extends ScreenController {
 
@@ -16,7 +20,7 @@ public class CreateUserController extends ScreenController {
     @FXML
     private TextField txtSSN;   
     
-    public void createUser(javafx.event.ActionEvent event) throws IOException{
+    public void createUser(javafx.event.ActionEvent event) throws IOException, NoSuchAlgorithmException{
         String username = txtUsername.getText();
         String ssn = encryptSSN(txtSSN.getText());
 
@@ -28,7 +32,7 @@ public class CreateUserController extends ScreenController {
         switchScreen(event, "login.fxml");
     }
 
-    private String encryptSSN(String ssn){
+    private String encryptSSN(String ssn) throws NoSuchAlgorithmException{
         //using MD5 for this project for expediency 
         //actual production code could use a better encryption
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");

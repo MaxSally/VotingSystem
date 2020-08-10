@@ -43,7 +43,7 @@ public class VoteController extends ScreenController implements Initializable {
 			hbox = new HBox(question, answerChoiceList);
 			hbox.setSpacing(10);
 		}
-		
+
 		public void updateItem(QuestionAnswer ballot, boolean empty) {
 
 			super.updateItem(ballot, empty);
@@ -100,8 +100,8 @@ public class VoteController extends ScreenController implements Initializable {
         Button confirm = new Button(confirmButton);
         confirm.setOnAction(e -> {
 			try {
-		    	DataLogic.getInstance().submitVote(selectedAnswer);
-				switchScreen(event, "thankYou_screen.fxml");
+		    	//DataLogic.getInstance().submitVote(selectedAnswer);
+				switchScreen(event, "confirm_screen.fxml");
 				window.close();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
