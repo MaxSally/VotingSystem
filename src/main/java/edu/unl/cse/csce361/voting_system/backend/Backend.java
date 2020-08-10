@@ -55,7 +55,7 @@ public class Backend {
         return voter;
     }
 
-    public Admin registerAdminAccount(String username, String password) {
+    public Admin registerAdminAccount(String username, String password, boolean isElectionOfficial) {
         Session session = HibernateUtil.getSession();
         System.out.println("Starting Hibernate transaction...");
         Admin admin = null;
@@ -63,7 +63,12 @@ public class Backend {
             admin = AdminEntity.getAdminByUsername(username);
             if(admin == null) {
                 session.beginTransaction();
-                admin = new AdminEntity(username, password);
+                if(isElectionOfficial){
+                    admin = new ElectionOfficialEntity(username, password);
+                }else{
+                    admin = new AdminEntity(username, password);
+                }
+
                 session.saveOrUpdate(admin);
                 session.getTransaction().commit();
             } else {
