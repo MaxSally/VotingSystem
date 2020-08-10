@@ -203,5 +203,9 @@ public class DataLogic {
         }
     }
 
+    public void registerNewVoter(String name, String ssn){
+        Backend.getInstance().registerToVote(name, ssn);
+    }
+
 }
 

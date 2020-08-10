@@ -18,20 +18,28 @@ public class CreateUserController extends ScreenController {
     
     public void createUser(javafx.event.ActionEvent event) throws IOException{
         String username = txtUsername.getText();
-        //TODO encrypt ssn
-        String ssn = txtSSN.getText();
+        String ssn = encryptSSN(txtSSN.getText());
 
-        //DataLogic.getInstance().createNewUser(username, ssn);
-        
-        //might add message and sleep for 2 seconds before switching screens
-
+        DataLogic.getInstance().registerNewVoter(username, ssn);
         switchScreen(event, "login.fxml");
     }
 
     public void cancel(javafx.event.ActionEvent event) throws IOException{
-        //logout method
-        //logout();
         switchScreen(event, "login.fxml");
+    }
+
+    private String encryptSSN(String ssn){
+        //using MD5 for this project for expediency 
+        //actual production code could use a better encryption
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        messageDigest.update(ssn.getBytes());
+        byte[] ssnBytes = messageDigest.digest();
+        StringBuilder build = new StringBuilder();
+        for(int i=0; i< ssnBytes.length ;i++)
+        {
+            build.append(Integer.toString((ssnBytes[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return build.toString();
     }
 
 

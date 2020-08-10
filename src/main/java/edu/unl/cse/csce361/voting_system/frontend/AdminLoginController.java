@@ -27,7 +27,7 @@ public class AdminLoginController extends ScreenController {
 
         if(DataLogic.getInstance().adminLogIn(username, ssn)){
 
-            if(true){
+            if(DataLogic.getInstance().isElectionOfficial()){
                 switchScreen(event, "election_screen.fxml");
             }
             else{
