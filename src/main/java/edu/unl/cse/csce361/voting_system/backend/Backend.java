@@ -13,7 +13,6 @@ import static edu.unl.cse.csce361.voting_system.backend.VoterEntity.REQUIRED_SSN
 public class Backend {
 
     private static Backend instance;
-    private Admin currentAdmin;
 
     private Backend() {
         super();
@@ -190,7 +189,7 @@ public class Backend {
         return admin.getFinalWinner(electionName);
     }
 
-    public boolean isElectionOfficial() { 
+    public boolean isElectionOfficial(Admin currentAdmin) {
     	return currentAdmin instanceof ElectionOfficialEntity; 
     }
 

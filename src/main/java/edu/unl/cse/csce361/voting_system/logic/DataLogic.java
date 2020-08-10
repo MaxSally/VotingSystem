@@ -196,7 +196,7 @@ public class DataLogic {
     }
 
     public boolean isElectionOfficial() {
-        if(Backend.getInstance().isElectionOfficial()) {
+        if(Backend.getInstance().isElectionOfficial(currentAdmin)) {
             return true;
         } else {
             return false;
