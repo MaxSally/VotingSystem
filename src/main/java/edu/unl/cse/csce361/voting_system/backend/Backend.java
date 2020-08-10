@@ -40,17 +40,13 @@ public class Backend {
         System.out.println("Starting Hibernate transaction...");
         Voter voter = null;
         try {
-            if(VoterEntity.validateSSN(ssn)) {
-                if(VoterEntity.getVoterBySSN(ssn) == null) {
-                    session.beginTransaction();
-                    voter = new VoterEntity(name, ssn);
-                    session.saveOrUpdate(voter);
-                    session.getTransaction().commit();
-                } else {
-                    System.err.println("A voter with the ssn " + ssn + " already exists");
-                }
+        	if(VoterEntity.getVoterBySSN(ssn) == null) {
+        		session.beginTransaction();
+        		voter = new VoterEntity(name, ssn);
+        		session.saveOrUpdate(voter);
+        		session.getTransaction().commit();
             } else {
-                System.err.println("The ssn " + ssn + "is invalid. It must be " + REQUIRED_SSN_LENGTH + " digits");
+                System.err.println("A voter with the ssn " + ssn + " already exists");
             }
         } catch (HibernateException exception) {
             System.err.println("encounter hibernate problem" + exception);
