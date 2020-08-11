@@ -45,8 +45,8 @@ public class DatabasePopulator {
     public static Set<Election> createElection() {
         System.out.println("Creating election .... Hooray");
         return Set.of(
-                new ElectionEntity("Nov2020", LocalDate.of(2020, 10, 9), LocalDate.of(2020, 11, 9), true, false),
-                new ElectionEntity("Nov2021", LocalDate.of(2021, 7, 9), LocalDate.of(2021, 11, 9), false, false)
+                new ElectionEntity("Nov2020", LocalDate.of(2020, 10, 9), LocalDate.of(2020, 11, 9)),
+                new ElectionEntity("Nov2021", LocalDate.of(2021, 7, 9), LocalDate.of(2021, 11, 9))
         );
     }
 
@@ -189,6 +189,7 @@ public class DatabasePopulator {
             createVoterChoice(answerOptionIndex).forEach(session::saveOrUpdate);
             session.getTransaction().commit();
             setVoterStatus();
+            Backend.getInstance().startElection(new ElectionOfficialEntity("Hello", "hooy"), "Nov2020");
             System.out.println("Concluding Hibernate transaction...");
             System.out.println("Success! The database has been populated.");
         } catch (MappingException mappingException) {

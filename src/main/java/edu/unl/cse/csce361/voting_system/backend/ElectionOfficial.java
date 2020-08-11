@@ -8,7 +8,7 @@ public interface ElectionOfficial {
 
     boolean createAnswer(Question question, String answerText);
 
-    boolean createElection(String name, LocalDate startTime, LocalDate endTime, boolean status);
+    boolean createElection(String name, LocalDate startTime, LocalDate endTime);
 
     boolean updateQuestion(String electionName, String originalQuestionText, String updatedQuestionText);
 

@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class ElectionEntity implements Election{
 
-    public static  final int MAXIMUM_NAME_LENGTH = 20;
+
 
     static ElectionEntity getElectionByName(String electionName){
         Session session = HibernateUtil.getSession();
@@ -47,6 +47,23 @@ public class ElectionEntity implements Election{
         return inactiveElections;
     }
 
+    static List<Election> getAllElection(){
+        List<Election> elections = new ArrayList<>();
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            List<ElectionEntity> allElections = session.createQuery("SELECT election From ElectionEntity election", ElectionEntity.class).getResultList();
+            session.getTransaction().commit();
+            for(ElectionEntity electionEntity : allElections){
+                elections.add(electionEntity);
+            }
+        }catch (HibernateException exception){
+            System.err.println("Could not load all elections " + exception.getMessage());
+            session.getTransaction().rollback();
+        }
+        return elections;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "ID")
@@ -63,7 +80,7 @@ public class ElectionEntity implements Election{
     private LocalDate endTime;
 
     @Column
-    private boolean status;
+    private String status;
 
     @Column
     private boolean isRemoved;
@@ -74,14 +91,13 @@ public class ElectionEntity implements Election{
     @ManyToMany(mappedBy = "electionVotedIn", cascade = CascadeType.ALL)
     private Set<VoterEntity> voters;
 
-    public ElectionEntity(String name, LocalDate startTime, LocalDate endTime, boolean status, boolean isRemoved) {
+    public ElectionEntity(String name, LocalDate startTime, LocalDate endTime) {
         this.name = name;
         if(startTime.isBefore(endTime)) {
             this.startTime = startTime;
             this.endTime = endTime;
         }
-        this.status = status;
-        this.isRemoved = isRemoved;
+        status = PREPARE_PHASE;
         questions = new ArrayList<>();
         voters = new HashSet<>();
     }
@@ -114,11 +130,6 @@ public class ElectionEntity implements Election{
     }
 
     @Override
-    public String getName(){
-        return name;
-    }
-
-    @Override
     public void addVoter(VoterEntity voter){
         voters.add(voter);
         Session session = HibernateUtil.getSession();
@@ -134,7 +145,7 @@ public class ElectionEntity implements Election{
 
     @Override
     public boolean isAvailableForEdit() {
-        return !status && !isRemoved;
+        return status.equals(PREPARE_PHASE) && !isRemoved;
     }
 
     @Override
@@ -151,7 +162,7 @@ public class ElectionEntity implements Election{
     }
 
     @Override
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

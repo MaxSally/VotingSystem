@@ -52,7 +52,7 @@ public class DataLogic {
     }
     
     public boolean checkIfVoted() {
-        return currentVoter.hasVoted(currentElection.getName());
+        return currentVoter.hasVoted(currentElection.getElectionName());
     }
     
     public Map<String, String>getVoterVoteResult() {
@@ -81,11 +81,11 @@ public class DataLogic {
     }
     
     public List<QuestionAnswer> getAllQuestionsAndAnswers() {
-        List<String> questions = Backend.getInstance().getAllQuestionsByElection(currentElection.getName());
+        List<String> questions = Backend.getInstance().getAllQuestionsByElection(currentElection.getElectionName());
         List<QuestionAnswer> lstCurrentQA = new ArrayList<>();
         for(String question : questions) {
-            List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question, currentElection.getName());
-            QuestionAndAnswerOption questionAndAnswerOption = new QuestionAndAnswerOption(currentElection.getName(), question);
+            List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question, currentElection.getElectionName());
+            QuestionAndAnswerOption questionAndAnswerOption = new QuestionAndAnswerOption(currentElection.getElectionName(), question);
             questionAndAnswerOption.setAnswerOptions(answerOptions);
             lstCurrentQA.add(questionAndAnswerOption);
         }
@@ -136,7 +136,7 @@ public class DataLogic {
     }
 
     public String getCurrentElectionName() {
-        return currentElection.getName();
+        return currentElection.getElectionName();
     }
     
     public void setEditElectionName(String electionNameToBeEdit) {
@@ -148,20 +148,26 @@ public class DataLogic {
     }
 
     public Map<String, String> getAllVoterStatus() {
-        return Backend.getInstance().getAllVoterStatus(currentAdmin, currentElection.getName());
+        return Backend.getInstance().getAllVoterStatus(currentAdmin, currentElection.getElectionName());
     }
 
     public Map<String, Map<String, Long>> getFinalResult() {
-        return Backend.getInstance().getFinalResult(currentAdmin, currentElection.getName());
+        return Backend.getInstance().getFinalResult(currentAdmin, currentElection.getElectionName());
     }
     
     public Map<String, List<String>> getWinnerResult() {
-    	return Backend.getInstance().getAllWinner(currentAdmin, currentElection.getName());
+    	return Backend.getInstance().getAllWinner(currentAdmin, currentElection.getElectionName());
     }
 /*
     public void createNewElectionFromModel(String electionName, Map<String, List<String>> questions, LocalDate startTime, LocalDate endTime, boolean status) {
+<<<<<<< HEAD
         if (isElectionOfficial()) {
             Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, electionName, startTime, endTime, status);
+=======
+        if (currentAdmin instanceof ElectionOfficial) {
+            Backend.getInstance().createNewElection((ElectionOfficial) currentOfficial, 
+            		electionName, startTime, endTime);
+>>>>>>> ff62d1fe9aaada4ff20e6d5579f7a201b6eb8431
 
             for (Map.Entry<String, List<String>> question : questions.entrySet()) {
                 Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
@@ -176,9 +182,9 @@ public class DataLogic {
     }
     */
     
-    public void createNewElectionFromModel(String electionName, LocalDate startTime, LocalDate endTime, boolean status) {
+    public void createNewElectionFromModel(String electionName, LocalDate startTime, LocalDate endTime) {
         if (isElectionOfficial()) {
-            Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, electionName, startTime, endTime, status);
+            Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, electionName, startTime, endTime);
         }
     }
     

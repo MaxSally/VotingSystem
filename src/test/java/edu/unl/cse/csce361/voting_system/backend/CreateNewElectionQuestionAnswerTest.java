@@ -77,7 +77,7 @@ public class CreateNewElectionQuestionAnswerTest extends TestTemplate {
         ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
         LocalDate startTime = LocalDate.of(2020,11,10);
         LocalDate endTime = LocalDate.of(2020,11,11);
-        boolean result = admin.createElection(electionName, startTime, endTime, false);
+        boolean result = admin.createElection(electionName, startTime, endTime);
         assertFalse(result);
     }
 
@@ -87,7 +87,11 @@ public class CreateNewElectionQuestionAnswerTest extends TestTemplate {
         ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
         LocalDate startTime = LocalDate.of(2022,11,10);
         LocalDate endTime = LocalDate.of(2022,11,11);
-        boolean result = admin.createElection(electionName, startTime, endTime, false);
+        boolean result = admin.createElection(electionName, startTime, endTime);
         assertTrue(result);
+        List<Election> inactiveElection = Backend.getInstance().getAllInactiveElections();
+        for(Election election :inactiveElection){
+            System.out.println(election.getElectionName());
+        }
     }
 }
