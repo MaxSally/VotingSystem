@@ -1,6 +1,8 @@
 package edu.unl.cse.csce361.voting_system.logic;
 
 import edu.unl.cse.csce361.voting_system.backend.*;
+import edu.unl.cse.csce361.voting_system.frontend.BallotResult;
+import edu.unl.cse.csce361.voting_system.frontend.VoterStatus;
 import javafx.util.Pair;
 
 import java.time.LocalDate;
@@ -124,20 +126,12 @@ public class DataLogic {
         return Backend.getInstance().getAllVoterStatus(currentAdmin, currentElection.getName());
     }
 
-    public VoterStatus getVoterAndStatus(String name, String status) {
-        return new VoterStatus(name, status);
-    }
-
     public Map<String, Map<String, Long>> getFinalResult(){
         return Backend.getInstance().getFinalResult(currentAdmin, currentElection.getName());
     }
     
     public Map<String, List<String>> getWinnerResult(){
     	return Backend.getInstance().getAllWinner(currentAdmin, currentElection.getName());
-    }
-
-    public BallotResult getBallotResult(String questionText, String answerOptionText, Long votes) {
-        return new BallotResult(questionText, answerOptionText, votes);
     }
 
     public void createNewElectionFromModel(String electionName, Map<String, List<String>> questions, LocalDate startTime, LocalDate endTime, boolean status) {

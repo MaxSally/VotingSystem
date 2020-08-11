@@ -1,4 +1,4 @@
-package edu.unl.cse.csce361.voting_system.logic;
+package edu.unl.cse.csce361.voting_system.frontend;
 
 import javafx.beans.property.SimpleStringProperty;
 

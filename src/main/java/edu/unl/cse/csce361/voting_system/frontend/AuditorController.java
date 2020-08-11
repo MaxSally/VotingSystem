@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import edu.unl.cse.csce361.voting_system.logic.BallotResult;
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
-import edu.unl.cse.csce361.voting_system.logic.VoterStatus;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -67,7 +65,7 @@ public class AuditorController implements Initializable{
 		Map<String, String> voterWithStatus = DataLogic.getInstance().getAllVoterStatus();
 			
 		for(Map.Entry<String, String> voter : voterWithStatus.entrySet()) {
-			voterList.add(DataLogic.getInstance().getVoterAndStatus(voter.getKey(), voter.getValue()));
+			voterList.add(new VoterStatus(voter.getKey(), voter.getValue()));
 		}
 
 		voterName.setCellValueFactory(new PropertyValueFactory<VoterStatus, String>("name"));
@@ -82,7 +80,8 @@ public class AuditorController implements Initializable{
 		for(Map.Entry<String, Map<String, Long>> questionWithAnswerResult : getFinalResult.entrySet()) {
 			answerChoiceWithResult = questionWithAnswerResult.getValue();
 			for(Map.Entry<String, Long> answerWithResult : answerChoiceWithResult.entrySet()) {
-				questionWithAnswerResultList.add(DataLogic.getInstance().getBallotResult(questionWithAnswerResult.getKey(), answerWithResult.getKey(), answerWithResult.getValue()));
+				questionWithAnswerResultList.add(new BallotResult(questionWithAnswerResult.getKey(), 
+						answerWithResult.getKey(), answerWithResult.getValue()));
 			}
 		}
 				
