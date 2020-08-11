@@ -74,14 +74,14 @@ public class VoteController extends ScreenController implements Initializable {
 		
 	}
 
-    public void cancel(javafx.event.ActionEvent event) throws IOException{
+    public void cancel(javafx.event.ActionEvent event) throws IOException {
         //logout method
         //logout();
         switchScreen(event, "login.fxml");
     }
     
-    public void submitVotes(javafx.event.ActionEvent event) throws IOException{
-    	DataLogic.getInstance().setQuestionWithSelectedQuestion(selectedAnswer);
+    public void submitVotes(javafx.event.ActionEvent event) throws IOException { 
+    	DataLogic.getInstance().setQuestionWithSelectedAnswer(selectedAnswer);
     	switchScreen(event, "confirm_screen.fxml");
     }
 

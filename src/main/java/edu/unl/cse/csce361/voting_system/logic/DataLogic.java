@@ -17,14 +17,14 @@ public class DataLogic {
     private Admin currentOfficial;
     private Map<String,String> questionWithSelectedAnswer;
 
-    public static DataLogic getInstance(){
+    public static DataLogic getInstance(){ 
         if(instance == null){
             instance = new DataLogic();
         }
         return instance;
     }
 
-    private DataLogic(){
+    private DataLogic() {
         lstQuestionAnswer = new ArrayList<>();
         currentVoter = null;
         currentAdmin = Backend.getInstance().getAdminByUsername("superuser 999");
@@ -33,9 +33,60 @@ public class DataLogic {
         currentOfficial = Backend.getInstance().getAdminByUsername("Batman");;
         questionWithSelectedAnswer = new HashMap<>();
     }
+    
+    public boolean logIn(String name, String SNN) {
+        currentVoter = Backend.getInstance().voterLogIn(name, SNN);
+        return currentVoter != null;
+    }
+    
+    public void setCurrentVoter(String SSN) {
+        currentVoter = Backend.getInstance().getVoterBySSN(SSN);
+    }
 
-    public boolean checkIfVoted(){
+    public String getCurrentVoterName() {
+        return currentVoter.getName();
+    }
+    
+    public boolean checkIfVoted() {
         return currentVoter.hasVoted(currentElection.getName());
+    }
+    
+    public Map<String, String>getVoterVoteResult() {
+        return Backend.getInstance().getVoterVoteResult(currentVoter, currentElection.getElectionName());
+    }
+    
+    public boolean adminLogIn(String name, String password) {
+        currentAdmin = Backend.getInstance().adminLogIn(name, password);
+        return currentAdmin != null;
+    }
+    
+    public boolean isElectionOfficial() {
+        if(Backend.getInstance().isElectionOfficial(currentAdmin)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void registerNewVoter(String name, String ssn) {
+        Backend.getInstance().registerToVote(name, ssn);
+    }
+    
+    public void registerNewAdmin(String name, String ssn, boolean electionOfficial) {
+        Backend.getInstance().registerAdminAccount(name, ssn, electionOfficial);
+    }
+    
+    public List<QuestionAnswer> getAllQuestionsAndAnswers() {
+        List<String> questions = Backend.getInstance().getAllQuestionsByElection(currentElection.getName());
+        List<QuestionAnswer> lstCurrentQA = new ArrayList<>();
+        for(String question : questions) {
+            List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question, currentElection.getName());
+            QuestionAndAnswerOption questionAndAnswerOption = new QuestionAndAnswerOption(currentElection.getName(), question);
+            questionAndAnswerOption.setAnswerOptions(answerOptions);
+            lstCurrentQA.add(questionAndAnswerOption);
+        }
+        lstQuestionAnswer = lstCurrentQA;
+        return lstCurrentQA;
     }
 
     public boolean submitVote(Map<String, String> voterSelections) {
@@ -75,62 +126,23 @@ public class DataLogic {
         return true;
     }
 
-    public List<QuestionAnswer> getAllQuestionsAndAnswers() {
-        List<String> questions = Backend.getInstance().getAllQuestionsByElection(currentElection.getName());
-        List<QuestionAnswer> lstCurrentQA = new ArrayList<>();
-        for(String question : questions) {
-            List<Pair<String, Long> > answerOptions = Backend.getInstance().getAllAnswersByQuestion(question, currentElection.getName());
-            QuestionAndAnswerOption questionAndAnswerOption = new QuestionAndAnswerOption(currentElection.getName(), question);
-            questionAndAnswerOption.setAnswerOptions(answerOptions);
-            lstCurrentQA.add(questionAndAnswerOption);
-        }
-        lstQuestionAnswer = lstCurrentQA;
-        return lstCurrentQA;
-    }
-
-    /*
-    Right now setElection and setCurrentVoter are reserved for debug.
-     */
-
     public void setElection(String electionName) {
         currentElection = Backend.getInstance().getElectionByName(electionName);
-    }
-
-    public boolean logIn(String name, String SNN) {
-        currentVoter = Backend.getInstance().voterLogIn(name, SNN);
-        return currentVoter != null;
-    }
-
-    public void setCurrentVoter(String SSN){
-        currentVoter = Backend.getInstance().getVoterBySSN(SSN);
-    }
-
-    public String getCurrentVoterName() {
-        return currentVoter.getName();
-    }
-
-    public Map<String, String>getVoterVoteResult() {
-        return Backend.getInstance().getVoterVoteResult(currentVoter, currentElection.getElectionName());
-    }
-
-    public boolean adminLogIn(String name, String password) {
-        currentAdmin = Backend.getInstance().adminLogIn(name, password);
-        return currentAdmin != null;
     }
 
     public String getCurrentElectionName() {
         return currentElection.getName();
     }
 
-    public Map<String, String> getAllVoterStatus(){
+    public Map<String, String> getAllVoterStatus() {
         return Backend.getInstance().getAllVoterStatus(currentAdmin, currentElection.getName());
     }
 
-    public Map<String, Map<String, Long>> getFinalResult(){
+    public Map<String, Map<String, Long>> getFinalResult() {
         return Backend.getInstance().getFinalResult(currentAdmin, currentElection.getName());
     }
     
-    public Map<String, List<String>> getWinnerResult(){
+    public Map<String, List<String>> getWinnerResult() {
     	return Backend.getInstance().getAllWinner(currentAdmin, currentElection.getName());
     }
 
@@ -161,26 +173,28 @@ public class DataLogic {
         		questionText, newAnswerText, electionName);
     }
     
-    public void removeQuestion(String electionName, String questionText){
+    public void removeQuestion(String electionName, String questionText) {
         Backend.getInstance().removeQuestion((ElectionOfficial) currentAdmin, electionName, questionText);
     }
     
-    public void removeAnswer(String electionName, String questionText, String answerText){
+    public void removeAnswer(String electionName, String questionText, String answerText) {
         Backend.getInstance().removeAnswer((ElectionOfficial) currentAdmin, questionText, answerText, electionName);
     }
     
-    public void updateElectionName(String originalElectionName, String updatedElectionName){
+    public void updateElectionName(String originalElectionName, String updatedElectionName) {
         Backend.getInstance().updateElectionName((ElectionOfficial) currentAdmin, originalElectionName, updatedElectionName);
     }
     
-    public void updateQuestion(String electionName, String originalQuestionText, String updatedQuestionText){
+    public void updateQuestion(String electionName, String originalQuestionText, String updatedQuestionText) {
         Backend.getInstance().updateQuestion((ElectionOfficial) currentAdmin, electionName, originalQuestionText, updatedQuestionText);
     }
     
-    public void updateAnswer(String questionText, String originalAnswerText, String updatedAnswerText, String electionName){
+    public void updateAnswer(String questionText, String originalAnswerText, String updatedAnswerText, String electionName) {
         Backend.getInstance().updateAnswer((ElectionOfficial) currentAdmin, questionText, originalAnswerText, updatedAnswerText, electionName);
     }
     
+    //get question and answer choice based on the selected election from front end
+    //not according to the currentElection
     public List<QuestionAnswer> getQuestionAnswerByElection(String electionName) {
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
         List<QuestionAnswer> lstCurrentQA = new ArrayList<>();
@@ -193,27 +207,18 @@ public class DataLogic {
         lstQuestionAnswer = lstCurrentQA;
         return lstCurrentQA;
     }
-
-    public boolean isElectionOfficial() {
-        if(Backend.getInstance().isElectionOfficial(currentAdmin)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void registerNewVoter(String name, String ssn){
-        Backend.getInstance().registerToVote(name, ssn);
-    }
     
-    public void setQuestionWithSelectedQuestion(Map<String, String> questionWithAnswer) {
+    //used in VoteController and ConfirmationScreenController
+    //used to parse around both of the controller
+    public void setQuestionWithSelectedAnswer(Map<String, String> questionWithAnswer) {
     	questionWithSelectedAnswer.putAll(questionWithAnswer);
     }
     
-    public Map<String, String> getQuestionWithAnswerList(){
+    public Map<String, String> getQuestionWithAnswerList() {
     	return questionWithSelectedAnswer;
     }
     
+    //only return the selected answer
     public List<String> getSelectedAnswerList() {
     	List<String> answerList = new ArrayList<>();
     	
@@ -222,10 +227,5 @@ public class DataLogic {
     	}
     	return answerList;
     }
- 
-    public void registerNewAdmin(String name, String ssn, boolean electionOfficial){
-        Backend.getInstance().registerAdminAccount(name, ssn, electionOfficial);
-    }
-
 }
 
