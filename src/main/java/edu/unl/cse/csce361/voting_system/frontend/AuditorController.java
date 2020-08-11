@@ -2,6 +2,7 @@ package edu.unl.cse.csce361.voting_system.frontend;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -12,12 +13,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AuditorController implements Initializable{
+	
+	@FXML
+	private Label electionName;
+	
+	@FXML
+	private TableView<ElectionWinner> winnerTable;
 
+	@FXML
+	private TableColumn<ElectionWinner, String> question;
+	
+	@FXML
+	private TableColumn<ElectionWinner, String> winningAnswer;
+	
 	@FXML
 	private TableView<VoterStatus> voterTable;
 
@@ -39,12 +53,16 @@ public class AuditorController implements Initializable{
 	@FXML
 	private TableColumn<BallotResult, Long> numberOfVotes;
 	
+	ObservableList<ElectionWinner> winnerList = FXCollections.observableArrayList();
 	ObservableList<VoterStatus> voterList = FXCollections.observableArrayList();
 	ObservableList<BallotResult> questionWithAnswerResultList = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		
+		electionName.setText(DataLogic.getInstance().getCurrentElectionName());
+		
 		//Voter and status table
 		Map<String, String> voterWithStatus = DataLogic.getInstance().getAllVoterStatus();
 			
@@ -74,5 +92,19 @@ public class AuditorController implements Initializable{
 
 		ballotTable.setItems(questionWithAnswerResultList);
 
+		//winnerTable
+		Map<String, List<String>> winnerResult = DataLogic.getInstance().getWinnerResult();
+		
+		for(Map.Entry<String, List<String>> question : winnerResult.entrySet()) {
+			for(String answer : question.getValue()) {
+				winnerList.add(new ElectionWinner(question.getKey(), answer));
+			}
+		}
+
+		question.setCellValueFactory(new PropertyValueFactory<ElectionWinner, String>("question"));
+        winningAnswer.setCellValueFactory(new PropertyValueFactory<ElectionWinner, String>("winningAnswer"));
+
+		winnerTable.setItems(winnerList);
+		
 	}
 }

@@ -12,7 +12,7 @@ public class DataLogic {
     private Voter currentVoter;
     private Election currentElection;
     private Admin currentAdmin;
-    private ElectionOfficial currentOfficial;
+    private Admin currentOfficial;
     private Map<String,String> questionWithSelectedAnswer;
 
     public static DataLogic getInstance(){
@@ -28,7 +28,7 @@ public class DataLogic {
         currentAdmin = Backend.getInstance().getAdminByUsername("superuser 999");
         // next sprint we will dynamically change the current election
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
-        currentOfficial = null;
+        currentOfficial = Backend.getInstance().getAdminByUsername("Batman");;
         questionWithSelectedAnswer = new HashMap<>();
     }
 
@@ -130,6 +130,10 @@ public class DataLogic {
 
     public Map<String, Map<String, Long>> getFinalResult(){
         return Backend.getInstance().getFinalResult(currentAdmin, currentElection.getName());
+    }
+    
+    public Map<String, List<String>> getWinnerResult(){
+    	return Backend.getInstance().getAllWinner(currentAdmin, currentElection.getName());
     }
 
     public BallotResult getBallotResult(String questionText, String answerOptionText, Long votes) {
