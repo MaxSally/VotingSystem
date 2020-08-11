@@ -4,9 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
@@ -18,7 +15,7 @@ public class CreateUserController extends ScreenController {
     @FXML
     private TextField txtSSN;   
     
-    public void createUser(javafx.event.ActionEvent event) throws IOException{
+    public void createUser(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
         String ssn = encryptSSN(txtSSN.getText());
 
@@ -26,7 +23,7 @@ public class CreateUserController extends ScreenController {
         switchScreen(event, "login.fxml");
     }
 
-    public void cancel(javafx.event.ActionEvent event) throws IOException{
+    public void cancel(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "login.fxml");
     }
 }

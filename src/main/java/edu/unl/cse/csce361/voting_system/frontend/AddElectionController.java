@@ -5,7 +5,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,8 +18,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
-import edu.unl.cse.csce361.voting_system.logic.QuestionAndAnswerOption;
-import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 
 public class AddElectionController extends ScreenController implements Initializable {
 
@@ -41,9 +38,6 @@ public class AddElectionController extends ScreenController implements Initializ
 	
 	@FXML
 	private TextField answerOptionTextField4;
-	
-	@FXML
-	private Button addQuestion;
 	
 	@FXML
 	private ChoiceBox<String> questions;

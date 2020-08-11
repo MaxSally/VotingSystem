@@ -13,7 +13,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Button fx:id="btnCancel" layoutX="319.0" layoutY="20.0" mnemonicParsing="false" onAction="#logout" prefHeight="45.0" prefWidth="69.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
+      <Button layoutX="319.0" layoutY="20.0" mnemonicParsing="false" onAction="#logout" prefHeight="45.0" prefWidth="69.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

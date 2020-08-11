@@ -3,14 +3,8 @@ package edu.unl.cse.csce361.voting_system.frontend;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,7 +29,6 @@ public class VoteController extends ScreenController implements Initializable {
 	private List<String> answer = DataLogic.getInstance().getSelectedAnswerList();
 
 	class Cell extends ListCell<QuestionAnswer> {
-
 		HBox hbox;
 		Label question = new Label();
 		ChoiceBox<String> answerChoiceList = new ChoiceBox<String>();
@@ -47,7 +40,6 @@ public class VoteController extends ScreenController implements Initializable {
 		}
 
 		public void updateItem(QuestionAnswer ballot, boolean empty) {
-
 			super.updateItem(ballot, empty);
 			setText(null);
 			setGraphic(null);
@@ -71,12 +63,9 @@ public class VoteController extends ScreenController implements Initializable {
 		listView.setItems(FXCollections.observableArrayList(questionsAndAnswer));
 		
 		listView.setCellFactory(param -> new Cell());
-		
 	}
 
     public void cancel(javafx.event.ActionEvent event) throws IOException {
-        //logout method
-        //logout();
         switchScreen(event, "login.fxml");
     }
     

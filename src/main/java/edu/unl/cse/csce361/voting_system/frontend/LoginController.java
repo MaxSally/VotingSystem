@@ -17,11 +17,11 @@ public class LoginController extends ScreenController {
     @FXML 
     private Text txtErrorText;
 
-    public void createUser(javafx.event.ActionEvent event) throws IOException{
+    public void createUser(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "create_user.fxml");
     }
 
-    public void adminLogin(javafx.event.ActionEvent event) throws IOException{
+    public void adminLogin(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "admin_login.fxml");
     }
 
@@ -29,16 +29,16 @@ public class LoginController extends ScreenController {
         String username = txtUsername.getText();
         String ssn = encryptSSN(txtPassword.getText());
 
-        if(DataLogic.getInstance().logIn(username, ssn)){
+        if(DataLogic.getInstance().logIn(username, ssn)) {
             if(DataLogic.getInstance().checkIfVoted()){
                 switchScreen(event, "user_info.fxml");
             }
-            else{
+            else {
                 switchScreen(event, "voting_screen.fxml");
             }
             txtErrorText.setText("");
         }
-        else{
+        else {
             txtErrorText.setText("Error. Name or SSN must be wrong.");
         }
     }

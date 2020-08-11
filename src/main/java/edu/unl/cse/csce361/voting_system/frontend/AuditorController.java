@@ -1,5 +1,6 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class AuditorController implements Initializable{
+public class AuditorController extends ScreenController implements Initializable {
 	
 	@FXML
 	private Label electionName;
@@ -104,6 +105,9 @@ public class AuditorController implements Initializable{
         winningAnswer.setCellValueFactory(new PropertyValueFactory<ElectionWinner, String>("winningAnswer"));
 
 		winnerTable.setItems(winnerList);
-		
+	}
+	
+	public void logOut(javafx.event.ActionEvent event) throws IOException {
+		switchScreen(event, "admin_login.fxml");
 	}
 }

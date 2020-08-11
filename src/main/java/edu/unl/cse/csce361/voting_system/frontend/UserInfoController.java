@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
-public class UserInfoController extends ScreenController implements Initializable{
+public class UserInfoController extends ScreenController implements Initializable {
 
     @FXML 
     private Text txtUsername;

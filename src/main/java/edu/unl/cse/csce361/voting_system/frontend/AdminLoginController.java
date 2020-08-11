@@ -17,11 +17,11 @@ public class AdminLoginController extends ScreenController {
     @FXML 
     private Text txtErrorText;
 
-    public void cancel(javafx.event.ActionEvent event) throws IOException{
+    public void cancel(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "login.fxml");
     }
 
-    public void createAdmin(javafx.event.ActionEvent event) throws IOException{
+    public void createAdmin(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "create_admin.fxml");
     }
 
@@ -29,9 +29,9 @@ public class AdminLoginController extends ScreenController {
         String username = txtUsername.getText();
         String password = encryptSSN(txtPassword.getText());
 
-        if(DataLogic.getInstance().adminLogIn(username, password)){
+        if(DataLogic.getInstance().adminLogIn(username, password)) {
 
-            if(DataLogic.getInstance().isElectionOfficial()){
+            if(DataLogic.getInstance().isElectionOfficial()) {
                 switchScreen(event, "elections_screen.fxml");
             }
             else{
