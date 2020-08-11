@@ -70,10 +70,10 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     }
 
     @Override
-    public boolean createElection(String name, LocalDate startTime, LocalDate endTime, boolean status) {
+    public boolean createElection(String name, LocalDate startTime, LocalDate endTime) {
         boolean success = false;
         if(ElectionEntity.getElectionByName(name) == null) {
-            Election election = new ElectionEntity(name, startTime, endTime, status, false);
+            Election election = new ElectionEntity(name, startTime, endTime);
             Session session = HibernateUtil.getSession();
             session.beginTransaction();
             try {
@@ -243,7 +243,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     public boolean startElection(String electionName) {
         ElectionEntity election = ElectionEntity.getElectionByName(electionName);
         if(election != null) {
-            election.setStatus(true);
+            election.setStatus(election.VOTING_PHASE);
             return true;
         }
         return false;
@@ -253,7 +253,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     public boolean endElection(String electionName) {
         ElectionEntity election = ElectionEntity.getElectionByName(electionName);
         if(election != null) {
-            election.setStatus(false);
+            election.setStatus(election.FINISH_PHASE);
             return true;
         }
         return false;

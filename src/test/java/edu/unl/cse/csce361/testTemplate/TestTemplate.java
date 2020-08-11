@@ -48,6 +48,7 @@ public class TestTemplate {
         DatabasePopulator.createVoterChoice(answerOptionIndex).forEach(session::saveOrUpdate);
         session.getTransaction().commit();
         DatabasePopulator.setVoterStatus();
+        Backend.getInstance().startElection(new ElectionOfficialEntity("Hello", "hooy"), "Nov2020");
     }
 
     @After

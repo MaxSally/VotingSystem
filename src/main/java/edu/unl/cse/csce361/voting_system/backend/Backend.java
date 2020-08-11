@@ -128,8 +128,8 @@ public class Backend {
     }
 
     public boolean createNewElection(ElectionOfficial electionOfficial, String electionName, LocalDate startTime,
-                                     LocalDate endTime, boolean status) {
-        return electionOfficial.createElection(electionName, startTime, endTime, false);
+                                     LocalDate endTime) {
+        return electionOfficial.createElection(electionName, startTime, endTime);
     }
 
     public boolean createNewQuestion(ElectionOfficial electionOfficial, String electionName, String questionText) {
