@@ -47,6 +47,23 @@ public class ElectionEntity implements Election{
         return inactiveElections;
     }
 
+    static List<Election> getAllElection(){
+        List<Election> elections = new ArrayList<>();
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            List<ElectionEntity> allElections = session.createQuery("SELECT election From ElectionEntity election", ElectionEntity.class).getResultList();
+            session.getTransaction().commit();
+            for(ElectionEntity electionEntity : allElections){
+                elections.add(electionEntity);
+            }
+        }catch (HibernateException exception){
+            System.err.println("Could not load all elections " + exception.getMessage());
+            session.getTransaction().rollback();
+        }
+        return elections;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "ID")

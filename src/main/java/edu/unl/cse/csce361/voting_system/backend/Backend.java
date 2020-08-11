@@ -198,6 +198,10 @@ public class Backend {
         return ElectionEntity.getAllInactiveElection();
     }
 
+    public List<Election> getAllElections(){
+        return ElectionEntity.getAllElection();
+    }
+
     public LocalDate getStartTimeForElection(String currentElection){
         return ElectionEntity.getElectionByName(currentElection).getStartTime();
     }
