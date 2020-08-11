@@ -8,20 +8,31 @@ import javafx.scene.control.Button;
 
 public class ElectionStatus extends ScreenController {
 	private SimpleStringProperty electionName;
-	private Button updateButton;
+	private Button editButton;
+	private Button startButton;
+	private Button endButton;
 	
-	public ElectionStatus(String electionName, Button updateButton) {
+	public ElectionStatus(String electionName, Button editButton, Button startButton, Button endButton) {
         this.electionName = new SimpleStringProperty(electionName);
-        this.updateButton = updateButton;
-        //this.status = new SimpleStringProperty(status);
-        updateButton.setOnAction(e -> {
+        this.editButton = editButton;
+        this.startButton = startButton;
+        this.endButton = endButton;
+        editButton.setOnAction(e -> {
 			try {
-				//DataLogic.getInstance().setElection(electionName);
+				DataLogic.getInstance().setEditElectionName(getElectionName());
 				switchScreen(e, "update_election.fxml");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		});
+        startButton.setOnAction(e2 -> {
+			DataLogic.getInstance().setStartElection(getElectionName());
+			startButton.setStyle("-fx-background-color: #32CD32;");
+		});
+        endButton.setOnAction(e3 -> {
+        	DataLogic.getInstance().setEndElection(getElectionName());
+        	endButton.setStyle("-fx-background-color: #f11919;");
 		});
 
     }
@@ -34,20 +45,28 @@ public class ElectionStatus extends ScreenController {
         this.electionName = new SimpleStringProperty(electionName);
     }
 	
-	public void setUpdateButton(Button updateButton) {
-		this.updateButton = updateButton;
+	public void setEditButton(Button editButton) {
+		this.editButton = editButton;
 	}
 	
-	public Button getUpdateButton() {
-		return updateButton;
-	}
-	/*
-	public String getStatus() {
-		return status.get();
+	public Button getEditButton() {
+		return editButton;
 	}
 	
-	public void setStatus(String status) {
-        this.status = new SimpleStringProperty(status);
-    }*/
+	public Button getStartButton() {
+		return startButton;
+	}
+	
+	public void setStartButton(Button startButton) {
+		this.startButton = startButton;
+	}
+	
+	public Button getEndButton() {
+		return endButton;
+	}
+	
+	public void setEndButton(Button endButton) {
+		this.endButton = endButton;
+	}
 }
 

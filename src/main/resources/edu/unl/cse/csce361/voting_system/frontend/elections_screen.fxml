@@ -21,8 +21,10 @@
       </Button>
       <TableView fx:id="tableView" layoutY="81.0" prefHeight="354.0" prefWidth="400.0">
         <columns>
-          <TableColumn fx:id="electionName" prefWidth="298.0" text="Election Name" />
-            <TableColumn fx:id="button" prefWidth="101.0" />
+          <TableColumn fx:id="electionName" prefWidth="149.0" text="Election Name" />
+            <TableColumn fx:id="editButton" prefWidth="65.0" text="Update" />
+            <TableColumn fx:id="startButton" prefWidth="92.0" text="Start Election" />
+            <TableColumn fx:id="endButton" prefWidth="93.0" text="End Election" />
         </columns>
       </TableView>
       <Label layoutX="104.0" layoutY="4.0" text="Welcome Election Official">
@@ -35,10 +37,14 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Button layoutX="209.0" layoutY="449.0" mnemonicParsing="false" onAction="#goToAdd" prefHeight="27.0" prefWidth="177.0" style="-fx-background-color: #32CD32#32CD32;" text="Add New Election">
+      <Button layoutX="208.0" layoutY="487.0" mnemonicParsing="false" onAction="#goToAdd" prefHeight="27.0" prefWidth="177.0" style="-fx-background-color: #32CD32#32CD32;" text="Add New Election">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
+      <Label layoutX="14.0" layoutY="445.0" text="Start Date: " />
+      <Label layoutX="14.0" layoutY="479.0" text="End Date: " />
+      <Label layoutX="111.0" layoutY="445.0" text="Label" />
+      <Label layoutX="104.0" layoutY="479.0" text="Label" />
    </children>
 </Pane>

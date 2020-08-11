@@ -29,7 +29,6 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="electionName" layoutX="10.0" layoutY="122.0" prefWidth="150.0" />
       <Label layoutX="10.0" layoutY="198.0" text="Question:" />
       <ChoiceBox fx:id="question" layoutX="10.0" layoutY="221.0" prefWidth="150.0" />
       <Button layoutX="183.0" layoutY="221.0" mnemonicParsing="false" onAction="#editQuestionText" text="Edit" />
@@ -51,5 +50,10 @@
       <Button fx:id="updateName" layoutX="197.0" layoutY="157.0" mnemonicParsing="false" onAction="#updateElectionName" text="Update" visible="false" />
       <Button fx:id="updateQuestion" layoutX="197.0" layoutY="256.0" mnemonicParsing="false" onAction="#updateQuestionText" text="Update" visible="false" />
       <Button fx:id="updateAnswer" layoutX="197.0" layoutY="406.0" mnemonicParsing="false" onAction="#updateAnswerText" text="Update" visible="false" />
+      <Label fx:id="electionName" layoutX="10.0" layoutY="127.0" text="Label">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

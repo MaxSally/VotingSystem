@@ -14,6 +14,7 @@ public class DataLogic {
     private Admin currentAdmin;
     private ElectionOfficial currentOfficial;
     private Map<String,String> questionWithSelectedAnswer;
+    private String editElectionName;
 
     public static DataLogic getInstance() { 
         if(instance == null) {
@@ -30,6 +31,7 @@ public class DataLogic {
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
         currentOfficial = null;
         questionWithSelectedAnswer = new HashMap<>();
+        editElectionName = "";
     }
     
     public boolean logIn(String name, String SNN) {
@@ -43,6 +45,10 @@ public class DataLogic {
 
     public String getCurrentVoterName() {
         return currentVoter.getName();
+    }
+    
+    public String getCurrentName(String username) {
+        return Backend.getInstance().getAdminByUsername(username).toString();
     }
     
     public boolean checkIfVoted() {
@@ -132,6 +138,14 @@ public class DataLogic {
     public String getCurrentElectionName() {
         return currentElection.getName();
     }
+    
+    public void setEditElectionName(String electionNameToBeEdit) {
+    	editElectionName = electionNameToBeEdit;
+    }
+    
+    public String getEditElectionName() {
+        return editElectionName;
+    }
 
     public Map<String, String> getAllVoterStatus() {
         return Backend.getInstance().getAllVoterStatus(currentAdmin, currentElection.getName());
@@ -144,11 +158,10 @@ public class DataLogic {
     public Map<String, List<String>> getWinnerResult() {
     	return Backend.getInstance().getAllWinner(currentAdmin, currentElection.getName());
     }
-
+/*
     public void createNewElectionFromModel(String electionName, Map<String, List<String>> questions, LocalDate startTime, LocalDate endTime, boolean status) {
-        if (currentAdmin instanceof ElectionOfficial) {
-            Backend.getInstance().createNewElection((ElectionOfficial) currentOfficial, 
-            		electionName, startTime, endTime, status);
+        if (isElectionOfficial()) {
+            Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, electionName, startTime, endTime, status);
 
             for (Map.Entry<String, List<String>> question : questions.entrySet()) {
                 Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
@@ -159,6 +172,13 @@ public class DataLogic {
                     		question.getKey(), answer, electionName);
                 }
             }
+        }
+    }
+    */
+    
+    public void createNewElectionFromModel(String electionName, LocalDate startTime, LocalDate endTime, boolean status) {
+        if (isElectionOfficial()) {
+            Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, electionName, startTime, endTime, status);
         }
     }
     
@@ -215,6 +235,30 @@ public class DataLogic {
     
     public Map<String, String> getQuestionWithAnswerList() {
     	return questionWithSelectedAnswer;
+    }
+    
+    public List<String> getInactiveElectionList() {
+    	List<String> inactiveElectionStringList = new ArrayList<>();
+    	List<Election> inactiveElection = Backend.getInstance().getAllInactiveElections();
+    	
+    	for(Election election : inactiveElection) {
+    		inactiveElectionStringList.add(election.getElectionName());
+    	}
+    	return inactiveElectionStringList;
+    }
+    
+    public boolean setStartElection(String electionName) {
+    	if(isElectionOfficial()) {
+    		currentElection = Backend.getInstance().startElection((ElectionOfficial) currentAdmin, electionName);
+    	}
+    	return currentElection != null;
+    }
+    
+    public boolean setEndElection(String electionName) {
+    	if(isElectionOfficial()) {
+    		return Backend.getInstance().endElection(currentOfficial, electionName);
+    	}
+    	return false;
     }
 }
 

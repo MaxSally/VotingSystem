@@ -169,8 +169,11 @@ public class Backend {
         return electionOfficial.removeAnswer(QuestionEntity.getQuestionsByName(questionText, electionName), answerText);
     }
 
-    public boolean startElection(ElectionOfficial electionOfficial, String electionName) {
-        return electionOfficial.startElection(electionName);
+    public Election startElection(ElectionOfficial electionOfficial, String electionName) {
+        if(electionOfficial.startElection(electionName)) {
+        	return ElectionEntity.getElectionByName(electionName);
+        }
+        return null;
     }
 
     public boolean endElection(ElectionOfficial electionOfficial, String electionName) {

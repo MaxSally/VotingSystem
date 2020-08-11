@@ -25,24 +25,28 @@ public class ElectionsController extends ScreenController implements Initializab
 	private TableColumn<ElectionStatus, String> electionName;
 	
 	@FXML
-	private TableColumn<ElectionStatus, Button> button;
+	private TableColumn<ElectionStatus, Button> editButton;
+	
+	@FXML
+	private TableColumn<ElectionStatus, Button> startButton;
+	
+	@FXML
+	private TableColumn<ElectionStatus, Button> endButton;
 	
 	private ObservableList<ElectionStatus> name = FXCollections.observableArrayList();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-        //List<String> electionList = DataLogic.getInstance().getElectionList();
-		List<String> electionList = new ArrayList<>();
+        List<String> electionList = DataLogic.getInstance().getInactiveElectionList();
 		
-		electionList.add("Nov 2020");
-		electionList.add("Nov 2021");
-        
         for(String election : electionList) {
-        	name.add(new ElectionStatus(election, new Button("Update")));
+        	name.add(new ElectionStatus(election, new Button("Edit"), new Button("Start"), new Button("End")));
         }
         
         electionName.setCellValueFactory(new PropertyValueFactory<ElectionStatus, String>("electionName"));
-        button.setCellValueFactory(new PropertyValueFactory<ElectionStatus, Button>("updateButton"));
+        editButton.setCellValueFactory(new PropertyValueFactory<ElectionStatus, Button>("editButton"));
+        startButton.setCellValueFactory(new PropertyValueFactory<ElectionStatus, Button>("startButton"));
+        endButton.setCellValueFactory(new PropertyValueFactory<ElectionStatus, Button>("endButton"));
         
         tableView.setItems(name);;
     }

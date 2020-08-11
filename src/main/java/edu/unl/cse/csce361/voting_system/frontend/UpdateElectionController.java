@@ -13,9 +13,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class UpdateElectionController extends ScreenController implements Initializable {
+	
+	@FXML
+	private Label electionName;
 	
 	@FXML
 	private Button updateName;
@@ -31,9 +35,6 @@ public class UpdateElectionController extends ScreenController implements Initia
 	
 	@FXML
 	private Button addAnswerOption;
-	
-	@FXML
-	private ChoiceBox<String> electionName;
 	
 	@FXML
 	private ChoiceBox<String> question;
@@ -55,40 +56,32 @@ public class UpdateElectionController extends ScreenController implements Initia
 	
 	@FXML
 	private TextField newAnswerOptionText;
-	
-	//TODO delete this
-	private List<String> election = new ArrayList<>();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		//TODO delete this
 		
-		election.add("Nov2020");
-		election.add("Nov2021");
-		
-		electionName.setItems(FXCollections.observableArrayList(election));
-		
-		electionName.setOnAction(e -> useNewElection());
+		electionName.setText(DataLogic.getInstance().getEditElectionName());
+		useNewElection();
 		question.setOnAction(e -> useNewQuestion());
 	} 
 	
+	
 	public void useNewElection() {
-		List<QuestionAnswer> selectedQuestionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName.getValue());
+		List<QuestionAnswer> selectedQuestionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName.getText());
 		List<String> selectedQuestion = new ArrayList<>();
 		
 		for(QuestionAnswer question : selectedQuestionAnswer) {
 			selectedQuestion.add(question.getQuestionText());
 		}
 		
-		editNameTextField.setText(electionName.getValue());
-		
 		question.setItems(FXCollections.observableArrayList(selectedQuestion));
 		answer.getItems().clear();
 	}
 	
 	public void useNewQuestion() {
-		List<QuestionAnswer> selectedQuestionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName.getValue());
+		List<QuestionAnswer> selectedQuestionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName.getText());
 		
 		for(QuestionAnswer questions : selectedQuestionAnswer) {
 			if(question.getValue().equals(questions.getQuestionText())) {
@@ -100,37 +93,37 @@ public class UpdateElectionController extends ScreenController implements Initia
 	}
 	
 	public void updateElectionName(javafx.event.ActionEvent event) throws IOException {
-		DataLogic.getInstance().updateElectionName(electionName.getValue(), editNameTextField.getText());
+		DataLogic.getInstance().updateElectionName(electionName.getText(), editNameTextField.getText());
     }
 	
 	public void updateQuestionText(javafx.event.ActionEvent event) throws IOException {
-		DataLogic.getInstance().updateQuestion(electionName.getValue(), question.getValue(), editQuestionTextField.getText());
+		DataLogic.getInstance().updateQuestion(electionName.getText(), question.getValue(), editQuestionTextField.getText());
     }
 	
 	public void updateAnswerText(javafx.event.ActionEvent event) throws IOException {
-		DataLogic.getInstance().updateAnswer(question.getValue(), answer.getValue(), editAnswerTextField.getText(), electionName.getValue());
+		DataLogic.getInstance().updateAnswer(question.getValue(), answer.getValue(), editAnswerTextField.getText(), electionName.getText());
     }
 	
 	public void createNewQuestion(javafx.event.ActionEvent event) throws IOException {
-		DataLogic.getInstance().addNewQuestion(electionName.getValue(), newQuestionText.getText());
+		DataLogic.getInstance().addNewQuestion(electionName.getText(), newQuestionText.getText());
 	}
 	
 	public void createNewAnswer(javafx.event.ActionEvent event) throws IOException {
-		DataLogic.getInstance().addNewAnswerOption(electionName.getValue(), question.getValue(), newAnswerOptionText.getText());
+		DataLogic.getInstance().addNewAnswerOption(electionName.getText(), question.getValue(), newAnswerOptionText.getText());
 	}
 
 	public void removeQuestion(javafx.event.ActionEvent event) throws IOException {
-		DataLogic.getInstance().removeQuestion(electionName.getValue(), question.getValue());
+		DataLogic.getInstance().removeQuestion(electionName.getText(), question.getValue());
 	}
 	
 	public void removeAnswer(javafx.event.ActionEvent event) throws IOException {
-		DataLogic.getInstance().removeAnswer(electionName.getValue(), question.getValue(), answer.getValue());
+		DataLogic.getInstance().removeAnswer(electionName.getText(), question.getValue(), answer.getValue());
 	}
 	
 	public void editElectionName(javafx.event.ActionEvent event) throws IOException {
 		editNameTextField.setVisible(true);
 		updateName.setVisible(true);
-		editNameTextField.setText(electionName.getValue());
+		editNameTextField.setText(electionName.getText());
 	}
 	
 	public void editQuestionText(javafx.event.ActionEvent event) throws IOException {

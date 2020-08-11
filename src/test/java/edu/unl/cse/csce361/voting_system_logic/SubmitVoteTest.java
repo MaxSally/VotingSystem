@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,5 +36,19 @@ public class SubmitVoteTest extends TestTemplate {
         DataLogic.getInstance().getAllQuestionsAndAnswers();
         boolean success = DataLogic.getInstance().submitVote(userSelections);
         assertTrue(success);
+    }
+    
+    @Test
+    public void testCreateNewElection() {
+    	String electionName = "Nov2022";
+    	String adminUser = "Batman";
+    	String password = "4b9f66817cf5ae30903c9a7bb53da984";
+    	DataLogic.getInstance().adminLogIn(adminUser, password);
+    	DataLogic.getInstance().createNewElectionFromModel(electionName, LocalDate.of(2022, 4, 20), 
+    			LocalDate.of(2022, 5, 20), false);
+    	List<Election> questionAnswer = Backend.getInstance().getAllInactiveElections();
+    	for(Election election : questionAnswer) {
+    		System.out.println(election.getElectionName());
+    	}
     }
 }

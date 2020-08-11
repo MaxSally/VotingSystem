@@ -114,9 +114,9 @@ public class AddElectionController extends ScreenController implements Initializ
         Button confirm = new Button(confirmButton);
         confirm.setOnAction(e -> {
 			try {
-		    	DataLogic.getInstance().createNewElectionFromModel(electionNameTextField.getText(), questionAnswer, 
-		    			startDate.getValue(), endDate.getValue(), true);
-				switchScreen(event, "");
+		    	DataLogic.getInstance().createNewElectionFromModel(electionNameTextField.getText(), 
+		    			startDate.getValue(), endDate.getValue(), false);
+				switchScreen(event, "elections_screen.fxml");
 				window.close();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
