@@ -15,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
-public class UpdateElectionController implements Initializable {
+public class UpdateElectionController extends ScreenController implements Initializable {
 	
 	@FXML
 	private Button updateName;
@@ -73,7 +73,7 @@ public class UpdateElectionController implements Initializable {
 		question.setOnAction(e -> useNewQuestion());
 	} 
 	
-	public void useNewElection(){
+	public void useNewElection() {
 		List<QuestionAnswer> selectedQuestionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName.getValue());
 		List<String> selectedQuestion = new ArrayList<>();
 		
@@ -150,9 +150,16 @@ public class UpdateElectionController implements Initializable {
 		addQuestion.setVisible(true);
 	}
 	
-	
 	public void addNewAnswerOption(javafx.event.ActionEvent event) throws IOException {
 		newAnswerOptionText.setVisible(true);
 		addAnswerOption.setVisible(true);
+	}
+	
+	public void cancel(javafx.event.ActionEvent event) throws IOException {
+		switchScreen(event, "elections_screen.fxml");
+	}
+	
+	public void finishEdit(javafx.event.ActionEvent event) throws IOException {
+		switchScreen(event, "elections_screen.fxml");
 	}
 }

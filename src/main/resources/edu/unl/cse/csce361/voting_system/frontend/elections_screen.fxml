@@ -9,7 +9,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.unl.cse.csce361.voting_system.frontend.ElectionsController">
    <children>
-      <Button layoutX="304.0" layoutY="30.0" mnemonicParsing="false" onAction="#cancel" prefHeight="31.0" prefWidth="82.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Logout" textFill="WHITE">
+      <Button layoutX="304.0" layoutY="30.0" mnemonicParsing="false" onAction="#logOut" prefHeight="31.0" prefWidth="82.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Logout" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -19,11 +19,10 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
-      <TableView layoutY="81.0" prefHeight="354.0" prefWidth="400.0">
+      <TableView fx:id="tableView" layoutY="81.0" prefHeight="354.0" prefWidth="400.0">
         <columns>
-          <TableColumn prefWidth="204.0" text="Election Name" />
-          <TableColumn prefWidth="107.0" text="Status" />
-            <TableColumn prefWidth="88.0" text="C2" />
+          <TableColumn fx:id="electionName" prefWidth="298.0" text="Election Name" />
+            <TableColumn fx:id="button" prefWidth="101.0" />
         </columns>
       </TableView>
       <Label layoutX="104.0" layoutY="4.0" text="Welcome Election Official">
@@ -36,7 +35,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Button layoutX="209.0" layoutY="449.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="177.0" style="-fx-background-color: #32CD32#32CD32;" text="Add New Election">
+      <Button layoutX="209.0" layoutY="449.0" mnemonicParsing="false" onAction="#goToAdd" prefHeight="27.0" prefWidth="177.0" style="-fx-background-color: #32CD32#32CD32;" text="Add New Election">
          <font>
             <Font size="16.0" />
          </font>

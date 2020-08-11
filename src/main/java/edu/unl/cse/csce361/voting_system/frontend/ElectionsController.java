@@ -1,51 +1,67 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
-
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.List;
 
 import java.util.ResourceBundle;
 
-public class ElectionsController extends ScreenController implements Initializable{
+import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 
+public class ElectionsController extends ScreenController implements Initializable {
 
+	@FXML
+	private TableView<ElectionStatus> tableView;
 	
+	@FXML
+	private TableColumn<ElectionStatus, String> electionName;
+	
+	@FXML
+	private TableColumn<ElectionStatus, Button> button;
+	
+	private ObservableList<ElectionStatus> name = FXCollections.observableArrayList();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-        // temporary array for testing.
+        //List<String> electionList = DataLogic.getInstance().getElectionList();
+		List<String> electionList = new ArrayList<>();
+		
+		electionList.add("Nov 2020");
+		electionList.add("Nov 2021");
         
+        for(String election : electionList) {
+        	name.add(new ElectionStatus(election, new Button("Update")));
+        }
+        
+        electionName.setCellValueFactory(new PropertyValueFactory<ElectionStatus, String>("electionName"));
+        button.setCellValueFactory(new PropertyValueFactory<ElectionStatus, Button>("updateButton"));
+        
+        tableView.setItems(name);;
     }
 
-    public void editElection(javafx.event.ActionEvent event) throws IOException{
-        //current election equals the argument election
-        //open edit_election.fxml
-        //if(comboElections.getValue() != null || comboElections.getValue() != ""){DataLogic.getInstance.setEditElection(comboElections.getValue);switchScreen(event, "edit_election.fxml");}
-        
+    public void goToUpdate(javafx.event.ActionEvent event) throws IOException {
+        switchScreen(event, "update_election.fxml");
     }
 
-    public void goToAdd(javafx.event.ActionEvent event) throws IOException{
+    public void goToAdd(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "add_election.fxml");
     }
 
-    public void goToAudit(javafx.event.ActionEvent event) throws IOException{
+    public void goToAudit(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "auditor.fxml");
     }
-    
-
-    public void cancel(javafx.event.ActionEvent event) throws IOException{
-        //logout method
-        //logout();
-        switchScreen(event, "login.fxml");
+   
+    public void logOut(javafx.event.ActionEvent event) throws IOException {
+        switchScreen(event, "admin_login.fxml");
     }
 
-
 }
+
