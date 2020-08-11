@@ -5,7 +5,7 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionAndAnswerOption implements QuestionAnswer{
+public class QuestionAndAnswerOption implements QuestionAnswer {
     private String electionName;
     private String questionText;
     private List<Pair<String, Long>> answerOptions;
@@ -27,8 +27,8 @@ public class QuestionAndAnswerOption implements QuestionAnswer{
         return questionText;
     }
 
-    public boolean isEqual(Object o){
-        if(o instanceof QuestionAndAnswerOption){
+    public boolean isEqual(Object o) {
+        if(o instanceof QuestionAndAnswerOption) { 
             return this.electionName.equals(((QuestionAndAnswerOption) o).getElectionName())
                     && this.questionText.equals(((QuestionAndAnswerOption) o).getQuestionText());
         }

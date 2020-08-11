@@ -1,8 +1,6 @@
 package edu.unl.cse.csce361.voting_system.logic;
 
 import edu.unl.cse.csce361.voting_system.backend.*;
-import edu.unl.cse.csce361.voting_system.frontend.BallotResult;
-import edu.unl.cse.csce361.voting_system.frontend.VoterStatus;
 import javafx.util.Pair;
 
 import java.time.LocalDate;
@@ -17,8 +15,8 @@ public class DataLogic {
     private Admin currentOfficial;
     private Map<String,String> questionWithSelectedAnswer;
 
-    public static DataLogic getInstance(){ 
-        if(instance == null){
+    public static DataLogic getInstance() { 
+        if(instance == null) {
             instance = new DataLogic();
         }
         return instance;
@@ -109,7 +107,8 @@ public class DataLogic {
                     if(answeredQuestion.contains(questionText)) {
                         System.err.println("Voter answers a question more than once.");
                         return false;
-                    }else {
+                    }
+                    else {
                         answeredQuestion.add(questionText);
                         boolean status = Backend.getInstance().submitVote(currentVoter,
                                 answerOption.getValue());
