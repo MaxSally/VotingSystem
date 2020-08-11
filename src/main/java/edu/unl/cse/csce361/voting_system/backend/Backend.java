@@ -84,8 +84,8 @@ public class Backend {
     public List<String> getAllQuestionsByElection(String electionName) {
         Election election = ElectionEntity.getElectionByName(electionName);
         List<String> questionAsString = new ArrayList<>();
-        for(QuestionEntity questionEntity: election.getAssociatedQuestions()){
-            questionAsString.add(questionEntity.getQuestionText());
+        for(Question question: election.getAssociatedQuestions()){
+            questionAsString.add(question.getQuestionText());
         }
         return questionAsString;
     }
@@ -93,8 +93,8 @@ public class Backend {
     public List<Pair<String, Long>> getAllAnswersByQuestion(String questionName, String electionName) {
         Question question = QuestionEntity.getQuestionsByName(questionName, electionName);
         List<Pair<String, Long>> answerOptions = new ArrayList<>();
-        for(AnswerOptionEntity answerOptionEntity: question.getAssociatedAnswerOption()){
-            answerOptions.add(new Pair<>(answerOptionEntity.getAnswerText(), answerOptionEntity.getId()));
+        for(AnswerOption answerOption: question.getAssociatedAnswerOption()){
+            answerOptions.add(new Pair<>(answerOption.getAnswerText(), answerOption.getId()));
         }
         return answerOptions;
     }

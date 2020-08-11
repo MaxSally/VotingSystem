@@ -107,7 +107,7 @@ public class VoterEntity implements Voter {
 
     @Override
     public Map<String, String> getVoterVoteResult(String electionName) {
-        Set<QuestionEntity> questions = new HashSet<>();
+        Set<Question> questions = new HashSet<>();
         questions.addAll(ElectionEntity.getElectionByName(electionName).getAssociatedQuestions());
 
         Map<String, String> voterSelections = new HashMap<>();
@@ -117,9 +117,9 @@ public class VoterEntity implements Voter {
             }
         }
 
-        for(QuestionEntity questionEntity : questions) {
-            if(!voterSelections.containsKey(questionEntity.getQuestionText())) {
-                voterSelections.put(questionEntity.getQuestionText(), AnswerOptionEntity.ABSTAIN_VOTE);
+        for(Question question : questions) {
+            if(!voterSelections.containsKey(question.getQuestionText())) {
+                voterSelections.put(question.getQuestionText(), AnswerOptionEntity.ABSTAIN_VOTE);
             }
         }
 

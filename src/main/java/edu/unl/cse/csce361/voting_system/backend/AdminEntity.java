@@ -74,9 +74,9 @@ public class AdminEntity implements  Admin {
 
     @Override
     public Map<String, Map<String, Long>> getFinalResult(String electionName) {
-        List<QuestionEntity> questions = ElectionEntity.getElectionByName(electionName).getAssociatedQuestions();
+        List<Question> questions = ElectionEntity.getElectionByName(electionName).getAssociatedQuestions();
         Map<String, Map<String, Long>> finalResult = new HashMap<>();
-        for(QuestionEntity question : questions){
+        for(Question question : questions){
             //can be simplified to one line but hard to debug
             Map<String , Long> finalResultEachQuestion = getFinalResultForEachQuestion(electionName, question);
             finalResult.put(question.getQuestionText(), finalResultEachQuestion);
@@ -84,16 +84,16 @@ public class AdminEntity implements  Admin {
         return finalResult;
     }
 
-    public Map<String, Long> getFinalResultForEachQuestion(String electionName, QuestionEntity question){
-        List<AnswerOptionEntity> answerOptions = question.getAssociatedAnswerOption();
+    public Map<String, Long> getFinalResultForEachQuestion(String electionName, Question question){
+        List<AnswerOption> answerOptions = question.getAssociatedAnswerOption();
         Map<String, Long> answerToQuestionVoteCount = new HashMap<>();
-        for(AnswerOptionEntity answerOptionEntity : answerOptions){
+        for(AnswerOption answerOption : answerOptions){
             Session session = HibernateUtil.getSession();
             try{
                 session.beginTransaction();
-                int voteCount = session.createQuery("From VoterChoiceEntity where answerOption_id = " + answerOptionEntity.getId(),
+                int voteCount = session.createQuery("From VoterChoiceEntity where answerOption_id = " + answerOption.getId(),
                         VoterChoiceEntity.class).list().size();
-                answerToQuestionVoteCount.put(answerOptionEntity.getAnswerText(), (long) voteCount);
+                answerToQuestionVoteCount.put(answerOption.getAnswerText(), (long) voteCount);
                 session.getTransaction().commit();
             }catch(HibernateException exception){
                 System.err.println("Encounter problems while counting votes " + exception);

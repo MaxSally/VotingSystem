@@ -90,6 +90,7 @@ public class AnswerOptionEntity implements  AnswerOption{
         return answerText;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -125,6 +126,7 @@ public class AnswerOptionEntity implements  AnswerOption{
         answerText = updateAnswerText;
     }
 
+    @Override
     public boolean getStatus() {
         return status;
     }

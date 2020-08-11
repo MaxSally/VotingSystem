@@ -166,9 +166,9 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
             return false;
         }
         boolean status = false;
-        List<AnswerOptionEntity> correspondingAnswers = question.getAssociatedAnswerOption();
-        for(AnswerOptionEntity answerOptionEntity : correspondingAnswers) {
-            if(!removeAnswer(question, answerOptionEntity.getAnswerText())) {
+        List<AnswerOption> correspondingAnswers = question.getAssociatedAnswerOption();
+        for(AnswerOption answerOption : correspondingAnswers) {
+            if(!removeAnswer(question, answerOption.getAnswerText())) {
                 status = true;
             }
         }

@@ -13,7 +13,7 @@ public interface Election {
     public String FINISH_PHASE = "Finish phase";
     String getElectionName();
 
-    List<QuestionEntity> getAssociatedQuestions();
+    List<Question> getAssociatedQuestions();
 
     void addVoter(VoterEntity voter);
 

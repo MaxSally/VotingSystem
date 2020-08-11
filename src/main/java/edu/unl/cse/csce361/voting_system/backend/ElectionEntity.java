@@ -55,7 +55,7 @@ public class ElectionEntity implements Election{
             List<ElectionEntity> allElections= session.createQuery("SELECT election From ElectionEntity election", ElectionEntity.class).getResultList();
             session.getTransaction().commit();
             for(ElectionEntity election: allElections){
-                if(election.getStatus().equals(VOTING_PHASE)){
+                if(election.getStatus().equals(VOTING_PHASE) && !election.isRemoved()){
                 	inProgressElections.add(election);
                 }
             }
@@ -134,8 +134,14 @@ public class ElectionEntity implements Election{
     }
 
     @Override
-    public List<QuestionEntity> getAssociatedQuestions() {
-        return questions;
+    public List<Question> getAssociatedQuestions() {
+        List<Question> availableQuestion = new ArrayList<>();
+        for(Question question: questions){
+            if(question.getStatus()){
+                availableQuestion.add(question);
+            }
+        }
+        return availableQuestion;
     }
 
     public void addElection(Question question){

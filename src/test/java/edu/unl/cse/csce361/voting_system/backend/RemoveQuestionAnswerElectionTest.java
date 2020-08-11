@@ -1,6 +1,8 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
 import edu.unl.cse.csce361.testTemplate.TestTemplate;
+import edu.unl.cse.csce361.voting_system.logic.DataLogic;
+import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 import org.junit.Test;
 
 import java.util.List;
@@ -31,7 +33,7 @@ public class RemoveQuestionAnswerElectionTest extends TestTemplate {
         assertTrue(result);
         assertTrue(questions.contains(questionText));
         assertFalse(QuestionEntity.getQuestionsByName(questionText, electionName).getStatus());
-        for(AnswerOptionEntity answerOptionEntity : QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption()) {
+        for(AnswerOption answerOptionEntity : QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption()) {
             assertFalse(answerOptionEntity.getStatus());
         }
     }
@@ -43,15 +45,25 @@ public class RemoveQuestionAnswerElectionTest extends TestTemplate {
         String answerText = "Meh";
         ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
         boolean result = admin.removeAnswer(QuestionEntity.getQuestionsByName(questionText, electionName), answerText);
-        List<AnswerOptionEntity> answers = QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption();
+        List<AnswerOption> answers = QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption();
         boolean answerTextStatus = false;
-        for(AnswerOptionEntity answerOption : answers) {
+        for(AnswerOption answerOption : answers) {
             if(answerOption.getAnswerText().equals(answerText)) {
                 answerTextStatus = answerOption.getStatus();
             }
         }
         assertTrue(result);
         assertFalse(answerTextStatus);
+
+        //Extra
+        DataLogic.getInstance().setElection(electionName);
+        List<QuestionAnswer> questionAnswers = DataLogic.getInstance().getAllQuestionsAndAnswers();
+        for(QuestionAnswer questionAnswer : questionAnswers){
+            System.out.println(questionAnswer.getQuestionText());
+            for(String answerOptions : questionAnswer.getAnswerText()){
+                System.out.println(answerOptions);
+            }
+        }
     }
 
     @Test
@@ -61,9 +73,9 @@ public class RemoveQuestionAnswerElectionTest extends TestTemplate {
         String answerText = "Pat Mann";
         ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
         boolean result = admin.removeAnswer(QuestionEntity.getQuestionsByName(questionText, electionName), answerText);
-        List<AnswerOptionEntity> answers = QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption();
+        List<AnswerOption> answers = QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption();
         boolean answerTextStatus = false;
-        for(AnswerOptionEntity answerOption : answers) {
+        for(AnswerOption answerOption : answers) {
             if(answerOption.getAnswerText().equals(answerText)) {
                 answerTextStatus = answerOption.getStatus();
             }

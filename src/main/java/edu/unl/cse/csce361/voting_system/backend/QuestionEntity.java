@@ -79,8 +79,14 @@ public class QuestionEntity implements Question {
     }
 
     @Override
-    public List<AnswerOptionEntity> getAssociatedAnswerOption() {
-        return answerOptions;
+    public List<AnswerOption> getAssociatedAnswerOption() {
+        List<AnswerOption> availableAnswerOption = new ArrayList<>();
+        for(AnswerOption answerOption: answerOptions){
+            if(answerOption.getStatus()){
+                availableAnswerOption.add(answerOption);
+            }
+        }
+        return availableAnswerOption;
     }
 
     private void setElection(String election) {
@@ -126,6 +132,7 @@ public class QuestionEntity implements Question {
         this.status = status;
     }
 
+    @Override
     public boolean getStatus() {
         return status;
     }
