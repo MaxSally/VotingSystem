@@ -15,12 +15,14 @@
       </Label>
       <Button layoutX="19.0" layoutY="18.0" mnemonicParsing="false" onAction="#goBackToVoteScreen" prefHeight="35.0" prefWidth="54.0" text="Back" />
       <Button layoutX="319.0" layoutY="551.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="67.0" text="Vote" />
-      <ListView layoutY="81.0" prefHeight="461.0" prefWidth="400.0" />
+      <ListView fx:id="listView" layoutY="101.0" prefHeight="441.0" prefWidth="400.0" />
       <Label layoutX="116.0" layoutY="52.0" text="*Please Check Your Choice" />
       <Label layoutX="14.0" layoutY="551.0" text="Press Back to go back and change your choice">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
+      <Label layoutX="14.0" layoutY="77.0" text="Current Election: " />
+      <Label fx:id="electionName" layoutX="125.0" layoutY="77.0" text="Label" />
    </children>
 </AnchorPane>

@@ -25,7 +25,7 @@ public class AdminTest extends TestTemplate {
         String username = "chloe";
         String password = "testaccount";
 
-        Admin admin = Backend.getInstance().registerAdminAccount(username, password);
+        Admin admin = Backend.getInstance().registerAdminAccount(username, password, true);
         assertNotNull(admin);
     }
 

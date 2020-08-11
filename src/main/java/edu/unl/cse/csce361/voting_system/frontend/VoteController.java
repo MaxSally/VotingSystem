@@ -31,6 +31,8 @@ public class VoteController extends ScreenController implements Initializable {
 	private ListView<QuestionAnswer> listView;
 	
 	private Map<String, String> selectedAnswer; 
+	
+	private List<String> answer = DataLogic.getInstance().getSelectedAnswerList();
 
 	class Cell extends ListCell<QuestionAnswer> {
 
@@ -52,6 +54,7 @@ public class VoteController extends ScreenController implements Initializable {
 			
 			if(ballot != null && !empty) {
 				question.setText(ballot.getQuestionText());
+				System.out.println(answer.get(getIndex()));
 				answerChoiceList.setItems(FXCollections.observableArrayList(ballot.getAnswerText()));
 				setGraphic(hbox);
 				answerChoiceList.setOnAction(e -> selectedAnswer.put(ballot.getQuestionText(), answerChoiceList.getValue()));
@@ -78,48 +81,8 @@ public class VoteController extends ScreenController implements Initializable {
     }
     
     public void submitVotes(javafx.event.ActionEvent event) throws IOException{
-    	alertScreen(event, "Alert!", "Make sure that you have chosen the choice that you want as you wont be able to go back", 
-    			"If everything is good, click 'ok' and click 'Submit Vote'", "Go Back", "Ok");
+    	DataLogic.getInstance().setQuestionWithSelectedQuestion(selectedAnswer);
+    	switchScreen(event, "confirm_screen.fxml");
     }
-    
-    public void alertScreen(javafx.event.ActionEvent event, String title, String message, String message2, String backButton, String confirmButton) {
-
-        Stage window = new Stage();
-        //application modality allows the application and screen below to remain open,
-        //but non-functional until the alert screen closes
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle(title);
-        window.setMinHeight(150);
-        window.setMinWidth(350);
-
-        Label label = new Label();
-        label.setText(message);
-        Label label2 = new Label();
-        label2.setText(message2);
-        
-        Button confirm = new Button(confirmButton);
-        confirm.setOnAction(e -> {
-			try {
-		    	//DataLogic.getInstance().submitVote(selectedAnswer);
-				switchScreen(event, "confirm_screen.fxml");
-				window.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-        
-        Button goBack = new Button(backButton);
-        goBack.setOnAction(e -> window.close());
-        
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, label2, goBack, confirm);
-        layout.setAlignment(Pos.CENTER);
-
-        Scene scene = new Scene(layout);
-        window.setScene(scene);
-        window.showAndWait();
-    }
-
 
 }

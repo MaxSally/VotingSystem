@@ -13,6 +13,7 @@ public class DataLogic {
     private Election currentElection;
     private Admin currentAdmin;
     private ElectionOfficial currentOfficial;
+    private Map<String,String> questionWithSelectedAnswer;
 
     public static DataLogic getInstance(){
         if(instance == null){
@@ -28,7 +29,7 @@ public class DataLogic {
         // next sprint we will dynamically change the current election
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
         currentOfficial = null;
-
+        questionWithSelectedAnswer = new HashMap<>();
     }
 
     public boolean checkIfVoted(){
@@ -206,7 +207,24 @@ public class DataLogic {
     public void registerNewVoter(String name, String ssn){
         Backend.getInstance().registerToVote(name, ssn);
     }
-
+    
+    public void setQuestionWithSelectedQuestion(Map<String, String> questionWithAnswer) {
+    	questionWithSelectedAnswer.putAll(questionWithAnswer);
+    }
+    
+    public Map<String, String> getQuestionWithAnswerList(){
+    	return questionWithSelectedAnswer;
+    }
+    
+    public List<String> getSelectedAnswerList() {
+    	List<String> answerList = new ArrayList<>();
+    	
+    	for(Map.Entry<String, String> questionAnswer : questionWithSelectedAnswer.entrySet()) {
+    		answerList.add(questionAnswer.getValue());
+    	}
+    	return answerList;
+    }
+ 
     public void registerNewAdmin(String name, String ssn, boolean electionOfficial){
         Backend.getInstance().registerAdminAccount(name, ssn, electionOfficial);
     }

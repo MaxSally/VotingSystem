@@ -105,30 +105,30 @@ public class DatabasePopulator {
     public static Set<VoterChoice> createVoterChoice( List<Long> answerOptionIndex) {
         System.out.println("Create voter choice/selection..........");
         return Set.of(
-                new VoterChoiceEntity("123456789", answerOptionIndex.get(0)),
-                new VoterChoiceEntity("123456789", answerOptionIndex.get(1)),
-                new VoterChoiceEntity("123456789", answerOptionIndex.get(2)),
-                new VoterChoiceEntity("123456789", answerOptionIndex.get(3)),
-                new VoterChoiceEntity("123456789", answerOptionIndex.get(4)),
-                new VoterChoiceEntity("123456789", answerOptionIndex.get(5)),
-                new VoterChoiceEntity("123879456", answerOptionIndex.get(6)),
-                new VoterChoiceEntity("123879456", answerOptionIndex.get(7)),
-                new VoterChoiceEntity("123879456", answerOptionIndex.get(8)),
-                new VoterChoiceEntity("123879456", answerOptionIndex.get(9)),
-                new VoterChoiceEntity("123879456", answerOptionIndex.get(10)),
-                new VoterChoiceEntity("123879456", answerOptionIndex.get(11))
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(0)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(1)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(2)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(3)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(4)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(5)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(6)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(7)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(8)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(9)),
+                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(10)),
+                new VoterChoiceEntity("b24454431f08deb4d5ee6747bd55f3be", answerOptionIndex.get(11))
         );
     }
 
     public static void setVoterStatus() {
         Session session = HibernateUtil.getSession();
         try {
-            Voter voter = VoterEntity.getVoterBySSN("123456789");
+            Voter voter = VoterEntity.getVoterBySSN("25f9e794323b453885f5181f1b624d0b");
             voter.addVotedElection("Nov2020");
             session.beginTransaction();
             session.saveOrUpdate(voter);
             session.getTransaction().commit();
-            voter = VoterEntity.getVoterBySSN("123879456");
+            voter = VoterEntity.getVoterBySSN("b24454431f08deb4d5ee6747bd55f3be");
             voter.addVotedElection("Nov2020");
             session.beginTransaction();
             session.saveOrUpdate(voter);
