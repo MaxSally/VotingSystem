@@ -104,7 +104,8 @@ public class ConfirmationScreenController extends ScreenController implements In
         confirm.setOnAction(e -> {
 			try {
 		    	DataLogic.getInstance().submitVote(questionWithSelectedAnswer);
-				switchScreen(event, "thankYou_fxml");
+		    	DataLogic.getInstance().getQuestionWithAnswerList().clear();
+				switchScreen(event, "thankYou_screen.fxml");
 				window.close();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

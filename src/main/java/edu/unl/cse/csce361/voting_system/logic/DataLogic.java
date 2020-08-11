@@ -12,7 +12,7 @@ public class DataLogic {
     private Voter currentVoter;
     private Election currentElection;
     private Admin currentAdmin;
-    private Admin currentOfficial;
+    private ElectionOfficial currentOfficial;
     private Map<String,String> questionWithSelectedAnswer;
 
     public static DataLogic getInstance() { 
@@ -28,7 +28,7 @@ public class DataLogic {
         currentAdmin = Backend.getInstance().getAdminByUsername("superuser 999");
         // next sprint we will dynamically change the current election
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
-        currentOfficial = Backend.getInstance().getAdminByUsername("Batman");;
+        currentOfficial = null;
         questionWithSelectedAnswer = new HashMap<>();
     }
     
@@ -60,7 +60,7 @@ public class DataLogic {
     
     public boolean isElectionOfficial() {
         if(Backend.getInstance().isElectionOfficial(currentAdmin)) {
-            return true;
+        	return true;
         } else {
             return false;
         }
@@ -147,7 +147,7 @@ public class DataLogic {
 
     public void createNewElectionFromModel(String electionName, Map<String, List<String>> questions, LocalDate startTime, LocalDate endTime, boolean status) {
         if (currentAdmin instanceof ElectionOfficial) {
-            Backend.getInstance().createNewElection((ElectionOfficial) currentAdmin, 
+            Backend.getInstance().createNewElection((ElectionOfficial) currentOfficial, 
             		electionName, startTime, endTime, status);
 
             for (Map.Entry<String, List<String>> question : questions.entrySet()) {
@@ -208,23 +208,13 @@ public class DataLogic {
     }
     
     //used in VoteController and ConfirmationScreenController
-    //used to parse around both of the controller
+    //used to parse data around both of the controller
     public void setQuestionWithSelectedAnswer(Map<String, String> questionWithAnswer) {
     	questionWithSelectedAnswer.putAll(questionWithAnswer);
     }
     
     public Map<String, String> getQuestionWithAnswerList() {
     	return questionWithSelectedAnswer;
-    }
-    
-    //only return the selected answer
-    public List<String> getSelectedAnswerList() {
-    	List<String> answerList = new ArrayList<>();
-    	
-    	for(Map.Entry<String, String> questionAnswer : questionWithSelectedAnswer.entrySet()) {
-    		answerList.add(questionAnswer.getValue());
-    	}
-    	return answerList;
     }
 }
 

@@ -37,6 +37,7 @@ public class LoginController extends ScreenController {
                 switchScreen(event, "voting_screen.fxml");
             }
             txtErrorText.setText("");
+            DataLogic.getInstance().setCurrentVoter(ssn);
         }
         else {
             txtErrorText.setText("Error. Name or SSN must be wrong.");

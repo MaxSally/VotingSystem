@@ -24,10 +24,10 @@ public class VoteController extends ScreenController implements Initializable {
 	@FXML
 	private ListView<QuestionAnswer> listView;
 	
+	private String currentVoter;
+	
 	private Map<String, String> selectedAnswer; 
 	
-	private List<String> answer = DataLogic.getInstance().getSelectedAnswerList();
-
 	class Cell extends ListCell<QuestionAnswer> {
 		HBox hbox;
 		Label question = new Label();
@@ -46,7 +46,10 @@ public class VoteController extends ScreenController implements Initializable {
 			
 			if(ballot != null && !empty) {
 				question.setText(ballot.getQuestionText());
-				System.out.println(answer.get(getIndex()));
+				answerChoiceList.setValue("Abstain Vote");
+				if(!(selectedAnswer.isEmpty())) {
+					answerChoiceList.setValue(selectedAnswer.get(ballot.getQuestionText()));
+				}
 				answerChoiceList.setItems(FXCollections.observableArrayList(ballot.getAnswerText()));
 				setGraphic(hbox);
 				answerChoiceList.setOnAction(e -> selectedAnswer.put(ballot.getQuestionText(), answerChoiceList.getValue()));
@@ -56,7 +59,17 @@ public class VoteController extends ScreenController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		selectedAnswer = new HashMap<>();
+		/*currentVoter = " ";
+		
+		if(!(currentVoter.equals(DataLogic.getInstance().getCurrentVoterName()))){
+			selectedAnswer = new HashMap<>();
+			currentVoter = DataLogic.getInstance().getCurrentVoterName();
+		}
+		else {
+			selectedAnswer = DataLogic.getInstance().getQuestionWithAnswerList(); 
+		}*/
+		
+		selectedAnswer = DataLogic.getInstance().getQuestionWithAnswerList(); 
 		electionName.setText(DataLogic.getInstance().getCurrentElectionName());
 
 		List<QuestionAnswer> questionsAndAnswer = DataLogic.getInstance().getAllQuestionsAndAnswers();
