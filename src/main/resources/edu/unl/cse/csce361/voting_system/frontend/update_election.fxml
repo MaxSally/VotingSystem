@@ -42,10 +42,10 @@
       <ChoiceBox fx:id="answer" layoutX="10.0" layoutY="367.0" prefWidth="150.0" />
       <Button layoutX="185.0" layoutY="367.0" mnemonicParsing="false" onAction="#editAnswerText" text="Edit" />
       <Button layoutX="241.0" layoutY="367.0" mnemonicParsing="false" onAction="#removeAnswer" text="Remove" />
-      <TextField fx:id="newQuestionText" disable="true" layoutX="158.0" layoutY="293.0" visible="false" />
+      <TextField fx:id="newQuestionText" layoutX="158.0" layoutY="293.0" visible="false" />
       <Button fx:id="addQuestion" layoutX="335.0" layoutY="293.0" mnemonicParsing="false" onAction="#createNewQuestion" text="Add" visible="false" />
       <Button layoutX="10.0" layoutY="443.0" mnemonicParsing="false" onAction="#addNewAnswerOption" text="Add New Option" />
-      <TextField fx:id="newAnswerOptionText" disable="true" layoutX="167.0" layoutY="443.0" visible="false" />
+      <TextField fx:id="newAnswerOptionText" layoutX="167.0" layoutY="443.0" visible="false" />
       <Button fx:id="addAnswerOption" layoutX="344.0" layoutY="443.0" mnemonicParsing="false" onAction="#createNewAnswer" text="Add" visible="false" />
       <Button fx:id="updateName" layoutX="197.0" layoutY="157.0" mnemonicParsing="false" onAction="#updateElectionName" text="Update" visible="false" />
       <Button fx:id="updateQuestion" layoutX="197.0" layoutY="256.0" mnemonicParsing="false" onAction="#updateQuestionText" text="Update" visible="false" />

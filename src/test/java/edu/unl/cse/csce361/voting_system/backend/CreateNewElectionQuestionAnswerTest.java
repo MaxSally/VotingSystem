@@ -94,4 +94,9 @@ public class CreateNewElectionQuestionAnswerTest extends TestTemplate {
             System.out.println(election.getElectionName());
         }
     }
+    
+    @Test
+    public void testElection() {
+    	List<Election> election = Backend.getInstance().getAllInProgressElections(); 
+    }
 }

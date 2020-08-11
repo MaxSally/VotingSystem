@@ -44,8 +44,7 @@ public class SubmitVoteTest extends TestTemplate {
     	String adminUser = "Batman";
     	String password = "4b9f66817cf5ae30903c9a7bb53da984";
     	DataLogic.getInstance().adminLogIn(adminUser, password);
-    	DataLogic.getInstance().createNewElectionFromModel(electionName, LocalDate.of(2022, 4, 20), 
-    			LocalDate.of(2022, 5, 20));
+    	//DataLogic.getInstance().createNewElectionFromModel(electionName, LocalDate.of(2022, 4, 20), LocalDate.of(2022, 5, 20));
     	List<Election> questionAnswer = Backend.getInstance().getAllInactiveElections();
     	for(Election election : questionAnswer) {
     		System.out.println(election.getElectionName());

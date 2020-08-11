@@ -200,6 +200,10 @@ public class Backend {
     public List<Election> getAllInactiveElections(){
         return ElectionEntity.getAllInactiveElection();
     }
+    
+    public List<Election> getAllInProgressElections(){
+        return ElectionEntity.getAllInProgressElection();
+    }
 
     public List<Election> getAllElections(){
         return ElectionEntity.getAllElection();

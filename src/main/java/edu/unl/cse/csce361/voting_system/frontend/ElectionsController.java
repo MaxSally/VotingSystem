@@ -37,10 +37,18 @@ public class ElectionsController extends ScreenController implements Initializab
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-        List<String> electionList = DataLogic.getInstance().getInactiveElectionList();
+        List<String> allElectionList = DataLogic.getInstance().getAllInProgressElectionList();
+        List<String> inActiveElectionList = DataLogic.getInstance().getInactiveElectionList();
 		
-        for(String election : electionList) {
-        	name.add(new ElectionStatus(election, new Button("Edit"), new Button("Start"), new Button("End")));
+        System.out.println(allElectionList.size());
+        System.out.println(inActiveElectionList.size());
+        
+        for(String election : allElectionList) {
+        	name.add(new ElectionStatus(election, new Button(""), new Button(""), new Button("End")));
+        }
+        
+        for(String election : inActiveElectionList) {
+        	name.add(new ElectionStatus(election, new Button("Edit"), new Button("Start"), new Button("")));
         }
         
         electionName.setCellValueFactory(new PropertyValueFactory<ElectionStatus, String>("electionName"));

@@ -12,7 +12,6 @@ public class DataLogic {
     private Voter currentVoter;
     private Election currentElection;
     private Admin currentAdmin;
-    private ElectionOfficial currentOfficial;
     private Map<String,String> questionWithSelectedAnswer;
     private String editElectionName;
 
@@ -29,7 +28,6 @@ public class DataLogic {
         currentAdmin = Backend.getInstance().getAdminByUsername("superuser 999");
         // next sprint we will dynamically change the current election
         currentElection = Backend.getInstance().getElectionByName("Nov2020");
-        currentOfficial = null;
         questionWithSelectedAnswer = new HashMap<>();
         editElectionName = "";
     }
@@ -158,64 +156,76 @@ public class DataLogic {
     public Map<String, List<String>> getWinnerResult() {
     	return Backend.getInstance().getAllWinner(currentAdmin, currentElection.getElectionName());
     }
-/*
-    public void createNewElectionFromModel(String electionName, Map<String, List<String>> questions, LocalDate startTime, LocalDate endTime, boolean status) {
-<<<<<<< HEAD
-        if (isElectionOfficial()) {
-            Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, electionName, startTime, endTime, status);
-=======
-        if (currentAdmin instanceof ElectionOfficial) {
-            Backend.getInstance().createNewElection((ElectionOfficial) currentOfficial, 
-            		electionName, startTime, endTime);
->>>>>>> ff62d1fe9aaada4ff20e6d5579f7a201b6eb8431
 
-            for (Map.Entry<String, List<String>> question : questions.entrySet()) {
-                Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
-                		electionName, question.getKey());
+    public void createNewElectionFromModel(String electionName, Map<String, List<String>> questionsAnswer, LocalDate startTime, LocalDate endTime) {
+
+        if (isElectionOfficial()) {
+            System.out.println(Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, 
+            		electionName, startTime, endTime));
+            for (Map.Entry<String, List<String>> question : questionsAnswer.entrySet()) {
+                System.out.println(Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
+                		electionName, question.getKey()));
                 List<String> answerList = question.getValue();
                 for (String answer : answerList) {
-                    Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
-                    		question.getKey(), answer, electionName);
+                	if(!(answer.equals("") || answer.equals(null))) {
+                		System.out.println(Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
+                				question.getKey(), answer, electionName));
+                	}
                 }
             }
         }
     }
-    */
     
+    /*
     public void createNewElectionFromModel(String electionName, LocalDate startTime, LocalDate endTime) {
         if (isElectionOfficial()) {
             Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, electionName, startTime, endTime);
         }
-    }
+    }*/
     
     public void addNewQuestion(String electionName, String newQuestionText) {
-    	Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
-        		electionName, newQuestionText);
+    	if(isElectionOfficial()) {
+	    	Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
+	        		electionName, newQuestionText);
+    	}
     }
     
     public void addNewAnswerOption(String electionName, String questionText, String newAnswerText) {
-    	Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
-        		questionText, newAnswerText, electionName);
+	    if(isElectionOfficial()) {
+	    	Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
+	        		questionText, newAnswerText, electionName);
+	    }
     }
     
     public void removeQuestion(String electionName, String questionText) {
-        Backend.getInstance().removeQuestion((ElectionOfficial) currentAdmin, electionName, questionText);
+    	if(isElectionOfficial()) {
+    		Backend.getInstance().removeQuestion((ElectionOfficial) currentAdmin, electionName, questionText);
+    	}
     }
     
     public void removeAnswer(String electionName, String questionText, String answerText) {
-        Backend.getInstance().removeAnswer((ElectionOfficial) currentAdmin, questionText, answerText, electionName);
+        if(isElectionOfficial()) {
+        	Backend.getInstance().removeAnswer((ElectionOfficial) currentAdmin, questionText, answerText, electionName);
+        }
     }
     
     public void updateElectionName(String originalElectionName, String updatedElectionName) {
-        Backend.getInstance().updateElectionName((ElectionOfficial) currentAdmin, originalElectionName, updatedElectionName);
+    	if(isElectionOfficial()) {
+    		Backend.getInstance().updateElectionName((ElectionOfficial) currentAdmin, originalElectionName, updatedElectionName);
+    	}
     }
     
     public void updateQuestion(String electionName, String originalQuestionText, String updatedQuestionText) {
-        Backend.getInstance().updateQuestion((ElectionOfficial) currentAdmin, electionName, originalQuestionText, updatedQuestionText);
+        if(isElectionOfficial()) {
+        	Backend.getInstance().updateQuestion((ElectionOfficial) currentAdmin, electionName, originalQuestionText, updatedQuestionText);
+        }
     }
     
     public void updateAnswer(String questionText, String originalAnswerText, String updatedAnswerText, String electionName) {
-        Backend.getInstance().updateAnswer((ElectionOfficial) currentAdmin, questionText, originalAnswerText, updatedAnswerText, electionName);
+    	if(isElectionOfficial()) {
+            Backend.getInstance().updateAnswer((ElectionOfficial) currentAdmin, questionText, originalAnswerText, updatedAnswerText, electionName);
+
+    	}
     }
     
     //get question and answer choice based on the selected election from front end
@@ -253,6 +263,26 @@ public class DataLogic {
     	return inactiveElectionStringList;
     }
     
+    public List<String> getAllInProgressElectionList() {
+    	List<String> allElectionStringList = new ArrayList<>();
+    	List<Election> allElection = Backend.getInstance().getAllInProgressElections();
+    	
+    	for(Election election : allElection) {
+    		allElectionStringList.add(election.getElectionName());
+    	}
+    	return allElectionStringList;
+    }
+    
+    public List<String> getAllElectionList() {
+    	List<String> allElectionStringList = new ArrayList<>();
+    	List<Election> allElection = Backend.getInstance().getAllElections();
+    	
+    	for(Election election : allElection) {
+    		allElectionStringList.add(election.getElectionName());
+    	}
+    	return allElectionStringList;
+    }
+    
     public boolean setStartElection(String electionName) {
     	if(isElectionOfficial()) {
     		currentElection = Backend.getInstance().startElection((ElectionOfficial) currentAdmin, electionName);
@@ -262,7 +292,7 @@ public class DataLogic {
     
     public boolean setEndElection(String electionName) {
     	if(isElectionOfficial()) {
-    		return Backend.getInstance().endElection(currentOfficial, electionName);
+    		return Backend.getInstance().endElection((ElectionOfficial) currentAdmin, electionName);
     	}
     	return false;
     }

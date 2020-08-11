@@ -114,6 +114,7 @@ public class UpdateElectionController extends ScreenController implements Initia
 
 	public void removeQuestion(javafx.event.ActionEvent event) throws IOException {
 		DataLogic.getInstance().removeQuestion(electionName.getText(), question.getValue());
+		System.out.println();
 	}
 	
 	public void removeAnswer(javafx.event.ActionEvent event) throws IOException {

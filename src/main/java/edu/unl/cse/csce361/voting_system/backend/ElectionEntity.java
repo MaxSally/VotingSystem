@@ -46,6 +46,25 @@ public class ElectionEntity implements Election{
         }
         return inactiveElections;
     }
+    
+    static List<Election> getAllInProgressElection(){
+        List<Election> inProgressElections = new ArrayList<>();
+        Session session = HibernateUtil.getSession();
+        try{
+            session.beginTransaction();
+            List<ElectionEntity> allElections= session.createQuery("SELECT election From ElectionEntity election", ElectionEntity.class).getResultList();
+            session.getTransaction().commit();
+            for(ElectionEntity election: allElections){
+                if(election.getStatus().equals(VOTING_PHASE)){
+                	inProgressElections.add(election);
+                }
+            }
+        }catch (HibernateException exception){
+            System.err.println("Could not load all elections " + exception.getMessage());
+            session.getTransaction().rollback();
+        }
+        return inProgressElections;
+    }
 
     static List<Election> getAllElection(){
         List<Election> elections = new ArrayList<>();
@@ -159,6 +178,10 @@ public class ElectionEntity implements Election{
 
     public void setRemoved(boolean removed) {
         isRemoved = removed;
+    }
+    
+    public String getStatus() {
+    	return status;
     }
 
     @Override

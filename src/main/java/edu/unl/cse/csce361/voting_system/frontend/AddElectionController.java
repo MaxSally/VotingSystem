@@ -81,14 +81,15 @@ public class AddElectionController extends ScreenController implements Initializ
     			if(selectedQuestion.equals(question.getKey())) {
     				answerOptionTextField1.setText(question.getValue().get(0));
     				answerOptionTextField2.setText(question.getValue().get(1));
-    				answerOptionTextField3.setText(question.getValue().get(2));;
-    				answerOptionTextField4.setText(question.getValue().get(3));;
+    				answerOptionTextField3.setText(question.getValue().get(2));
+    				answerOptionTextField4.setText(question.getValue().get(3));
     			}
     		}
     	}
     }
     
     public void createNewElectionModel(javafx.event.ActionEvent event) throws IOException {
+    	System.out.println(questionAnswer);
     	alertScreen(event, "Alert!", "is everything correct?", "If everything is ok, click 'ok'", "Go Back", "Ok");
     }
     
@@ -114,7 +115,7 @@ public class AddElectionController extends ScreenController implements Initializ
         Button confirm = new Button(confirmButton);
         confirm.setOnAction(e -> {
 			try {
-		    	DataLogic.getInstance().createNewElectionFromModel(electionNameTextField.getText(), 
+		    	DataLogic.getInstance().createNewElectionFromModel(electionNameTextField.getText(), questionAnswer, 
 		    			startDate.getValue(), endDate.getValue());
 				switchScreen(event, "elections_screen.fxml");
 				window.close();
