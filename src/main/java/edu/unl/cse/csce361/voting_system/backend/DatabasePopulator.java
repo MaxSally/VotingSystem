@@ -17,28 +17,28 @@ public class DatabasePopulator {
     public static Set<Voter> createVoters() {
         System.out.println("Creating Voter.....");
         return Set.of(
-                new VoterEntity("A", "123456789"),
-                new VoterEntity("B", "123879456"),
-                new VoterEntity("C", "839480320"),
-                new VoterEntity("D", "273832943"),
-                new VoterEntity("E", "987678987"),
-                new VoterEntity("F", "353812739")
+                new VoterEntity("A", "25f9e794323b453885f5181f1b624d0b"),//123456789
+                new VoterEntity("B", "b24454431f08deb4d5ee6747bd55f3be"),//123879456
+                new VoterEntity("C", "1719ab04795270842a9ed68c3a8064c1"),//839480320
+                new VoterEntity("D", "2e779d55f26986b3dfb6dc7ba7b3b38d"),//273832943
+                new VoterEntity("E", "5a7f04fcd071d7a80a25b397e59341d7"),//987678987
+                new VoterEntity("F", "20b9522580886ae6830172bae7cf06ac")//353812739
         );
     }
 
     public static Set<Admin> createAdmin() {
         System.out.println("Creating Admin.....");
         return Set.of(
-                new AdminEntity("superuser 999", "this is my password"),
-                new AdminEntity("superrobot 800", "password101")
+                new AdminEntity("superuser 999", "fc5e038d38a57032085441e7fe7010b0"),//helloworld
+                new AdminEntity("superrobot 800", "2804df10cfd85d566a0fbb8d71f760b0") //password101
         );
     }
 
     public static Set<ElectionOfficial> createElectionOfficial(){
         System.out.println("Creating election officials");
         return Set.of(
-                new ElectionOfficialEntity("Batman", "Batman123"),
-                new ElectionOfficialEntity("NuclearFusion", "WhatIsIt")
+                new ElectionOfficialEntity("Batman", "4b9f66817cf5ae30903c9a7bb53da984"), //Batman123
+                new ElectionOfficialEntity("NuclearFusion", "ca9fbb640474b738649e52613e91b7df") //WhatIsIt
         );
     }
 
