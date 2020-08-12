@@ -22,7 +22,7 @@ public class GetAllQuestionAndAnswerOptionTest extends TestTemplate {
         String firstQuestion = "Who is the next mayor?";
         String electionName = "Nov2020";
         String voterSSN = "83948032O";
-        DataLogic.getInstance().setElection(electionName);
+        DataLogic.getInstance().setCurrentElection(electionName);
         DataLogic.getInstance().setCurrentVoter(voterSSN);
         List<QuestionAnswer> lstQA = DataLogic.getInstance().getAllQuestionsAndAnswers();
         assertEquals(expectedSize, lstQA.size());

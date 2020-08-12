@@ -56,7 +56,7 @@ public class RemoveQuestionAnswerElectionTest extends TestTemplate {
         assertFalse(answerTextStatus);
 
         //Extra
-        DataLogic.getInstance().setElection(electionName);
+        DataLogic.getInstance().setCurrentElection(electionName);
         List<QuestionAnswer> questionAnswers = DataLogic.getInstance().getAllQuestionsAndAnswers();
         for(QuestionAnswer questionAnswer : questionAnswers){
             System.out.println(questionAnswer.getQuestionText());

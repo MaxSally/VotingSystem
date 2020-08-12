@@ -25,9 +25,14 @@ public class DataLogic {
     private DataLogic() {
         lstQuestionAnswer = new ArrayList<>();
         currentVoter = null;
-        currentAdmin = Backend.getInstance().getAdminByUsername("superuser 999");
-        // next sprint we will dynamically change the current election
-        currentElection = Backend.getInstance().getElectionByName("Nov2020");
+        currentAdmin = null;
+        List<Election> inProgressElection = Backend.getInstance().getAllInProgressElections();
+        if(inProgressElection.size() == 1) {
+        	currentElection = inProgressElection.get(0);
+        }
+        else {
+            currentElection = null;
+        }
         questionWithSelectedAnswer = new HashMap<>();
         editElectionName = "";
     }
@@ -70,10 +75,6 @@ public class DataLogic {
         }
     }
     
-    public void setCurrentAdmin(String username) {
-    	currentAdmin = Backend.getInstance().getAdminByUsername(username);
-    }
-    
     public void registerNewVoter(String name, String ssn) {
         Backend.getInstance().registerToVote(name, ssn);
     }
@@ -82,6 +83,11 @@ public class DataLogic {
         Backend.getInstance().registerAdminAccount(name, ssn, electionOfficial);
     }
     
+    public boolean isCurrentElectionActive() {
+    	return currentElection != null;
+    }
+    
+    //get all questions and answer for the current election 
     public List<QuestionAnswer> getAllQuestionsAndAnswers() {
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(currentElection.getElectionName());
         List<QuestionAnswer> lstCurrentQA = new ArrayList<>();
@@ -95,6 +101,7 @@ public class DataLogic {
         return lstCurrentQA;
     }
 
+    //submit voter's vote into the database
     public boolean submitVote(Map<String, String> voterSelections) {
         if(currentVoter.hasVoted(currentElection.getElectionName())){
             System.err.println("Voter has voted");
@@ -133,7 +140,8 @@ public class DataLogic {
         return true;
     }
 
-    public void setElection(String electionName) {
+    //setter and getter for currently in progress election
+    public void setCurrentElection(String electionName) {
         currentElection = Backend.getInstance().getElectionByName(electionName);
     }
 
@@ -141,6 +149,7 @@ public class DataLogic {
         return currentElection.getElectionName();
     }
     
+    //setter and getter for selected election to be edit/update
     public void setEditElectionName(String electionNameToBeEdit) {
     	editElectionName = electionNameToBeEdit;
     }
@@ -149,20 +158,22 @@ public class DataLogic {
         return editElectionName;
     }
 
+    //get all the status of registered voter 
     public Map<String, String> getAllVoterStatus() {
         return Backend.getInstance().getAllVoterStatus(currentAdmin, currentElection.getElectionName());
     }
 
+    //get the vote result for each answer in each question
     public Map<String, Map<String, Long>> getFinalResult() {
         return Backend.getInstance().getFinalResult(currentAdmin, currentElection.getElectionName());
     }
     
+    //get the winner for the current election
     public Map<String, List<String>> getWinnerResult() {
     	return Backend.getInstance().getAllWinner(currentAdmin, currentElection.getElectionName());
     }
 
     public void createNewElectionFromModel(String electionName, Map<String, List<String>> questionsAnswer, LocalDate startTime, LocalDate endTime) {
-
         if (isElectionOfficial()) {
         	Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, 
             		electionName, startTime, endTime);
@@ -170,6 +181,8 @@ public class DataLogic {
                 Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
                 		electionName, question.getKey());
                 List<String> answerList = question.getValue();
+                System.out.println(answerList);
+                System.out.println(answerList.size());
                 for (String answer : answerList) {
                 	if(!(answer.equals("") || answer == null)) {
                 		Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
@@ -180,24 +193,15 @@ public class DataLogic {
         }
     }
     
-    /*
-    public void createNewElectionFromModel(String electionName, LocalDate startTime, LocalDate endTime) {
-        if (isElectionOfficial()) {
-            Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, electionName, startTime, endTime);
-        }
-    }*/
-    
     public void addNewQuestion(String electionName, String newQuestionText) {
     	if(isElectionOfficial()) {
-	    	Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
-	        		electionName, newQuestionText);
+	    	Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, electionName, newQuestionText);
     	}
     }
     
     public void addNewAnswerOption(String electionName, String questionText, String newAnswerText) {
 	    if(isElectionOfficial()) {
-	    	Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
-	        		questionText, newAnswerText, electionName);
+	    	Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, questionText, newAnswerText, electionName);
 	    }
     }
     
@@ -257,6 +261,7 @@ public class DataLogic {
     	return questionWithSelectedAnswer;
     }
     
+    //get a list of election based the election status
     public List<String> getInactiveElectionList() {
     	List<String> inactiveElectionStringList = new ArrayList<>();
     	List<Election> inactiveElection = Backend.getInstance().getAllInactiveElections();
@@ -287,8 +292,12 @@ public class DataLogic {
     	return allElectionStringList;
     }
     
+    //set election status
     public boolean setStartElection(String electionName) {
     	if(isElectionOfficial()) {
+    		if(currentElection.isInProgress()) {
+    			return false;
+    		}
     		currentElection = Backend.getInstance().startElection((ElectionOfficial) currentAdmin, electionName);
     	}
     	return currentElection != null;
@@ -301,6 +310,7 @@ public class DataLogic {
     	return false;
     }
     
+    //get the duration of the selected election
     public LocalDate getElectionStartDate(String electionName) {
     	return Backend.getInstance().getStartTimeForElection(electionName);
     }
