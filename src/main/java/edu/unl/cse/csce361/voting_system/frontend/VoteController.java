@@ -8,7 +8,6 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -23,8 +22,6 @@ public class VoteController extends ScreenController implements Initializable {
 	
 	@FXML
 	private ListView<QuestionAnswer> listView;
-	
-	private String currentVoter;
 	
 	private Map<String, String> selectedAnswer; 
 	
@@ -59,16 +56,6 @@ public class VoteController extends ScreenController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		/*currentVoter = " ";
-		
-		if(!(currentVoter.equals(DataLogic.getInstance().getCurrentVoterName()))){
-			selectedAnswer = new HashMap<>();
-			currentVoter = DataLogic.getInstance().getCurrentVoterName();
-		}
-		else {
-			selectedAnswer = DataLogic.getInstance().getQuestionWithAnswerList(); 
-		}*/
-		
 		selectedAnswer = DataLogic.getInstance().getQuestionWithAnswerList(); 
 		electionName.setText(DataLogic.getInstance().getCurrentElectionName());
 
@@ -86,5 +73,4 @@ public class VoteController extends ScreenController implements Initializable {
     	DataLogic.getInstance().setQuestionWithSelectedAnswer(selectedAnswer);
     	switchScreen(event, "confirm_screen.fxml");
     }
-
 }

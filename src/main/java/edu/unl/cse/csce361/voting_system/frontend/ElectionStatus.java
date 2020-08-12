@@ -1,7 +1,6 @@
 package edu.unl.cse.csce361.voting_system.frontend;
 
 import java.io.IOException;
-import java.util.List;
 
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,6 +17,8 @@ public class ElectionStatus extends ScreenController {
         this.editButton = editButton;
         this.startButton = startButton;
         this.endButton = endButton;
+        
+        //edit button
         if(editButton.getText().equals("")) {
 			editButton.setVisible(false);
 		}
@@ -34,18 +35,19 @@ public class ElectionStatus extends ScreenController {
 			});
 		}
         
+        //start election button
         if(startButton.getText().equals("")) {
     		startButton.setVisible(false);
     	}
     	else {
 	        startButton.setOnAction(e2 -> {
 	        	DataLogic.getInstance().setStartElection(getElectionName());
-	        	
 	    		startButton.setStyle("-fx-background-color: #32CD32;");
 	    		editButton.setVisible(false);
 			});
 		}
         
+        //end election button
         if(endButton.getText().equals("")) {
     		endButton.setVisible(false);
     	}

@@ -29,6 +29,11 @@ public class LoginController extends ScreenController {
         String username = txtUsername.getText();
         String ssn = encryptSSN(txtPassword.getText());
 
+        if(!DataLogic.getInstance().isCurrentElectionActive()) {
+        	txtErrorText.setText("Currently, there's no election going on.");
+        	return;
+        }
+        
         if(DataLogic.getInstance().logIn(username, ssn)) {
             if(DataLogic.getInstance().checkIfVoted()){
                 switchScreen(event, "user_info.fxml");

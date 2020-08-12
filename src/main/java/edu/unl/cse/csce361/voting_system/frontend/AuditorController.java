@@ -52,13 +52,16 @@ public class AuditorController extends ScreenController implements Initializable
 	@FXML
 	private TableColumn<BallotResult, Long> numberOfVotes;
 	
-	ObservableList<ElectionWinner> winnerList = FXCollections.observableArrayList();
-	ObservableList<VoterStatus> voterList = FXCollections.observableArrayList();
-	ObservableList<BallotResult> questionWithAnswerResultList = FXCollections.observableArrayList();
+	private ObservableList<ElectionWinner> winnerList;
+	private ObservableList<VoterStatus> voterList;
+	private ObservableList<BallotResult> questionWithAnswerResultList;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		winnerList = FXCollections.observableArrayList();
+		voterList = FXCollections.observableArrayList();
+		questionWithAnswerResultList = FXCollections.observableArrayList();
 		
 		electionName.setText(DataLogic.getInstance().getCurrentElectionName());
 		

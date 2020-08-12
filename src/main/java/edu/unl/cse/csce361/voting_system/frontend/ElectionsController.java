@@ -9,7 +9,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import java.util.ResourceBundle;
@@ -42,23 +41,21 @@ public class ElectionsController extends ScreenController implements Initializab
 	@FXML
 	private TableColumn<ElectionStatus, Button> endButton;
 	
-	private ObservableList<ElectionStatus> name = FXCollections.observableArrayList();
+	private ObservableList<ElectionStatus> data;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		data = FXCollections.observableArrayList();
 		
         List<String> allElectionList = DataLogic.getInstance().getAllInProgressElectionList();
         List<String> inActiveElectionList = DataLogic.getInstance().getInactiveElectionList();
-		
-        System.out.println(allElectionList.size());
-        System.out.println(inActiveElectionList.size());
         
         for(String election : allElectionList) {
-        	name.add(new ElectionStatus(election, new Button(""), new Button(""), new Button("End")));
+        	data.add(new ElectionStatus(election, new Button(""), new Button(""), new Button("End")));
         }
         
         for(String election : inActiveElectionList) {
-        	name.add(new ElectionStatus(election, new Button("Edit"), new Button("Start"), new Button("")));
+        	data.add(new ElectionStatus(election, new Button("Edit"), new Button("Start"), new Button("")));
         }
         
         electionName.setCellValueFactory(new PropertyValueFactory<ElectionStatus, String>("electionName"));
@@ -66,7 +63,7 @@ public class ElectionsController extends ScreenController implements Initializab
         startButton.setCellValueFactory(new PropertyValueFactory<ElectionStatus, Button>("startButton"));
         endButton.setCellValueFactory(new PropertyValueFactory<ElectionStatus, Button>("endButton"));
         
-        tableView.setItems(name);;
+        tableView.setItems(data);;
     }
 
     public void goToUpdate(javafx.event.ActionEvent event) throws IOException {
@@ -84,6 +81,5 @@ public class ElectionsController extends ScreenController implements Initializab
     public void logOut(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "admin_login.fxml");
     }
-
 }
 

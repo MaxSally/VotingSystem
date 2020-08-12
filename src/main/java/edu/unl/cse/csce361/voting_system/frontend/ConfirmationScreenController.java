@@ -2,14 +2,10 @@ package edu.unl.cse.csce361.voting_system.frontend;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import edu.unl.cse.csce361.voting_system.frontend.VoteController.Cell;
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
-import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,11 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -36,10 +30,9 @@ public class ConfirmationScreenController extends ScreenController implements In
 	
 	private Map<String, String> questionWithSelectedAnswer; 
 	
-	ObservableList<Map.Entry<String, String>> voterChoice = FXCollections.observableArrayList();
+	private ObservableList<Map.Entry<String, String>> voterChoice;
 
 	class Cell extends ListCell<Map.Entry<String, String>> {
-
 		VBox vbox;
 		Label question = new Label();
 		Label answer = new Label();
@@ -64,9 +57,10 @@ public class ConfirmationScreenController extends ScreenController implements In
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		voterChoice = FXCollections.observableArrayList();
+		
 		electionName.setText(DataLogic.getInstance().getCurrentElectionName());
 		questionWithSelectedAnswer = DataLogic.getInstance().getQuestionWithAnswerList();
-		
 		
 		for(Map.Entry<String, String> questionAnswer : questionWithSelectedAnswer.entrySet()) {
 			voterChoice.add(questionAnswer);
@@ -86,7 +80,6 @@ public class ConfirmationScreenController extends ScreenController implements In
     }
 	
 	public void alertScreen(javafx.event.ActionEvent event, String title, String message, String message2, String backButton, String confirmButton) {
-
         Stage window = new Stage();
         //application modality allows the application and screen below to remain open,
         //but non-functional until the alert screen closes
@@ -124,5 +117,4 @@ public class ConfirmationScreenController extends ScreenController implements In
         window.setScene(scene);
         window.showAndWait();
     }
-	
 }

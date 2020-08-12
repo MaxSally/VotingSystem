@@ -49,10 +49,11 @@ public class AddElectionController extends ScreenController implements Initializ
 	private DatePicker endDate;
 	
 	//List<QuestionAnswer> questionAnswer = new ArrayList<>();
-	Map<String, List<String>> questionAnswer = new HashMap<>();
+	private Map<String, List<String>> questionAnswer;
 	
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+    	questionAnswer = new HashMap<>();
     	questions.setOnAction(e -> displaySelectedQuestion());
     }
     
@@ -89,6 +90,7 @@ public class AddElectionController extends ScreenController implements Initializ
     }
     
     public void createNewElectionModel(javafx.event.ActionEvent event) throws IOException {
+    	addNewQuestion(event);
     	alertScreen(event, "Alert!", "is everything correct?", "If everything is ok, click 'ok'", "Go Back", "Ok");
     }
     
@@ -114,8 +116,7 @@ public class AddElectionController extends ScreenController implements Initializ
         Button confirm = new Button(confirmButton);
         confirm.setOnAction(e -> {
 			try {
-		    	DataLogic.getInstance().createNewElectionFromModel(electionNameTextField.getText(), questionAnswer, 
-		    			startDate.getValue(), endDate.getValue());
+		    	DataLogic.getInstance().createNewElectionFromModel(electionNameTextField.getText(), questionAnswer, startDate.getValue(), endDate.getValue());
 				switchScreen(event, "elections_screen.fxml");
 				window.close();
 			} catch (IOException e1) {

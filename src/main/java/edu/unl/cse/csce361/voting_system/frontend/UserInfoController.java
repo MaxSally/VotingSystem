@@ -23,8 +23,7 @@ public class UserInfoController extends ScreenController implements Initializabl
 
     private ObservableList<Map.Entry<String, String>> data;
 	
-	static class Cell extends ListCell<Map.Entry<String, String>> {
-
+	class Cell extends ListCell<Map.Entry<String, String>> {
 		VBox vbox;
 		Label question = new Label();
 		Label answer = new Label();
@@ -35,7 +34,6 @@ public class UserInfoController extends ScreenController implements Initializabl
 		}
 		
 		public void updateItem(Map.Entry<String, String> ballot, boolean empty) {
-
 			super.updateItem(ballot, empty);
 			setText(null);
 			setGraphic(null);
@@ -50,7 +48,6 @@ public class UserInfoController extends ScreenController implements Initializabl
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		data = FXCollections.observableArrayList();
 		txtUsername.setText(DataLogic.getInstance().getCurrentVoterName());
 		Map<String, String> questionAnswer = DataLogic.getInstance().getVoterVoteResult();
@@ -61,18 +58,10 @@ public class UserInfoController extends ScreenController implements Initializabl
 	}
 
     public void logout(javafx.event.ActionEvent event) throws IOException {
-        //logout method
-        //logout();
         switchScreen(event, "login.fxml");
     }
 
     public void proceed(javafx.event.ActionEvent event) throws IOException {
         switchScreen(event, "voting_screen.fxml");
     }
-
-
-
-
-
-
 }
