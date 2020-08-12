@@ -26,4 +26,6 @@ public interface Election {
     LocalDate getStartTime();
 
     LocalDate getEndTime();
+    
+    boolean isInProgress();
 }

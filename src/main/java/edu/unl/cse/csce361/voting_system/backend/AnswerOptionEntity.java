@@ -10,8 +10,6 @@ import java.util.List;
 @Entity
 public class AnswerOptionEntity implements  AnswerOption{
 
-    private static Long idCount = 0L;
-
     static Long getAnswerOptionIndexByName(String questionText, String answerText) {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
@@ -54,9 +52,6 @@ public class AnswerOptionEntity implements  AnswerOption{
     @GeneratedValue
     private Long id;
 
-    @NaturalId
-    private Long answerId;
-
     @Column
     private String answerText;
 
@@ -74,8 +69,6 @@ public class AnswerOptionEntity implements  AnswerOption{
         setQuestion(question, electionName);
         status = true;
         voterChoices = new ArrayList<>();
-        answerId = idCount;
-        idCount++;
     }
 
     public AnswerOptionEntity() {

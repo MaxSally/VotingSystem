@@ -13,8 +13,6 @@ import java.util.Set;
 @Entity
 public class ElectionEntity implements Election{
 
-
-
     static ElectionEntity getElectionByName(String electionName){
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
@@ -203,5 +201,10 @@ public class ElectionEntity implements Election{
     @Override
     public LocalDate getEndTime() {
         return endTime;
+    }
+    
+    @Override
+    public boolean isInProgress() {
+    	return status == VOTING_PHASE;
     }
 }

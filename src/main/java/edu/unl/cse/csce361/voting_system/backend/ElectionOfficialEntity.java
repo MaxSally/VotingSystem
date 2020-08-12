@@ -33,6 +33,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
         if(QuestionEntity.getQuestionsByName(questionText, electionName) == null) {
             Question question = new QuestionEntity(questionText, electionName);
             Session session = HibernateUtil.getSession();
+            
             session.beginTransaction();
             try {
                 session.saveOrUpdate(question);
