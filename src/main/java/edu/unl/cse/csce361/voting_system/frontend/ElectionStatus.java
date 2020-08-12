@@ -40,6 +40,7 @@ public class ElectionStatus extends ScreenController {
     	else {
 	        startButton.setOnAction(e2 -> {
 	        	DataLogic.getInstance().setStartElection(getElectionName());
+	        	
 	    		startButton.setStyle("-fx-background-color: #32CD32;");
 	    		editButton.setVisible(false);
 			});

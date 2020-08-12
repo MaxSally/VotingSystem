@@ -89,7 +89,6 @@ public class AddElectionController extends ScreenController implements Initializ
     }
     
     public void createNewElectionModel(javafx.event.ActionEvent event) throws IOException {
-    	System.out.println(questionAnswer);
     	alertScreen(event, "Alert!", "is everything correct?", "If everything is ok, click 'ok'", "Go Back", "Ok");
     }
     

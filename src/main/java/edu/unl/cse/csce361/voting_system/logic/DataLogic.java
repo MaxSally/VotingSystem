@@ -70,6 +70,10 @@ public class DataLogic {
         }
     }
     
+    public void setCurrentAdmin(String username) {
+    	currentAdmin = Backend.getInstance().getAdminByUsername(username);
+    }
+    
     public void registerNewVoter(String name, String ssn) {
         Backend.getInstance().registerToVote(name, ssn);
     }
@@ -160,16 +164,16 @@ public class DataLogic {
     public void createNewElectionFromModel(String electionName, Map<String, List<String>> questionsAnswer, LocalDate startTime, LocalDate endTime) {
 
         if (isElectionOfficial()) {
-            System.out.println(Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, 
-            		electionName, startTime, endTime));
+        	Backend.getInstance().createNewElection((ElectionOfficial)currentAdmin, 
+            		electionName, startTime, endTime);
             for (Map.Entry<String, List<String>> question : questionsAnswer.entrySet()) {
-                System.out.println(Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
-                		electionName, question.getKey()));
+                Backend.getInstance().createNewQuestion((ElectionOfficial) currentAdmin, 
+                		electionName, question.getKey());
                 List<String> answerList = question.getValue();
                 for (String answer : answerList) {
-                	if(!(answer.equals("") || answer.equals(null))) {
-                		System.out.println(Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
-                				question.getKey(), answer, electionName));
+                	if(!(answer.equals("") || answer == null)) {
+                		Backend.getInstance().createNewAnswer((ElectionOfficial) currentAdmin, 
+                				question.getKey(), answer, electionName);
                 	}
                 }
             }
@@ -295,6 +299,14 @@ public class DataLogic {
     		return Backend.getInstance().endElection((ElectionOfficial) currentAdmin, electionName);
     	}
     	return false;
+    }
+    
+    public LocalDate getElectionStartDate(String electionName) {
+    	return Backend.getInstance().getStartTimeForElection(electionName);
+    }
+    
+    public LocalDate getElectionEndDate(String electionName) {
+    	return Backend.getInstance().getEndTimeForElection(electionName);
     }
 }
 

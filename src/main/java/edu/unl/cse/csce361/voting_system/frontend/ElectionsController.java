@@ -19,6 +19,15 @@ import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 public class ElectionsController extends ScreenController implements Initializable {
 
 	@FXML
+	private Label adminUsername;
+	
+	@FXML
+	private Label startDate;
+	
+	@FXML
+	private Label endDate;
+	
+	@FXML
 	private TableView<ElectionStatus> tableView;
 	
 	@FXML
@@ -37,6 +46,7 @@ public class ElectionsController extends ScreenController implements Initializab
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
         List<String> allElectionList = DataLogic.getInstance().getAllInProgressElectionList();
         List<String> inActiveElectionList = DataLogic.getInstance().getInactiveElectionList();
 		

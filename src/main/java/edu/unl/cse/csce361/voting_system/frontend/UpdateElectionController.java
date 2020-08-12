@@ -106,15 +106,31 @@ public class UpdateElectionController extends ScreenController implements Initia
 	
 	public void createNewQuestion(javafx.event.ActionEvent event) throws IOException {
 		DataLogic.getInstance().addNewQuestion(electionName.getText(), newQuestionText.getText());
+		
+		List<QuestionAnswer> selectedQuestionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName.getText());
+		List<String> selectedQuestion = new ArrayList<>();
+		
+		for(QuestionAnswer question : selectedQuestionAnswer) {
+			selectedQuestion.add(question.getQuestionText());
+		}
+		
 	}
 	
 	public void createNewAnswer(javafx.event.ActionEvent event) throws IOException {
-		DataLogic.getInstance().addNewAnswerOption(electionName.getText(), question.getValue(), newAnswerOptionText.getText());
+		DataLogic.getInstance().addNewAnswerOption(electionName.getText(), question.getValue(), 
+				newAnswerOptionText.getText());
+		List<QuestionAnswer> selectedQuestionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName.getText());
+
+		for(QuestionAnswer questions : selectedQuestionAnswer) {
+			if(question.getValue().equals(questions.getQuestionText())) {
+				answer.setItems(FXCollections.observableArrayList(questions.getAnswerText()));
+			}
+		}
+		
 	}
 
 	public void removeQuestion(javafx.event.ActionEvent event) throws IOException {
 		DataLogic.getInstance().removeQuestion(electionName.getText(), question.getValue());
-		System.out.println();
 	}
 	
 	public void removeAnswer(javafx.event.ActionEvent event) throws IOException {
