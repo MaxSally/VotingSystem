@@ -70,7 +70,8 @@ public class DataLogic {
     public boolean isElectionOfficial() {
         if(Backend.getInstance().isElectionOfficial(currentAdmin)) {
         	return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -232,7 +233,6 @@ public class DataLogic {
     public void updateAnswer(String questionText, String originalAnswerText, String updatedAnswerText, String electionName) {
     	if(isElectionOfficial()) {
             Backend.getInstance().updateAnswer((ElectionOfficial) currentAdmin, questionText, originalAnswerText, updatedAnswerText, electionName);
-
     	}
     }
     
