@@ -6,9 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public abstract class ScreenController {

@@ -48,7 +48,6 @@ public class AddElectionController extends ScreenController implements Initializ
 	@FXML 
 	private DatePicker endDate;
 	
-	//List<QuestionAnswer> questionAnswer = new ArrayList<>();
 	private Map<String, List<String>> questionAnswer;
 	
     @Override
@@ -99,7 +98,6 @@ public class AddElectionController extends ScreenController implements Initializ
     }
     
     public void alertScreen(javafx.event.ActionEvent event, String title, String message, String message2, String backButton, String confirmButton) {
-
         Stage window = new Stage();
         //application modality allows the application and screen below to remain open,
         //but non-functional until the alert screen closes
@@ -120,7 +118,6 @@ public class AddElectionController extends ScreenController implements Initializ
 				switchScreen(event, "elections_screen.fxml");
 				window.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});

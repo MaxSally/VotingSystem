@@ -36,5 +36,4 @@ public class BallotResult {
 	public void setVotes(Long votes) {
 		this.votes = new SimpleLongProperty(votes);
 	}
-	
 }

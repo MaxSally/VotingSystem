@@ -30,7 +30,6 @@ public class AdminLoginController extends ScreenController {
         String password = encryptSSN(txtPassword.getText());
 
         if(DataLogic.getInstance().adminLogIn(username, password)) {
-
             if(DataLogic.getInstance().isElectionOfficial()) {
                 switchScreen(event, "elections_screen.fxml");
             }
