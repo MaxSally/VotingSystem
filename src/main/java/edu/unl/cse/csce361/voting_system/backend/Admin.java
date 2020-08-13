@@ -7,15 +7,11 @@ public interface Admin {
 
     boolean logIn(String password);
 
-    String getFinalResult();
-
-    boolean createQuestion(String questionText, List<String> answerOption);
-
-    boolean updateAnswerOption(Question question, List<String> answerOption);
-
-    boolean removeAnswerOption(Question question, AnswerOption answerOption);
-
-    boolean updateQuestion(Question question, String newQuestionText);
-
     Map<String, String> getAllVoterStatus(String electionName);
+
+    Map<String, Map<String, Long>> getFinalResult(String electionName);
+
+    List<Map<String, String>> getAllVoterVoteResult(String electionName);
+
+    Map<String, List<String>> getFinalWinner(String electionName);
 }

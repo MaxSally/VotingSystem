@@ -15,24 +15,29 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <ScrollPane hbarPolicy="NEVER" layoutY="71.0" prefHeight="444.0" prefWidth="400.0">
+      <ScrollPane hbarPolicy="NEVER" layoutY="92.0" prefHeight="423.0" prefWidth="400.0">
          <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="448.0" prefWidth="400.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="429.0" prefWidth="400.0">
                <children>
                   <ListView fx:id="listView" layoutX="36.0" layoutY="45.0" prefHeight="448.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button layoutX="300.0" layoutY="18.0" mnemonicParsing="false" onAction="#cancel" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
+      <Button layoutX="299.0" layoutY="23.0" mnemonicParsing="false" onAction="#cancel" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Cancel" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Label layoutX="130.0" layoutY="22.0" text="Please Vote">
+      <Label layoutX="149.0" layoutY="62.0" text="Please Vote">
          <font>
-            <Font size="25.0" />
+            <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="electionName" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="168.0" layoutY="25.0" text="Label" textAlignment="CENTER">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+      <Label layoutX="148.0" layoutY="6.0" text="Current Election:" />
    </children>
 </Pane>
