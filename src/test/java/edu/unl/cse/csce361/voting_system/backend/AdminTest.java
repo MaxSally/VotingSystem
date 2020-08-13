@@ -14,7 +14,7 @@ public class AdminTest extends TestTemplate {
     @Test
     public void testAdminLogIn() {
         String username = "superuser 999";
-        String password = "this is my password";
+        String password = "fc5e038d38a57032085441e7fe7010b0";
 
         Admin admin = Backend.getInstance().adminLogIn(username, password);
         assertNotNull(admin);
@@ -28,15 +28,4 @@ public class AdminTest extends TestTemplate {
         Admin admin = Backend.getInstance().registerAdminAccount(username, password, true);
         assertNotNull(admin);
     }
-
-    @Test
-    public void getAllInactiveElection(){
-        List<Election> elections = Backend.getInstance().getAllInactiveElections();
-        int expectedSize = 1;
-        String expectedName = "Nov2021";
-        assertEquals(expectedSize, elections.size());
-        assertTrue(elections.get(0).isAvailableForEdit());
-        assertEquals(expectedName, elections.get(0).getElectionName());
-    }
-
 }

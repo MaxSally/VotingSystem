@@ -26,8 +26,8 @@ public class CreateNewElectionQuestionAnswerTest extends TestTemplate {
     public void testAddQuestionToInactiveElection() {
         String electionName = "Nov2021";
         String questionText = "What is your name?";
-        ElectionOfficial admin = new ElectionOfficialEntity("test", "12345");
-        boolean result = admin.createQuestion(electionName, questionText);
+        ElectionOfficial electionOfficial = new ElectionOfficialEntity("test", "12345");
+        boolean result = electionOfficial.createQuestion(electionName, questionText);
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
         assertTrue(result);
         assertTrue(questions.contains(questionText));
@@ -90,9 +90,13 @@ public class CreateNewElectionQuestionAnswerTest extends TestTemplate {
         boolean result = admin.createElection(electionName, startTime, endTime);
         assertTrue(result);
         List<Election> inactiveElection = Backend.getInstance().getAllInactiveElections();
+        boolean hasElection = false;
         for(Election election :inactiveElection){
-            System.out.println(election.getElectionName());
+            if(election.getElectionName().equals(electionName)){
+                hasElection = true;
+            }
         }
+        assertTrue(hasElection);
     }
     
     @Test

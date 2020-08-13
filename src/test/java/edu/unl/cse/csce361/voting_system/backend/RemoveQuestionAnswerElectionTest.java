@@ -31,7 +31,7 @@ public class RemoveQuestionAnswerElectionTest extends TestTemplate {
         boolean result = admin.removeQuestion(electionName, questionText);
         List<String> questions = Backend.getInstance().getAllQuestionsByElection(electionName);
         assertTrue(result);
-        assertTrue(questions.contains(questionText));
+        assertFalse(questions.contains(questionText));
         assertFalse(QuestionEntity.getQuestionsByName(questionText, electionName).getStatus());
         for(AnswerOption answerOptionEntity : QuestionEntity.getQuestionsByName(questionText, electionName).getAssociatedAnswerOption()) {
             assertFalse(answerOptionEntity.getStatus());
@@ -54,16 +54,6 @@ public class RemoveQuestionAnswerElectionTest extends TestTemplate {
         }
         assertTrue(result);
         assertFalse(answerTextStatus);
-
-        //Extra
-        DataLogic.getInstance().setCurrentElection(electionName);
-        List<QuestionAnswer> questionAnswers = DataLogic.getInstance().getAllQuestionsAndAnswers();
-        for(QuestionAnswer questionAnswer : questionAnswers){
-            System.out.println(questionAnswer.getQuestionText());
-            for(String answerOptions : questionAnswer.getAnswerText()){
-                System.out.println(answerOptions);
-            }
-        }
     }
 
     @Test

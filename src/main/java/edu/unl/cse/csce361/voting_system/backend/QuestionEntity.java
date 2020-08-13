@@ -98,7 +98,7 @@ public class QuestionEntity implements Question {
                     "    (unlikely), or the entity does not have a simple natural ID (also unlikely).");
             System.err.println("  " + e.getMessage());
             System.err.println("Please inform the the developer that the error occurred in\n" +
-                    "    CarEntity.setElection(String).");
+                    "    ElectionEntity.setElection(String).");
             electionEntity = null;
             System.err.println("Resuming, leaving " + this.toString() + " without an assigned Election.");
         } finally {

@@ -27,7 +27,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     @Override
     public boolean createQuestion(String electionName, String questionText) {
         if(!ElectionEntity.getElectionByName(electionName).isAvailableForEdit()) {
-            return true;
+            return false;
         }
         boolean status = false;
         if(QuestionEntity.getQuestionsByName(questionText, electionName) == null) {

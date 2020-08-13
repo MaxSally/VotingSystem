@@ -26,12 +26,5 @@ public class GetAllQuestionAndAnswerOptionTest extends TestTemplate {
         DataLogic.getInstance().setCurrentVoter(voterSSN);
         List<QuestionAnswer> lstQA = DataLogic.getInstance().getAllQuestionsAndAnswers();
         assertEquals(expectedSize, lstQA.size());
-        assertEquals(firstQuestion, lstQA.get(0).getQuestionText());
-        for(QuestionAnswer questionAnswer : lstQA){
-            System.out.println(questionAnswer.getQuestionText());
-            for(String answer : questionAnswer.getAnswerText()){
-                System.out.println(answer);
-            }
-        }
     }
 }

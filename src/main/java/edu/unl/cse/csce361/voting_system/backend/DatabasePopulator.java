@@ -111,11 +111,11 @@ public class DatabasePopulator {
                 new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(3)),
                 new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(4)),
                 new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(5)),
-                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(6)),
-                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(7)),
-                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(8)),
-                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(9)),
-                new VoterChoiceEntity("25f9e794323b453885f5181f1b624d0b", answerOptionIndex.get(10)),
+                new VoterChoiceEntity("b24454431f08deb4d5ee6747bd55f3be", answerOptionIndex.get(6)),
+                new VoterChoiceEntity("b24454431f08deb4d5ee6747bd55f3be", answerOptionIndex.get(7)),
+                new VoterChoiceEntity("b24454431f08deb4d5ee6747bd55f3be", answerOptionIndex.get(8)),
+                new VoterChoiceEntity("b24454431f08deb4d5ee6747bd55f3be", answerOptionIndex.get(9)),
+                new VoterChoiceEntity("b24454431f08deb4d5ee6747bd55f3be", answerOptionIndex.get(10)),
                 new VoterChoiceEntity("b24454431f08deb4d5ee6747bd55f3be", answerOptionIndex.get(11))
         );
     }
@@ -175,7 +175,7 @@ public class DatabasePopulator {
             List<Question> questions = createQuestion();
             session.beginTransaction();
             for(Question question: questions){
-            session.saveOrUpdate(question);
+                session.saveOrUpdate(question);
             }
             session.getTransaction().commit();
             List<AnswerOption> answerOptions = createAnswerOption();
