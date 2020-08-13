@@ -1,13 +1,12 @@
 package edu.unl.cse.csce361.voting_system_logic;
 
+import edu.unl.cse.csce361.testTemplate.TestTemplate;
 import edu.unl.cse.csce361.voting_system.backend.*;
 import edu.unl.cse.csce361.voting_system.logic.DataLogic;
 import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
-import javafx.util.Pair;
-import org.hibernate.Session;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,47 +14,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class SubmitVoteTest {
-    DataLogic dataLogic;
-    List<Long> answerOptionIndex;
-
-    @Before
-    public void setUp() {
-        dataLogic = DataLogic.getInstance();
-        Session session = HibernateUtil.getSession();
-        session.beginTransaction();
-        DatabasePopulator.depopulateTables(session);
-        DatabasePopulator.createVoters().forEach(session::saveOrUpdate);
-        DatabasePopulator.createAdmin().forEach(session::saveOrUpdate);
-        DatabasePopulator.createElection().forEach(session::saveOrUpdate);
-        DatabasePopulator.createQuestion().forEach(session::saveOrUpdate);
-        session.getTransaction().commit();
-        List<AnswerOption> answerOptions = DatabasePopulator.createAnswerOption();
-        session.beginTransaction();
-        for(AnswerOption answerOption: answerOptions){
-            session.saveOrUpdate(answerOption);
-        }
-        session.getTransaction().commit();
-        answerOptionIndex = DatabasePopulator.getAnswerOptionIndex();
-        session.beginTransaction();
-        DatabasePopulator.createVoterChoice(answerOptionIndex).forEach(session::saveOrUpdate);
-        session.getTransaction().commit();
-        DatabasePopulator.setVoterStatus();
-    }
-
-    @After
-    public void tearDown() {
-        Session session = HibernateUtil.getSession();
-        session.beginTransaction();
-        DatabasePopulator.depopulateTables(session);
-        session.getTransaction().commit();
-    }
+public class SubmitVoteTest extends TestTemplate {
 
     @Test
-    public void submitVote(){
+    public void submitVote() {
         String electionName = "Nov2020";
-        String voterSSN = "83948032O";
-        DataLogic.getInstance().setElection(electionName);
+        String voterSSN = "1719ab04795270842a9ed68c3a8064c1";
+        DataLogic.getInstance().setCurrentElection(electionName);
         DataLogic.getInstance().setCurrentVoter(voterSSN);
         Map<String, String> userSelections = new HashMap<>();
         userSelections.put("Who is the next mayor?", "Pat Mann");
@@ -63,7 +28,63 @@ public class SubmitVoteTest {
         userSelections.put("Shall there be a 25¢ tax on cherries?", "No");
         userSelections.put("Shall liquor licenses be required for electronic bars?", "Yes");
         userSelections.put("Shall electronic race tracks be held liable for electronic car crashes?", "No");
+        userSelections.put("Who is the next Sheriff?", AnswerOption.ABSTAIN_VOTE);
+        DataLogic.getInstance().getAllQuestionsAndAnswers();
         boolean success = DataLogic.getInstance().submitVote(userSelections);
         assertTrue(success);
+    }
+    
+    @Test
+    public void testCreateNewQuestion() {
+    	String electionName = "Nov2021";
+    	String question = "What is your name?";
+    	String adminUser = "Batman";
+    	String password = "4b9f66817cf5ae30903c9a7bb53da984";
+    	DataLogic.getInstance().adminLogIn(adminUser, password);
+    	DataLogic.getInstance().addNewQuestion(electionName, question);
+    	List<QuestionAnswer> questionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName);
+    	for(QuestionAnswer election : questionAnswer) {
+    		System.out.println(election.getQuestionText());
+    	}
+    }
+    
+    @Test
+    public void testCreateNewAnswer() {
+    	String electionName = "Nov2021";
+    	String question = "What is your name?";
+    	String answer = "yes";
+    	String adminUser = "Batman";
+    	String password = "4b9f66817cf5ae30903c9a7bb53da984";
+    	DataLogic.getInstance().adminLogIn(adminUser, password);
+    	DataLogic.getInstance().addNewQuestion(electionName, question);
+    	DataLogic.getInstance().addNewAnswerOption(electionName, question, answer);
+    	List<QuestionAnswer> questionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName);
+    	for(QuestionAnswer election : questionAnswer) {
+    		System.out.println(election.getQuestionText());
+    		System.out.println(election.getAnswerText());
+    	}
+    }
+    
+    @Test
+    public void testCreateElectionModel() {
+    	String electionName = "Nov2026";
+    	String question = "What is your name?";
+    	List<String> answer = new ArrayList<>();
+    	answer.add("yes");
+    	answer.add("No");
+    	answer.add("");
+    	Map<String, List<String>> questionWithAnswer = new HashMap<>();
+    	questionWithAnswer.put(question, answer);
+    	LocalDate startDate = LocalDate.of(2026, 4, 23);
+    	LocalDate endDate = LocalDate.of(2026, 4, 30);
+    	String adminUser = "Batman";
+    	String password = "4b9f66817cf5ae30903c9a7bb53da984";
+    	DataLogic.getInstance().adminLogIn(adminUser, password);
+    	DataLogic.getInstance().createNewElectionFromModel(electionName, questionWithAnswer, startDate, endDate);
+    	List<QuestionAnswer> questionAnswer = DataLogic.getInstance().getQuestionAnswerByElection(electionName);
+    	for(QuestionAnswer election : questionAnswer) {
+    		System.out.println(election.getQuestionText());
+    		System.out.println(election.getAnswerText());
+    	}
     }
 }

@@ -37,13 +37,13 @@
         </property>
 
         <!-- Names the annotated entity class -->
+        <mapping class="edu.unl.cse.csce361.voting_system.backend.VoterEntity"/>
         <mapping class="edu.unl.cse.csce361.voting_system.backend.AdminEntity"/>
         <mapping class="edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity"/>
-        <mapping class="edu.unl.cse.csce361.voting_system.backend.ElectionEntity"/>
-        <mapping class="edu.unl.cse.csce361.voting_system.backend.FinalResultEntity"/>
-        <mapping class="edu.unl.cse.csce361.voting_system.backend.QuestionEntity"/>
         <mapping class="edu.unl.cse.csce361.voting_system.backend.VoterChoiceEntity"/>
-        <mapping class="edu.unl.cse.csce361.voting_system.backend.VoterEntity"/>
+        <mapping class="edu.unl.cse.csce361.voting_system.backend.ElectionEntity"/>
+        <mapping class="edu.unl.cse.csce361.voting_system.backend.QuestionEntity"/>
+        <mapping class="edu.unl.cse.csce361.voting_system.backend.ElectionOfficialEntity"/>
 
     </session-factory>
 </hibernate-configuration>
