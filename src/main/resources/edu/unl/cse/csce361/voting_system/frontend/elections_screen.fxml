@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.unl.cse.csce361.voting_system.frontend.ElectionsController">
+   <children>
+      <Button layoutX="316.0" layoutY="16.0" mnemonicParsing="false" onAction="#logOut" prefHeight="45.0" prefWidth="70.0" style="-fx-background-color: f11919; -fx-border-radius: 0px;;" text="Logout" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="25.0" layoutY="535.0" mnemonicParsing="false" onAction="#goToAudit" style="-fx-background-color: #1971ff; -fx-pref-width: 350;" text="View Results Information" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tableView" layoutY="81.0" prefHeight="376.0" prefWidth="400.0">
+        <columns>
+          <TableColumn fx:id="electionName" prefWidth="149.0" text="Election Name" />
+            <TableColumn fx:id="editButton" prefWidth="65.0" text="Update" />
+            <TableColumn fx:id="startButton" prefWidth="92.0" text="Start Election" />
+            <TableColumn fx:id="endButton" prefWidth="93.0" text="End Election" />
+        </columns>
+      </TableView>
+      <Label layoutX="104.0" layoutY="36.0" text="Welcome Election Official">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="208.0" layoutY="465.0" mnemonicParsing="false" onAction="#goToAdd" prefHeight="27.0" prefWidth="177.0" style="-fx-background-color: #32CD32#32CD32;" text="Add New Election">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
