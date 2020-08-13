@@ -27,7 +27,7 @@ public class LoginController extends ScreenController {
 
     public void login(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
-        String ssn = encryptSSN(txtPassword.getText());
+        String ssn = encrypt(txtPassword.getText());
 
         if(!DataLogic.getInstance().isCurrentElectionActive()) {
         	txtErrorText.setText("Currently, there's no election going on.");

@@ -133,6 +133,11 @@ public class UpdateElectionController extends ScreenController implements Initia
 				answer.getSelectionModel().getSelectedItem());
 	}
 	
+	public void removeElection(javafx.event.ActionEvent event) throws IOException {
+		DataLogic.getInstance().removeElection(electionName.getText());
+		switchScreen(event, "elections_screen.fxml");
+	}
+	
 	public void editElectionName(javafx.event.ActionEvent event) throws IOException {
 		editNameTextField.setVisible(true);
 		updateName.setVisible(true);

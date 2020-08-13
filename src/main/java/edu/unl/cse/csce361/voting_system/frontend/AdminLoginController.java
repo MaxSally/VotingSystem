@@ -27,7 +27,7 @@ public class AdminLoginController extends ScreenController {
 
     public void login(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
-        String password = encryptSSN(txtPassword.getText());
+        String password = encrypt(txtPassword.getText());
 
         if(DataLogic.getInstance().adminLogIn(username, password)) {
             if(DataLogic.getInstance().isElectionOfficial()) {

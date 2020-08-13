@@ -19,7 +19,7 @@ public class CreateAdminController extends ScreenController {
     
     public void createUser(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
-        String password = encryptSSN(txtPassword.getText());
+        String password = encrypt(txtPassword.getText());
         boolean electionOfficial = chkElectionOfficial.selectedProperty().getValue();
 
         DataLogic.getInstance().registerNewAdmin(username, password, electionOfficial);

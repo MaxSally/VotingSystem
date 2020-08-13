@@ -206,6 +206,12 @@ public class DataLogic {
 	    }
     }
     
+    public void removeElection(String electionName) {
+    	if(isElectionOfficial()) {
+    		Backend.getInstance().removeElection((ElectionOfficial) currentAdmin, electionName);
+    	}
+    }
+    
     public void removeQuestion(String electionName, String questionText) {
     	if(isElectionOfficial()) {
     		Backend.getInstance().removeQuestion((ElectionOfficial) currentAdmin, electionName, questionText);

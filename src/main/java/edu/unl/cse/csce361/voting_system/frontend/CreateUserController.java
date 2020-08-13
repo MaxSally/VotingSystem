@@ -17,7 +17,7 @@ public class CreateUserController extends ScreenController {
     
     public void createUser(javafx.event.ActionEvent event) throws IOException {
         String username = txtUsername.getText();
-        String ssn = encryptSSN(txtSSN.getText());
+        String ssn = encrypt(txtSSN.getText());
 
         DataLogic.getInstance().registerNewVoter(username, ssn);
         switchScreen(event, "login.fxml");

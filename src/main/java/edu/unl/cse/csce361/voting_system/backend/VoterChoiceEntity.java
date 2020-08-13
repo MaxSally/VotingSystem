@@ -10,6 +10,7 @@ public class VoterChoiceEntity implements VoterChoice {
     @GeneratedValue
     private Long id;
 
+    @Column
     private String voter;
 
     @ManyToOne(fetch = FetchType.LAZY)

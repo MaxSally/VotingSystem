@@ -55,5 +55,6 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Button layoutX="9.0" layoutY="558.0" mnemonicParsing="false" onAction="#removeElection" style="-fx-background-color: f11919;" text="Remove Election" textFill="#f8f6f6" />
    </children>
 </Pane>
