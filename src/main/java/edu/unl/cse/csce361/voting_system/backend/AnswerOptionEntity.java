@@ -2,7 +2,6 @@ package edu.unl.cse.csce361.voting_system.backend;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,8 @@ public class AnswerOptionEntity implements  AnswerOption{
                     answerIndex = answerOptionEntity.getId();
                 }
             }
-        } catch (HibernateException exception) {
+        } 
+        catch (HibernateException exception) {
             System.err.println("Could not load answerText " + answerText + ". " + exception.getMessage());
         }
         return answerIndex;
@@ -42,7 +42,8 @@ public class AnswerOptionEntity implements  AnswerOption{
                     answer = answerOptionEntity;
                 }
             }
-        } catch (HibernateException exception) {
+        } 
+        catch (HibernateException exception) {
             System.err.println("Could not load answerText " + answerText + ". " + exception.getMessage());
         }
         return answer;
@@ -74,7 +75,7 @@ public class AnswerOptionEntity implements  AnswerOption{
     public AnswerOptionEntity() {
     }
 
-    void setStatus(boolean status){
+    void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -92,7 +93,7 @@ public class AnswerOptionEntity implements  AnswerOption{
         return question;
     }
     
-    private void setQuestion(String questionText, String electionName){
+    private void setQuestion(String questionText, String electionName) {
         QuestionEntity questionEntity = QuestionEntity.getQuestionsByName(questionText, electionName);
         if (questionEntity != null) {
             questionEntity.addAnswerOption(this);
@@ -101,16 +102,17 @@ public class AnswerOptionEntity implements  AnswerOption{
         }
     }
 
-    public void setQuestion(QuestionEntity question){
+    public void setQuestion(QuestionEntity question) {
         this.question = question;
     }
 
-    public void addAnswerOption(VoterChoice voterChoice){
-        if(voterChoice instanceof VoterChoiceEntity){
+    public void addAnswerOption(VoterChoice voterChoice) {
+        if(voterChoice instanceof VoterChoiceEntity) {
             VoterChoiceEntity voterChoiceEntity = (VoterChoiceEntity) voterChoice;
             voterChoices.add(voterChoiceEntity);
             voterChoiceEntity.setAnswerOption(this);
-        }else {
+        }
+        else {
             throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
         }
     }

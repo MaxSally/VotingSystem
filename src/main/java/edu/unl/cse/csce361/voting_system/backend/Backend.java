@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import static edu.unl.cse.csce361.voting_system.backend.VoterEntity.REQUIRED_SSN_LENGTH;
 
 public class Backend {
 
@@ -45,10 +44,12 @@ public class Backend {
         		voter = new VoterEntity(name, ssn);
         		session.saveOrUpdate(voter);
         		session.getTransaction().commit();
-            } else {
+            } 
+        	else {
                 System.err.println("A voter with the ssn " + ssn + " already exists");
             }
-        } catch (HibernateException exception) {
+        } 
+        catch (HibernateException exception) {
             System.err.println("encounter hibernate problem" + exception);
             session.getTransaction().rollback();
         }
@@ -65,16 +66,18 @@ public class Backend {
                 session.beginTransaction();
                 if(isElectionOfficial){
                     admin = new ElectionOfficialEntity(username, password);
-                }else{
+                }
+                else {
                     admin = new AdminEntity(username, password);
                 }
-
                 session.saveOrUpdate(admin);
                 session.getTransaction().commit();
-            } else {
+            } 
+            else {
                 System.err.println("An admin account with the username " + username + " already exists");
             }
-        } catch (HibernateException exception) {
+        } 
+        catch (HibernateException exception) {
             System.err.println("encounter hibernate problem" + exception);
             session.getTransaction().rollback();
         }
@@ -84,7 +87,7 @@ public class Backend {
     public List<String> getAllQuestionsByElection(String electionName) {
         Election election = ElectionEntity.getElectionByName(electionName);
         List<String> questionAsString = new ArrayList<>();
-        for(Question question: election.getAssociatedQuestions()){
+        for(Question question: election.getAssociatedQuestions()) {
             questionAsString.add(question.getQuestionText());
         }
         return questionAsString;
@@ -93,25 +96,25 @@ public class Backend {
     public List<Pair<String, Long>> getAllAnswersByQuestion(String questionName, String electionName) {
         Question question = QuestionEntity.getQuestionsByName(questionName, electionName);
         List<Pair<String, Long>> answerOptions = new ArrayList<>();
-        for(AnswerOption answerOption: question.getAssociatedAnswerOption()){
+        for(AnswerOption answerOption: question.getAssociatedAnswerOption()) {
             answerOptions.add(new Pair<>(answerOption.getAnswerText(), answerOption.getId()));
         }
         return answerOptions;
     }
 
-    public boolean submitVote(Voter voter, Long answerOptionIndex){
+    public boolean submitVote(Voter voter, Long answerOptionIndex) {
         return voter.vote(answerOptionIndex);
     }
 
-    public Map<String, String> getAllVoterStatus(Admin admin, String electionName){
+    public Map<String, String> getAllVoterStatus(Admin admin, String electionName) {
         return admin.getAllVoterStatus(electionName);
     }
 
-    public Election getElectionByName(String electionName){
+    public Election getElectionByName(String electionName) {
         return ElectionEntity.getElectionByName(electionName);
     }
 
-    public Voter getVoterBySSN(String SSN){
+    public Voter getVoterBySSN(String SSN) {
         return VoterEntity.getVoterBySSN(SSN);
     }
 
@@ -180,16 +183,15 @@ public class Backend {
         return electionOfficial.endElection(electionName);
     }
 
-    public Map<String, Map<String, Long>> getFinalResult(Admin admin, String electionName){
+    public Map<String, Map<String, Long>> getFinalResult(Admin admin, String electionName) {
         return admin.getFinalResult(electionName);
     }
 
-    public List<Map<String, String>> getAllVoterVoteResult(Admin admin, String electionName){
+    public List<Map<String, String>> getAllVoterVoteResult(Admin admin, String electionName) {
         return admin.getAllVoterVoteResult(electionName);
     }
     
-
-    public Map<String, List<String>> getAllWinner(Admin admin, String electionName){
+    public Map<String, List<String>> getAllWinner(Admin admin, String electionName) {
         return admin.getFinalWinner(electionName);
     }
 
@@ -197,24 +199,23 @@ public class Backend {
     	return currentAdmin instanceof ElectionOfficialEntity; 
     }
 
-    public List<Election> getAllInactiveElections(){
+    public List<Election> getAllInactiveElections() {
         return ElectionEntity.getAllInactiveElection();
     }
     
-    public List<Election> getAllInProgressElections(){
+    public List<Election> getAllInProgressElections() {
         return ElectionEntity.getAllInProgressElection();
     }
 
-    public List<Election> getAllElections(){
+    public List<Election> getAllElections() {
         return ElectionEntity.getAllElection();
     }
 
-    public LocalDate getStartTimeForElection(String currentElection){
+    public LocalDate getStartTimeForElection(String currentElection) {
         return ElectionEntity.getElectionByName(currentElection).getStartTime();
     }
 
-    public LocalDate getEndTimeForElection(String currentElection){
+    public LocalDate getEndTimeForElection(String currentElection) {
         return ElectionEntity.getElectionByName(currentElection).getEndTime();
     }
-
 }

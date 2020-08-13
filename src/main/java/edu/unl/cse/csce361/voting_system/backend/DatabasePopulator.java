@@ -34,7 +34,7 @@ public class DatabasePopulator {
         );
     }
 
-    public static Set<ElectionOfficial> createElectionOfficial(){
+    public static Set<ElectionOfficial> createElectionOfficial() {
         System.out.println("Creating election officials");
         return Set.of(
                 new ElectionOfficialEntity("Batman", "4b9f66817cf5ae30903c9a7bb53da984"), //Batman123
@@ -85,7 +85,7 @@ public class DatabasePopulator {
         );
     }
 
-    public static List<Long> getAnswerOptionIndex(){
+    public static List<Long> getAnswerOptionIndex() {
         List<Long> answerOptionIndex = new ArrayList<>();
         answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next mayor?", "Dawn Keykong"));
         answerOptionIndex.add(AnswerOptionEntity.getAnswerOptionIndexByName("Who is the next city council?", "Blinky"));
@@ -174,13 +174,13 @@ public class DatabasePopulator {
             session.getTransaction().commit();
             List<Question> questions = createQuestion();
             session.beginTransaction();
-            for(Question question: questions){
+            for(Question question: questions) {
                 session.saveOrUpdate(question);
             }
             session.getTransaction().commit();
             List<AnswerOption> answerOptions = createAnswerOption();
             session.beginTransaction();
-            for(AnswerOption answerOption: answerOptions){
+            for(AnswerOption answerOption: answerOptions) {
                 session.saveOrUpdate(answerOption);
             }
             session.getTransaction().commit();

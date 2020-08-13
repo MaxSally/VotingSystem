@@ -2,11 +2,9 @@ package edu.unl.cse.csce361.testTemplate;
 
 import edu.unl.cse.csce361.voting_system.backend.*;
 import org.hibernate.Session;
-import org.hsqldb.Database;
 import org.junit.After;
 import org.junit.Before;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +37,7 @@ public class TestTemplate {
         session.getTransaction().commit();
         List<AnswerOption> answerOptions = DatabasePopulator.createAnswerOption();
         session.beginTransaction();
-        for(AnswerOption answerOption: answerOptions){
+        for(AnswerOption answerOption: answerOptions) {
             session.saveOrUpdate(answerOption);
         }
         session.getTransaction().commit();

@@ -244,7 +244,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     public boolean startElection(String electionName) {
         ElectionEntity election = ElectionEntity.getElectionByName(electionName);
         if(election != null) {
-            election.setStatus(election.VOTING_PHASE);
+            election.setStatus(Election.VOTING_PHASE);
             return true;
         }
         return false;
@@ -254,7 +254,7 @@ public class ElectionOfficialEntity extends AdminEntity implements ElectionOffic
     public boolean endElection(String electionName) {
         ElectionEntity election = ElectionEntity.getElectionByName(electionName);
         if(election != null) {
-            election.setStatus(election.FINISH_PHASE);
+            election.setStatus(Election.FINISH_PHASE);
             return true;
         }
         return false;

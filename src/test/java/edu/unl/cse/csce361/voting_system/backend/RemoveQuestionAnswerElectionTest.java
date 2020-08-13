@@ -1,10 +1,7 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
 import edu.unl.cse.csce361.testTemplate.TestTemplate;
-import edu.unl.cse.csce361.voting_system.logic.DataLogic;
-import edu.unl.cse.csce361.voting_system.logic.QuestionAnswer;
 import org.junit.Test;
-
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;

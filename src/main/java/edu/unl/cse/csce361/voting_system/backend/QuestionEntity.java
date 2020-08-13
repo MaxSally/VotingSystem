@@ -12,7 +12,7 @@ import static edu.unl.cse.csce361.voting_system.backend.AnswerOptionEntity.ABSTA
 @Entity
 public class QuestionEntity implements Question {
 
-    static QuestionEntity getQuestionsByName(String questionName, String electionName){
+    static QuestionEntity getQuestionsByName(String questionName, String electionName) {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         QuestionEntity question = null;
@@ -58,11 +58,11 @@ public class QuestionEntity implements Question {
         answerOptions = new ArrayList<>();
         AnswerOptionEntity abstainVote = new AnswerOptionEntity(electionName, questionText, ABSTAIN_VOTE);
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             session.beginTransaction();
             session.saveOrUpdate(abstainVote);
             session.getTransaction().commit();
-        }catch (HibernateException exception){
+        } catch (HibernateException exception){
             System.err.println("Encounter hibernate problems while adding abstain vote to the database " + exception);
             session.getTransaction().rollback();
         }
@@ -81,7 +81,7 @@ public class QuestionEntity implements Question {
     @Override
     public List<AnswerOption> getAssociatedAnswerOption() {
         List<AnswerOption> availableAnswerOption = new ArrayList<>();
-        for(AnswerOption answerOption: answerOptions){
+        for(AnswerOption answerOption: answerOptions) {
             if(answerOption.getStatus()){
                 availableAnswerOption.add(answerOption);
             }
@@ -104,7 +104,8 @@ public class QuestionEntity implements Question {
         } finally {
             if (electionEntity != null) {
                 electionEntity.addElection(this);
-            } else {
+            } 
+            else {
                 this.election = null;
             }
         }
@@ -119,7 +120,8 @@ public class QuestionEntity implements Question {
             AnswerOptionEntity answerOptionEntity = (AnswerOptionEntity) answerOption;
             answerOptions.add(answerOptionEntity);
             answerOptionEntity.setQuestion(this);
-        } else {
+        } 
+        else {
             throw new IllegalArgumentException("Expected AnswerOption, got " + answerOption.getClass().getSimpleName());
         }
     }

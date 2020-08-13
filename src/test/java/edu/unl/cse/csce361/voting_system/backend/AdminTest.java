@@ -1,13 +1,9 @@
 package edu.unl.cse.csce361.voting_system.backend;
 
 import edu.unl.cse.csce361.testTemplate.TestTemplate;
-
 import org.junit.Test;
-
 import java.util.List;
-
 import static org.junit.Assert.*;
-
 
 public class AdminTest extends TestTemplate {
 
@@ -27,5 +23,15 @@ public class AdminTest extends TestTemplate {
 
         Admin admin = Backend.getInstance().registerAdminAccount(username, password, true);
         assertNotNull(admin);
+    }
+
+    @Test
+    public void getAllInactiveElection() {
+        List<Election> elections = Backend.getInstance().getAllInactiveElections();
+        int expectedSize = 1;
+        String expectedName = "Nov2021";
+        assertEquals(expectedSize, elections.size());
+        assertTrue(elections.get(0).isAvailableForEdit());
+        assertEquals(expectedName, elections.get(0).getElectionName());
     }
 }

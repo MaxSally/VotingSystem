@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-public class ElectionEntity implements Election{
+public class ElectionEntity implements Election {
 
-    static ElectionEntity getElectionByName(String electionName){
+    static ElectionEntity getElectionByName(String electionName) {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         ElectionEntity election = null;
@@ -26,55 +26,55 @@ public class ElectionEntity implements Election{
         return election;
     }
 
-    static List<Election> getAllInactiveElection(){
+    static List<Election> getAllInactiveElection() {
         List<Election> inactiveElections = new ArrayList<>();
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             session.beginTransaction();
             List<ElectionEntity> allElections= session.createQuery("SELECT election From ElectionEntity election", ElectionEntity.class).getResultList();
             session.getTransaction().commit();
-            for(ElectionEntity election: allElections){
+            for(ElectionEntity election: allElections) {
                 if(election.isAvailableForEdit()){
                     inactiveElections.add(election);
                 }
             }
-        }catch (HibernateException exception){
+        } catch (HibernateException exception){
             System.err.println("Could not load all elections " + exception.getMessage());
             session.getTransaction().rollback();
         }
         return inactiveElections;
     }
     
-    static List<Election> getAllInProgressElection(){
+    static List<Election> getAllInProgressElection() {
         List<Election> inProgressElections = new ArrayList<>();
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             session.beginTransaction();
             List<ElectionEntity> allElections= session.createQuery("SELECT election From ElectionEntity election", ElectionEntity.class).getResultList();
             session.getTransaction().commit();
-            for(ElectionEntity election: allElections){
-                if(election.getStatus().equals(VOTING_PHASE) && !election.isRemoved()){
+            for(ElectionEntity election: allElections) {
+                if(election.getStatus().equals(VOTING_PHASE) && !election.isRemoved()) {
                 	inProgressElections.add(election);
                 }
             }
-        }catch (HibernateException exception){
+        } catch (HibernateException exception) {
             System.err.println("Could not load all elections " + exception.getMessage());
             session.getTransaction().rollback();
         }
         return inProgressElections;
     }
 
-    static List<Election> getAllElection(){
+    static List<Election> getAllElection() {
         List<Election> elections = new ArrayList<>();
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             session.beginTransaction();
             List<ElectionEntity> allElections = session.createQuery("SELECT election From ElectionEntity election", ElectionEntity.class).getResultList();
             session.getTransaction().commit();
-            for(ElectionEntity electionEntity : allElections){
+            for(ElectionEntity electionEntity : allElections) {
                 elections.add(electionEntity);
             }
-        }catch (HibernateException exception){
+        } catch (HibernateException exception) {
             System.err.println("Could not load all elections " + exception.getMessage());
             session.getTransaction().rollback();
         }
@@ -142,25 +142,26 @@ public class ElectionEntity implements Election{
         return availableQuestion;
     }
 
-    public void addElection(Question question){
+    public void addElection(Question question) {
         if (question instanceof QuestionEntity) {
             QuestionEntity questionEntity = (QuestionEntity) question;
             questions.add(questionEntity);
             questionEntity.setElection(this);
-        } else {
+        } 
+        else {
             throw new IllegalArgumentException("Expected question, got " + question.getClass().getSimpleName());
         }
     }
 
     @Override
-    public void addVoter(VoterEntity voter){
+    public void addVoter(VoterEntity voter) {
         voters.add(voter);
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             session.beginTransaction();
             session.saveOrUpdate(this);
             session.getTransaction().commit();
-        } catch (HibernateException exception){
+        } catch (HibernateException exception) {
             System.err.println("Encounter hibernate exception while adding voter to election: " + exception);
             session.getTransaction().rollback();
         }

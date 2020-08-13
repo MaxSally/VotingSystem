@@ -13,7 +13,7 @@ public class VoterEntity implements Voter {
 
     public static int REQUIRED_SSN_LENGTH= 9;
 
-    static VoterEntity getVoterBySSN(String ssn){
+    static VoterEntity getVoterBySSN(String ssn) {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
         VoterEntity voter = null;
@@ -26,20 +26,20 @@ public class VoterEntity implements Voter {
         return voter;
     }
 
-    static Long getVoterCountVotedInElection(String electionName){
+    static Long getVoterCountVotedInElection(String electionName) {
         Long voterCount = 0L;
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             session.beginTransaction();
             List<VoterEntity> voters = session.createQuery("SELECT voter From VoterEntity voter", VoterEntity.class).getResultList();
             session.getTransaction().commit();
-            for(VoterEntity voter: voters){
-                if(voter.hasVoted(electionName)){
+            for(VoterEntity voter: voters) {
+                if(voter.hasVoted(electionName)) {
                     voterCount++;
                 }
             }
 
-        }catch (HibernateException exception){
+        } catch (HibernateException exception) {
             System.err.println("Could not load all Voters " + exception.getMessage());
             session.getTransaction().rollback();
         }
@@ -85,13 +85,13 @@ public class VoterEntity implements Voter {
     @Override
     public boolean vote(Long answerOptionIndex) {
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             session.beginTransaction();
             VoterChoiceEntity newVote = new VoterChoiceEntity(SSN, answerOptionIndex);
             session.saveOrUpdate(newVote);
             session.getTransaction().commit();
             return true;
-        }catch (HibernateException exception){
+        } catch (HibernateException exception) {
             System.err.println("Encounter exception while accessing db. " + exception);
             session.getTransaction().rollback();
             return false;
@@ -131,15 +131,15 @@ public class VoterEntity implements Voter {
                 voterSelections.put(question.getQuestionText(), AnswerOptionEntity.ABSTAIN_VOTE);
             }
         }
-
         return voterSelections;
     }
 
-    public void addVoter(VoterChoice voterChoice){
-        if(voterChoice instanceof VoterChoiceEntity){
+    public void addVoter(VoterChoice voterChoice) { 
+        if(voterChoice instanceof VoterChoiceEntity) {
             VoterChoiceEntity voterChoiceEntity = (VoterChoiceEntity) voterChoice;
             voterChoiceEntity.setVoter(this);
-        }else {
+        }
+        else {
             throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
         }
     }
@@ -148,11 +148,11 @@ public class VoterEntity implements Voter {
     public void addVotedElection(String electionName) {
         electionVotedIn.add(ElectionEntity.getElectionByName(electionName));
         Session session = HibernateUtil.getSession();
-        try{
+        try {
             session.beginTransaction();
             session.saveOrUpdate(this);
             session.getTransaction().commit();
-        } catch (HibernateException exception){
+        } catch (HibernateException exception) {
             System.err.println("Encounter hibernate exception while adding election to list of voted election: " + exception);
             session.getTransaction().rollback();
         }

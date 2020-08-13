@@ -8,7 +8,6 @@ import org.junit.rules.ExpectedException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +32,6 @@ public class VoterTest extends TestTemplate {
 
         Voter voter = Backend.getInstance().voterLogIn(name, ssn);
         assertNull(voter);
-
     }
 
     @Test
