@@ -10,8 +10,7 @@ public class VoterChoiceEntity implements VoterChoice {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    private VoterEntity voter;
+    private String voter;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private AnswerOptionEntity answerOption;
@@ -72,7 +71,7 @@ public class VoterChoiceEntity implements VoterChoice {
     }
 
     public void setVoter(VoterEntity voter){
-        this.voter = voter;
+        this.voter = EncryptionUtil.encrypt(voter.getSSN());
     }
 
     public void setAnswerOption(AnswerOptionEntity answerOption){
@@ -81,5 +80,9 @@ public class VoterChoiceEntity implements VoterChoice {
 
     public AnswerOptionEntity getAnswerOption() {
         return answerOption;
+    }
+
+    public Long getId(){
+        return id;
     }
 }

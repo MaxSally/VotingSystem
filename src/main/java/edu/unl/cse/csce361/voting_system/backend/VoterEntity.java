@@ -6,6 +6,8 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import java.util.*;
 
+import static edu.unl.cse.csce361.voting_system.backend.EncryptionUtil.encrypt;
+
 @Entity
 public class VoterEntity implements Voter {
 
@@ -55,9 +57,6 @@ public class VoterEntity implements Voter {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "voter", cascade = CascadeType.ALL)
-    private List<VoterChoiceEntity> voterChoices;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="electionVotedIn", joinColumns={@JoinColumn(referencedColumnName="ID")}
             , inverseJoinColumns={@JoinColumn(referencedColumnName="ID")})
@@ -70,7 +69,6 @@ public class VoterEntity implements Voter {
     public VoterEntity(String name, String SSN) {
     	this.SSN = SSN;
         this.name = name;
-        voterChoices = new ArrayList<>();
         electionVotedIn = new HashSet<>();
     }
 
@@ -111,6 +109,17 @@ public class VoterEntity implements Voter {
         questions.addAll(ElectionEntity.getElectionByName(electionName).getAssociatedQuestions());
 
         Map<String, String> voterSelections = new HashMap<>();
+        String encryptedSSN = encrypt(SSN);
+        List<VoterChoiceEntity> voterChoices = new ArrayList<>();
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        try {
+            voterChoices = session.createQuery("From VoterChoiceEntity  where voter = '" + encryptedSSN + "'", VoterChoiceEntity.class).getResultList();
+            session.getTransaction().commit();
+        } catch (HibernateException exception){
+            System.out.println("Encounter hibernate problems " + exception);
+            session.getTransaction().rollback();
+        }
         for(VoterChoiceEntity voterChoiceEntity : voterChoices) {
             if(questions.contains(voterChoiceEntity.getAnswerOption().getQuestion())) {
                 voterSelections.put(voterChoiceEntity.getAnswerOption().getQuestion().getQuestionText(), voterChoiceEntity.getAnswerOption().getAnswerText());
@@ -129,7 +138,6 @@ public class VoterEntity implements Voter {
     public void addVoter(VoterChoice voterChoice){
         if(voterChoice instanceof VoterChoiceEntity){
             VoterChoiceEntity voterChoiceEntity = (VoterChoiceEntity) voterChoice;
-            voterChoices.add(voterChoiceEntity);
             voterChoiceEntity.setVoter(this);
         }else {
             throw new IllegalArgumentException("Expected VoterChoice, got " + voterChoice.getClass().getSimpleName());
@@ -149,5 +157,9 @@ public class VoterEntity implements Voter {
             session.getTransaction().rollback();
         }
         ElectionEntity.getElectionByName(electionName).addVoter(this);
+    }
+
+    public String getSSN(){
+        return SSN;
     }
 }
